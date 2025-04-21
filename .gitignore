@@ -13,6 +13,9 @@ target/
 .springBeans
 .sts4-cache
 
+# Ignorar o arquivo real de configuração
+src/main/resources/config.properties
+
 ### IntelliJ IDEA ###
 .idea
 *.iws

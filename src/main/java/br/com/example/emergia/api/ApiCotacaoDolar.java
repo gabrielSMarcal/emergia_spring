@@ -1,11 +1,13 @@
 package br.com.example.emergia.api;
 
-import java.io.FileInputStream;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Properties;
-import java.util.Scanner;
 
 public class ApiCotacaoDolar {
 
@@ -13,8 +15,12 @@ public class ApiCotacaoDolar {
 
     private static String getApiKey() throws IOException {
         Properties properties = new Properties();
-        try (FileInputStream fis = new FileInputStream("src/config.properties")) {
-            properties.load(fis);
+        try (InputStream inputStream = ApiCotacaoDolar.class.getClassLoader()
+                .getResourceAsStream("config.properties")) {
+            if (inputStream == null) {
+                throw new IOException("Arquivo config.properties não encontrado no classpath.");
+            }
+            properties.load(inputStream);
         }
         String apiKey = properties.getProperty("API_KEY");
         if (apiKey == null || apiKey.isEmpty()) {
@@ -33,26 +39,15 @@ public class ApiCotacaoDolar {
 
         int respondeCode = connection.getResponseCode();
         if (respondeCode == 200) {
-            Scanner scanner = new Scanner(url.openStream());
-            StringBuilder response = new StringBuilder();
-            while (scanner.hasNext()) {
-                response.append(scanner.nextLine());
-            }
-            scanner.close();
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode responseJson = objectMapper.readTree(connection.getInputStream());
 
-            // Processa a resposta JSON como string
-            String responseBody = response.toString();
-            String searchKey = "\"USD\":";
-            int startIndex = responseBody.indexOf(searchKey) + searchKey.length();
-            int endIndex = responseBody.indexOf(",", startIndex);
-            if (endIndex == -1) {
-                endIndex = responseBody.indexOf("}", startIndex);
+            JsonNode usdNode = responseJson.path("rates").path("USD");
+            if (usdNode.isMissingNode() || !usdNode.isTextual()) {
+                throw new IOException("Erro ao encontrar campo 'USD'");
             }
 
-            // Extrai e converte o valor da cotação
-            String cotacaoString = responseBody.substring(startIndex, endIndex).trim();
-            cotacaoString = cotacaoString.replace("\"", "");
-            return Double.parseDouble(cotacaoString);
+            return Double.parseDouble(usdNode.asText());
         } else {
             throw new IOException("Erro ao obter cotação do dólar: " + respondeCode);
         }

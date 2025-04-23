@@ -1,0 +1,42 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+  }
+  
+  .cabecalho {
+    background-color: #1faa06;
+    color: white;
+    padding: 40px 20px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .cabecalho h1 {
+    margin: 0 0 15px 0;
+    font-size: 32px;
+  }
+  
+  .menu-links {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+  }
+  
+  .menu-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: 2px solid white;
+    border-radius: 5px;
+    transition: all 0.3s;
+  }
+  
+  .menu-links a:hover {
+    background-color: white;
+    color: #1faa06;
+  }
+  

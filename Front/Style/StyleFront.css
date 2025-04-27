@@ -1,0 +1,169 @@
+html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f9f9f9;
+    color: #333;
+  }
+
+  .video-fundo {
+    position: relative;
+    width: 100%;
+    height: 650px;
+    overflow: hidden;
+  }
+  
+  .video-fundo video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    z-index: 0;
+    filter: brightness(0.7); /* opcional, caso queira escurecer direto no vídeo */
+  }
+  
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4); /* escurece */
+    z-index: 1;
+  }
+  
+  .conteudo-video {
+    position: relative;
+    font-size: 25px;
+    line-height: 0.0;
+    z-index: 2;
+    height: 100%;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.7);
+  }
+  
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: transparent; /* Transparente no topo */
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 15px 0;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    z-index: 1000;
+  }
+  
+  nav.scrolled {
+    background-color: #00c707; /* Cor de fundo ao rolar (pode trocar por qualquer uma) */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px 15px;
+    border-radius: 4px;
+    transition: background 0.3s;
+    cursor: pointer;
+  }
+  
+  nav a:hover {
+    text-decoration: underline;
+    color: #3ce42d;
+  }
+  
+  main {
+    padding: 40px 20px;
+    max-width: 1000px;
+    margin: auto;
+  }
+  
+  section {
+    margin-bottom: 60px;
+  }
+  
+  h2 {
+    color: #22ca19;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .bloco-conteudo {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+  
+  .bloco-conteudo img {
+    width: 300px;
+    max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .bloco-conteudo.esquerda {
+    flex-direction: row;
+  }
+  
+  .bloco-conteudo.direita {
+    flex-direction: row-reverse;
+  }
+  
+  .bloco-conteudo div {
+    flex: 1;
+    min-width: 250px;
+  }
+
+  .caixa {
+    border: 2px solid #1faa06;
+    border-radius: 10px;
+    padding: 30px;
+    width: 350px;
+    margin: 50px auto;
+    text-align: center;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 10px rgba(60, 194, 3, 0.789);
+    font-family: Arial, sans-serif;
+  }
+
+  .caixa p {
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #333;
+  }
+
+  .botao-decorado {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  .botao-decorado:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+  }

@@ -1,4 +1,4 @@
-package br.com.example.emergia.model;
+package br.com.example.emergia.models;
 
 import br.com.example.emergia.api.ApiCotacaoDolar;
 import br.com.example.emergia.database.AtributosFixos;

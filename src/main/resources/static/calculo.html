@@ -11,107 +11,118 @@
   <h1>Cálculo da Emergia e Custos da Fazenda de Laticinios</h1>
 
   <div class="grid-container">
+    <!-- Água Usada -->
+    <div class="container">
+      <h2>Água Usada</h2>
+      <label for="aguaUsada">Litros de Água Usada:</label>
+        <input type="number" id="aguaUsada"></label>
+      <label for="qtdAnima">Quantide de Animais:</label>
+        <input type="number" id="qtdAnima"></label>
+      <label for="litrosAdicionalDia">Litros adicionais por dia:</label>
+        <input type="number" id="litrosAdicionalDia"></label>
+    </div>
+
     <!-- Eletricidade -->
     <div class="container">
       <h2>Eletricidade</h2>
       <label for="eletrica">Energia Elétrica (kWh):</label>
-      <input type="number" id="eletrica" step="0.01">
+        <input type="number" id="eletrica" step="0.01">
     </div>
 
     <!-- Mão de Obra -->
     <div class="container">
       <h2>Mão de Obra</h2>
       <label for="maoObraPessoas">Quantidade de Pessoas:</label>
-      <input type="number" id="maoObraPessoas" step="1">
+        <input type="number" id="maoObraPessoas" step="1">
       <label for="maoObraHoras">Horas Trabalhadas:</label>
-      <input type="number" id="maoObraHoras" step="0.01">
+        <input type="number" id="maoObraHoras" step="0.01">
       <label for="maoObraDias">Dias Trabalhados:</label>
-      <input type="number" id="maoObraDias" step="1">
+        <input type="number" id="maoObraDias" step="1">
     </div>
 
     <!-- Ração -->
     <div class="container">
       <h2>Ração</h2>
       <label for="racaoSacas">Quantidade de Ração (sacas):</label>
-      <input type="number" id="racaoSacas" step="1">
+        <input type="number" id="racaoSacas" step="1">
       <label for="racaoValor">Valor da Saca (R$):</label>
-      <input type="number" id="racaoValor" step="0.01">
+        <input type="number" id="racaoValor" step="0.01">
     </div>
 
     <!-- Cuidado do Solo -->
     <div class="container">
       <h2>Cuidado do Solo</h2>
       <label for="soloToneladas">Toneladas por Hectare:</label>
-      <input type="number" id="soloToneladas" step="0.01">
+        <input type="number" id="soloToneladas" step="0.01">
       <label for="soloAnos">Anos:</label>
-      <input type="number" id="soloAnos" step="1">
+        <input type="number" id="soloAnos" step="1">
       <label for="soloArea">Área Devastada pelo Gado (hectares):</label>
-      <input type="number" id="soloArea" step="0.01">
+        <input type="number" id="soloArea" step="0.01">
     </div>
 
     <!-- Maquinários -->
     <div class="container">
       <h2>Maquinários</h2>
       <label for="maquinarioHoras">Horas de Uso:</label>
-      <input type="number" id="maquinarioHoras" step="0.01">
+        <input type="number" id="maquinarioHoras" step="0.01">
       <label for="maquinarioValor">Valor por Hora (R$):</label>
-      <input type="number" id="maquinarioValor" step="0.01">
+        <input type="number" id="maquinarioValor" step="0.01">
     </div>
 
     <!-- Combustível -->
     <div class="container">
       <h2>Combustível</h2>
       <label for="combustivelHoras">Horas de Trator por Ano:</label>
-      <input type="number" id="combustivelHoras" step="0.01">
+        <input type="number" id="combustivelHoras" step="0.01">
       <label for="combustivelTratores">Quantidade de Tratores:</label>
-      <input type="number" id="combustivelTratores" step="1">
+        <input type="number" id="combustivelTratores" step="1">
       <label for="combustivelLitros">Litros por Hora:</label>
-      <input type="number" id="combustivelLitros" step="0.01">
+        <input type="number" id="combustivelLitros" step="0.01">
     </div>
 
     <!-- Perda do Solo -->
     <div class="container">
       <h2>Perda do Solo</h2>
       <label for="perdaSolo">Perda do Solo (toneladas/ano):</label>
-      <input type="number" id="perdaSolo" step="0.01">
+        <input type="number" id="perdaSolo" step="0.01">
     </div>
 
     <!-- Potencial Químico -->
     <div class="container">
       <h2>Potencial Químico</h2>
       <label for="potencialQuimicoArea">Área da Fazenda (hectares):</label>
-      <input type="number" id="potencialQuimicoArea" step="0.01">
+        <input type="number" id="potencialQuimicoArea" step="0.01">
       <label for="potencialQuimicoChuva">Média de Chuva por Ano (m³):</label>
-      <input type="number" id="potencialQuimicoChuva" step="0.01">
+        <input type="number" id="potencialQuimicoChuva" step="0.01">
     </div>
 
     <!-- Consumo e Manutenção -->
     <div class="container">
       <h2>Consumo e Manutenção</h2>
       <label for="consumoFazendaValor">Valor de Consumo e Manutenção (R$):</label>
-      <input type="number" id="consumoFazendaValor" step="0.01">
+        <input type="number" id="consumoFazendaValor" step="0.01">
       <label for="consumoFazendaAnos">Anos:</label>
-      <input type="number" id="consumoFazendaAnos" step="1">
+        <input type="number" id="consumoFazendaAnos" step="1">
     </div>
 
     <!-- Gado -->
     <div class="container">
       <h2>Gado</h2>
       <label for="gadoPeso">Peso Médio do Gado (kg):</label>
-      <input type="number" id="gadoPeso" step="0.01">
+        <input type="number" id="gadoPeso" step="0.01">
       <label for="gadoQuantidade">Quantidade de Animais:</label>
-      <input type="number" id="gadoQuantidade" step="1">
+        <input type="number" id="gadoQuantidade" step="1">
       <label for="gadoAnos">Anos de Vida Média:</label>
-      <input type="number" id="gadoAnos" step="0.01">
+        <input type="number" id="gadoAnos" step="0.01">
     </div>
 
     <!-- Produção de Leite -->
     <div class="container">
       <h2>Produção de Leite</h2>
       <label for="producaoLeiteArea">Área da Fazenda (hectares):</label>
-      <input type="number" id="producaoLeiteArea" step="0.01">
+        <input type="number" id="producaoLeiteArea" step="0.01">
       <label for="producaoLeiteLitros">Produção de Leite (litros/dia):</label>
-      <input type="number" id="producaoLeiteLitros" step="0.01">
+        <input type="number" id="producaoLeiteLitros" step="0.01">
     </div>
 
     <div class="container">
@@ -119,7 +130,7 @@
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <script src="JS/calc.js"></script>
 
 </body>
 </html>

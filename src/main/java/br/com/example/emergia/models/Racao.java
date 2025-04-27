@@ -6,9 +6,9 @@ import br.com.example.emergia.database.AtributosFixos;
 public class Racao extends AtributosFixos{
 
     private int saca;
-    private double valorSaca;
+    private float valorSaca;
 
-    public Racao (int saca, double valorSaca){
+    public Racao (int saca, float valorSaca){
         this.saca = saca;
         this.valorSaca = valorSaca;
     }

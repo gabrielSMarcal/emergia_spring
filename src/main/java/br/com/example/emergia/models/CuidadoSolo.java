@@ -7,13 +7,11 @@ public class CuidadoSolo extends AtributosFixos{
     // Ha = Hectatres
     private double toneladasPorHa;
     private int ano;
-
+    private double areaDevastadaPeloGado;
 
     public double getToneladasPorHa() {
         return toneladasPorHa;
     } //não sei se isso é necessário
-
-    private double areaDevastadaPeloGado;
 
     public CuidadoSolo (double toneladasPorHa, double areaDevastadaPeloGado, int ano) {
         this.areaDevastadaPeloGado = areaDevastadaPeloGado;

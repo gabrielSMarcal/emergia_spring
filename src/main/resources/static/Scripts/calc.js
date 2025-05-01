@@ -1,5 +1,7 @@
 import getDados from "./getDados.js";
 
+window.calcResults = {}; // Armazena os resultados globalmente
+
 document.addEventListener("DOMContentLoaded", () => {
   // Água Usada
   const aguaInputs = {
@@ -13,14 +15,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const animais = parseInt(aguaInputs.animais.value);
         const adicionais = parseFloat(aguaInputs.adicionais.value);
         if (!isNaN(litros) && !isNaN(animais) && !isNaN(adicionais)) {
-            getDados(`aguaUsada/calc?litros=${litros}&animais=${animais}&adicionais=${adicionais}`)
+            // Parâmetros: litroPorDiaAnimal, qtdAnimal, litrosAdicionalDia
+            getDados(`aguaUsada/calc?litroPorDiaAnimal=${litros}&qtdAnimal=${animais}&litrosAdicionalDia=${adicionais}`)
                 .then(result => displayResult("aguaUsada", result))
                 .catch(error => console.error("Erro ao calcular água usada:", error));
         }
     });
   });
   
-
   // Combustível
   const combustivelInputs = {
       horas: document.getElementById("combustivelHoras"),
@@ -33,7 +35,8 @@ document.addEventListener("DOMContentLoaded", () => {
           const tratores = parseInt(combustivelInputs.tratores.value);
           const litros = parseFloat(combustivelInputs.litros.value);
           if (!isNaN(horas) && !isNaN(tratores) && !isNaN(litros)) {
-              getDados(`combustivel/calc?horas=${horas}&tratores=${tratores}&litros=${litros}`)
+              // Parâmetros: horasTratorPorAno, qtdTrator, litrosPorHoras
+              getDados(`combustivel/calc?horasTratorPorAno=${horas}&qtdTrator=${tratores}&litrosPorHoras=${litros}`)
                   .then(result => displayResult("combustivel", result))
                   .catch(error => console.error("Erro ao calcular combustível:", error));
           }
@@ -52,7 +55,8 @@ document.addEventListener("DOMContentLoaded", () => {
           const anos = parseInt(soloInputs.anos.value);
           const area = parseFloat(soloInputs.area.value);
           if (!isNaN(toneladas) && !isNaN(anos) && !isNaN(area)) {
-              getDados(`cuidadoSolo/calc?toneladas=${toneladas}&anos=${anos}&area=${area}`)
+              // Parâmetros: toneladaPorHA, ano, areaDevastadaPeloGado
+              getDados(`solo/calc?toneladaPorHA=${toneladas}&ano=${anos}&areaDevastadaPeloGado=${area}`)
                   .then(result => displayResult("solo", result))
                   .catch(error => console.error("Erro ao calcular cuidado do solo:", error));
           }
@@ -64,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
   eletricaInput.addEventListener("input", () => {
       const energiaPORKWH = parseFloat(eletricaInput.value);
       if (!isNaN(energiaPORKWH)) {
-          getDados(`eletricidade/calc?energiaPORKWH=${energiaPORKWH}`)
+          getDados(`eletrica/calc?energiaPORKWH=${energiaPORKWH}`)
               .then(result => displayResult("eletrica", result))
               .catch(error => console.error("Erro ao calcular eletricidade:", error));
       }
@@ -82,7 +86,8 @@ document.addEventListener("DOMContentLoaded", () => {
           const quantidade = parseInt(gadoInputs.quantidade.value);
           const anos = parseFloat(gadoInputs.anos.value);
           if (!isNaN(peso) && !isNaN(quantidade) && !isNaN(anos)) {
-              getDados(`gado/calc?peso=${peso}&quantidade=${quantidade}&anos=${anos}`)
+              // Parâmetros: pesoKgMedia, numeroAnimais, anosVidaMedia
+              getDados(`gado/calc?pesoKgMedia=${peso}&numeroAnimais=${quantidade}&anosVidaMedia=${anos}`)
                   .then(result => displayResult("gado", result))
                   .catch(error => console.error("Erro ao calcular gado:", error));
           }
@@ -101,7 +106,8 @@ document.addEventListener("DOMContentLoaded", () => {
           const horas = parseFloat(maoObraInputs.horas.value);
           const dias = parseInt(maoObraInputs.dias.value);
           if (!isNaN(pessoas) && !isNaN(horas) && !isNaN(dias)) {
-              getDados(`maoObra/calc?pessoas=${pessoas}&horas=${horas}&dias=${dias}`)
+              // Parâmetros: pessoa, horasTrabalhadas, qtdDiasTrabalhado
+              getDados(`maoObra/calc?pessoa=${pessoas}&horasTrabalhadas=${horas}&qtdDiasTrabalhado=${dias}`)
                   .then(result => displayResult("maoObra", result))
                   .catch(error => console.error("Erro ao calcular mão de obra:", error));
           }
@@ -118,7 +124,8 @@ document.addEventListener("DOMContentLoaded", () => {
           const horas = parseFloat(maquinarioInputs.horas.value);
           const valor = parseFloat(maquinarioInputs.valor.value);
           if (!isNaN(horas) && !isNaN(valor)) {
-              getDados(`maquinarios/calc?horas=${horas}&valor=${valor}`)
+              // Parâmetros: qtdHoraTrator, valorHoraTrator
+              getDados(`maquinario/calc?qtdHoraTrator=${horas}&valorHoraTrator=${valor}`)
                   .then(result => displayResult("maquinario", result))
                   .catch(error => console.error("Erro ao calcular maquinários:", error));
           }
@@ -130,7 +137,8 @@ document.addEventListener("DOMContentLoaded", () => {
   perdaSoloInput.addEventListener("input", () => {
       const perda = parseFloat(perdaSoloInput.value);
       if (!isNaN(perda)) {
-          getDados(`perdaSolo/calc?perda=${perda}`)
+          // Parâmetro: perdaDeSoloTonelada
+          getDados(`perdaSolo/calc?perdaDeSoloTonelada=${perda}`)
               .then(result => displayResult("perdaSolo", result))
               .catch(error => console.error("Erro ao calcular perda do solo:", error));
       }
@@ -146,7 +154,8 @@ document.addEventListener("DOMContentLoaded", () => {
           const area = parseFloat(potencialQuimicoInputs.area.value);
           const chuva = parseFloat(potencialQuimicoInputs.chuva.value);
           if (!isNaN(area) && !isNaN(chuva)) {
-              getDados(`potencialQuimico/calc?area=${area}&chuva=${chuva}`)
+              // Parâmetros: haFazenda, mediaChuvaAnoMetros
+              getDados(`potencialQuimico/calc?haFazenda=${area}&mediaChuvaAnoMetros=${chuva}`)
                   .then(result => displayResult("potencialQuimico", result))
                   .catch(error => console.error("Erro ao calcular potencial químico:", error));
           }
@@ -163,13 +172,12 @@ document.addEventListener("DOMContentLoaded", () => {
           const area = parseFloat(producaoLeiteInputs.area.value);
           const litros = parseFloat(producaoLeiteInputs.litros.value);
           if (!isNaN(area) && !isNaN(litros)) {
-              getDados(`producaoLeite/calc?area=${area}&litros=${litros}`)
+              getDados(`producaoLeite/calc?leitePorDia=${litros}&haFazendaLeite=${area}`)
                   .then(result => displayResult("producaoLeite", result))
                   .catch(error => console.error("Erro ao calcular produção de leite:", error));
           }
       });
   });
-});
 
   // Ração
   const racaoInputs = {
@@ -181,7 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
           const sacas = parseInt(racaoInputs.sacas.value);
           const valor = parseFloat(racaoInputs.valor.value);
           if (!isNaN(sacas) && !isNaN(valor)) {
-              getDados(`racao/calc?sacas=${sacas}&valor=${valor}`)
+              getDados(`racao/calc?saca=${sacas}&valorSaca=${valor}`)
                   .then(result => displayResult("racao", result))
                   .catch(error => console.error("Erro ao calcular ração:", error));
           }
@@ -199,23 +207,75 @@ document.addEventListener("DOMContentLoaded", () => {
           const valor = parseFloat(consumoInputs.valor.value);
           const anos = parseInt(consumoInputs.anos.value);
           if (!isNaN(valor) && !isNaN(anos)) {
-              getDados(`consumoManutencao/calc?valor=${valor}&anos=${anos}`)
+              getDados(`consumoFazenda/calc?bens=${valor}&anos=${anos}`)
                   .then(result => displayResult("consumoFazenda", result))
                   .catch(error => console.error("Erro ao calcular consumo e manutenção:", error));
           }
       });
   });
 
-  
-// Função para exibir o resultado abaixo do campo correspondente
-function displayResult(fieldId, result) {
-  let resultElement = document.getElementById(`${fieldId}-result`);
-  if (!resultElement) {
-      const inputElement = document.getElementById(fieldId);
-      resultElement = document.createElement("div");
-      resultElement.id = `${fieldId}-result`;
-      resultElement.style.marginTop = "10px";
-      inputElement.parentElement.appendChild(resultElement);
+  // Botão para visualizar resultado
+  const visualizarBtn = document.getElementById("visualizarResultado");
+  if(visualizarBtn) {
+      visualizarBtn.addEventListener("click", () => {
+          // Salva os resultados em localStorage
+          localStorage.setItem("calcResults", JSON.stringify(window.calcResults));
+          // Redireciona para a página de resultados
+          window.location.href = "resultado.html";
+      });
   }
-  resultElement.textContent = `Resultado: ${result.toFixed(2)}`;
+});
+
+// Função para exibir o resultado abaixo do campo correspondente e armazená-lo
+function displayResult(fieldId, result) {
+    let numericResult = Number(result);
+    let resultElement = document.getElementById(`${fieldId}-result`);
+    
+    // Se o elemento de resultado não existir, cria um novo
+    if (!resultElement) {
+        let container = document.getElementById(fieldId)?.closest(".container");
+        
+        // Se o container não for encontrado, cria um container padrão
+        if (!container) {
+            console.warn(`Container não encontrado para o campo: ${fieldId}. Criando um container padrão.`);
+            container = document.createElement("div");
+            container.className = "container";
+            document.body.appendChild(container);
+        }
+
+        resultElement = document.createElement("div");
+        resultElement.id = `${fieldId}-result`;
+        resultElement.style.marginTop = "10px";
+        container.appendChild(resultElement);
+    }
+
+    // Atualiza o texto do resultado em notação científica com 2 dígitos após a vírgula (ex: 8.28E+21)
+    resultElement.textContent = `Resultado (${fieldId}): ${numericResult.toExponential(2).toUpperCase()}`;
+    window.calcResults[fieldId] = numericResult;
+}
+
+// Função para exibir erros no container correspondente
+function displayError(fieldId, errorMessage) {
+    let errorElement = document.getElementById(`${fieldId}-error`);
+    
+    // Localiza o container correspondente
+    let container = document.getElementById(fieldId)?.closest(".container");
+    if (!container) {
+        console.warn(`Container não encontrado para o campo: ${fieldId}. Criando um container padrão.`);
+        container = document.createElement("div");
+        container.className = "container";
+        document.body.appendChild(container);
+    }
+
+    // Se o elemento de erro não existir, cria um novo
+    if (!errorElement) {
+        errorElement = document.createElement("div");
+        errorElement.id = `${fieldId}-error`;
+        errorElement.style.marginTop = "10px";
+        errorElement.style.color = "red"; // Define a cor do texto como vermelho para destacar o erro
+        container.appendChild(errorElement);
+    }
+
+    // Atualiza o texto do erro
+    errorElement.textContent = `Erro (${fieldId}): ${errorMessage}`;
 }

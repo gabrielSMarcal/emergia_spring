@@ -1,4 +1,4 @@
-import getDados from "./getDados";
+import getDados from "./getDados.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   // Água Usada
@@ -17,8 +17,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 .then(result => displayResult("aguaUsada", result))
                 .catch(error => console.error("Erro ao calcular água usada:", error));
         }
+
+        console.log("Litros:", litros, "Animais:", animais, "Adicionais:", adicionais);
+        console.log("Resultado da API:", result);
     });
   });
+  
 
   // Combustível
   const combustivelInputs = {

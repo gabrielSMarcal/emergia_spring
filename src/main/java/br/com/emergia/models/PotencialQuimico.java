@@ -6,7 +6,13 @@ public class PotencialQuimico extends AtributosFixos {
 
     // ha = hectares
     private double haFazenda;
+    private String uFazenda = "Ha - Hectares";
     private double mediaChuvaAnoMetros; //é por ano em metros
+    private String uChuvaMetros = "M³";
+    private double resulPotencialQuimico;
+    private String uResulPotencialQuimico = "unid/ano";
+    private double resulRefEmergiaSolarPotencialQuimico;
+    private String uResulRefEmergiaSolarPotencialQuimico = "seJ/unid";
 
     public PotencialQuimico(double haFazenda, double mediaChuvaAnoMetros){
         this.haFazenda = haFazenda;
@@ -22,10 +28,14 @@ public class PotencialQuimico extends AtributosFixos {
     }
 
     public double calcPQ() {
-        return haFazenda * mediaChuvaAnoMetros * getConversaoHaParaM2() * getKgPorM3() * getEnergiaPorKg();
+        resulPotencialQuimico = haFazenda * mediaChuvaAnoMetros * getConversaoHaParaM2() * getKgPorM3() * getEnergiaPorKg();
+
+        return resulPotencialQuimico;
     }
-    /*
-    o que atualizei:
-    - Retirei a variável resul e coloquei apenas return
-     */
+
+    public double calRefEmergiaSolarPotencialQuimico(){
+        resulRefEmergiaSolarPotencialQuimico = calcPQ() * getTransformidadePontencialQuimico();
+        return resulRefEmergiaSolarPotencialQuimico;
+    }
+
 }

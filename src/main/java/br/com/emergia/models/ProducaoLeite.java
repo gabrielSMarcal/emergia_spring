@@ -6,10 +6,18 @@ public class ProducaoLeite extends AtributosFixos {
 
     // ha = hectares
     private double leitePorDia;
+    private String uLeitePorDia = "L";
     private double haFazendaLeite;
+    private String uHaFAzebdaLeite = "Ha";
+    private double resulProducaoLeite;
+    private double resulProducaoLeiteAno;
+
+    private String uResulProducaoLeite = "unid/ano";
+    private double resulRefEmergiaSolarProducaoLeite;
+    private String uResulRefEmergiaSolarProducaoLeite = "seJ/unid";
 
     public ProducaoLeite(double leitePorDia, double haFazendaLeite) {
-            this.haFazendaLeite = haFazendaLeite; /* este Ha é o tamanho da fazendo, ou seja, a gente pode puxar de uma variável que já existe.*/
+            this.haFazendaLeite = haFazendaLeite;
             this.leitePorDia = leitePorDia;
     }
 
@@ -23,14 +31,17 @@ public class ProducaoLeite extends AtributosFixos {
 
     public double calcPL () {
 
-        double energiaTotalano = leitePorDia * getDiasAno() * getLitroParaGrama()
+        resulProducaoLeiteAno = leitePorDia * getDiasAno() * getLitroParaGrama()
                 * getKcalPorGramaLeite() * getJoulesPorKcalLeite();
 
-        return energiaTotalano/haFazendaLeite; //energia por Ha
+        resulProducaoLeite = resulProducaoLeiteAno/haFazendaLeite;
+
+        return resulProducaoLeiteAno;
     }
 
-    /*
-    o que atualizei:
-    - Retirei a variável resul e coloquei apenas return
-     */
+    public double calRefEmergiaSolarProducaoLeite (){
+        resulRefEmergiaSolarProducaoLeite = calcPL() * getTransformidadeProducaoleite();
+
+        return resulRefEmergiaSolarProducaoLeite;
+    }
 }

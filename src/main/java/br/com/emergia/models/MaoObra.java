@@ -5,9 +5,16 @@ import br.com.emergia.database.AtributosFixos;
 public class MaoObra extends AtributosFixos{
 
     private int pessoa;
+    private String uPessoa = "U";
     private double horasTrabalhada;
+    private String uHorasTrabalhada = "H";
     private int qtdDiasTrabalhado;
+    private String uQtdDiasTrabalhado = "Dias";
     private int horasAnoReferencia = 2000;
+    private double resulMaoObra;
+    private String uResulMaoObra = "unid/ano";
+    private double resulRefEmergiaSolarMaoObra;
+    private String uResulRefEmergiaSolarMaoObra = "seJ/unid";
 
     public MaoObra (int pessoa, double horasTrabalhada, int qtdDiasTrabalhado){
         this.pessoa = pessoa;
@@ -28,11 +35,14 @@ public class MaoObra extends AtributosFixos{
     }
 
     public double calcMO() {
-        return (pessoa * horasTrabalhada * qtdDiasTrabalhado) / horasAnoReferencia * getEnergiaPessoaAno();
+        resulMaoObra = ((pessoa * horasTrabalhada * qtdDiasTrabalhado) / horasAnoReferencia) * getEnergiaPessoaAno();
+
+        return resulMaoObra;
     }
 
-    /*
-    o que atualizei:
-    - Retirei a variável resul e coloquei apenas return
-     */
+    public double calRefEmergiaSolarMaoObra (){
+        resulRefEmergiaSolarMaoObra = calcMO() * getTransformidadeMaoObra();
+        return resulRefEmergiaSolarMaoObra;
+    }
 }
+

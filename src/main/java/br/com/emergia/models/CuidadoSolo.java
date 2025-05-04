@@ -6,12 +6,20 @@ public class CuidadoSolo extends AtributosFixos{
 
     // Ha = Hectatres
     private double toneladasPorHa;
+    private String uToneladasHa = "T";
     private int ano;
-    private double areaDevastadaPeloGado;
+    private String uAno = "Ano";
+    private double resulCuidadoSolo;
+    private String uResulCuidadoSolo = "unid/ano";
+    private double resulRefEmergiaSolarCuidadoSolo;
+    private String uResulRefEmergiaSolarCuidadoSolo = "seJ/unid";
+
 
     public double getToneladasPorHa() {
         return toneladasPorHa;
     } //não sei se isso é necessário
+
+    private double areaDevastadaPeloGado;
 
     public CuidadoSolo (double toneladasPorHa, double areaDevastadaPeloGado, int ano) {
         this.areaDevastadaPeloGado = areaDevastadaPeloGado;
@@ -21,11 +29,13 @@ public class CuidadoSolo extends AtributosFixos{
 
     public double calcCS() {
         /*getAreaPorHa()*/
-        return (toneladasPorHa/ano) * getConversaoToneladaParaGramas() * areaDevastadaPeloGado;
+        resulCuidadoSolo = (toneladasPorHa/ano) * getConversaoToneladaParaGramas() * areaDevastadaPeloGado;
+
+        return resulCuidadoSolo;
     }
 
-    /*
-    o que atualizei:
-    - Retirei a variável resul e coloquei apenas return
-     */
+    public double calRefEmergiaSolarCuidadoSolo(){
+        resulRefEmergiaSolarCuidadoSolo = calcCS() * getTransformidadeCuidadoSolo();
+        return resulRefEmergiaSolarCuidadoSolo;
+    }
 }

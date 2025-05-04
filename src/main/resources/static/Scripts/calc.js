@@ -229,29 +229,42 @@ document.addEventListener("DOMContentLoaded", () => {
 // Função para exibir o resultado abaixo do campo correspondente e armazená-lo
 function displayResult(fieldId, result) {
     let numericResult = Number(result);
+    // Procura o elemento de resultado criado
     let resultElement = document.getElementById(`${fieldId}-result`);
-    
-    // Se o elemento de resultado não existir, cria um novo
+  
+    // Se não existir, cria-o dentro do container
     if (!resultElement) {
-        let container = document.getElementById(fieldId)?.closest(".container");
-        
-        // Se o container não for encontrado, cria um container padrão
+        let elem = document.getElementById(fieldId) || document.querySelector(`#${fieldId}`);
+        let container = elem ? elem.closest(".container") : null;
         if (!container) {
-            console.warn(`Container não encontrado para o campo: ${fieldId}. Criando um container padrão.`);
+            console.warn(`Container não encontrado para o campo: ${fieldId}. Criando container padrão.`);
             container = document.createElement("div");
             container.className = "container";
             document.body.appendChild(container);
         }
-
         resultElement = document.createElement("div");
         resultElement.id = `${fieldId}-result`;
         resultElement.style.marginTop = "10px";
         container.appendChild(resultElement);
     }
-
-    // Atualiza o texto do resultado em notação científica com 2 dígitos após a vírgula (ex: 8.28E+21)
+  
+    // Atualiza o texto do resultado no container
     resultElement.textContent = `Resultado (${fieldId}): ${numericResult.toExponential(2).toUpperCase()}`;
-    window.calcResults[fieldId] = numericResult;
+  
+    // Recupera o container para coletar o label e os inputs
+    let elem = document.getElementById(fieldId) || document.querySelector(`#${fieldId}`);
+    let container = elem ? elem.closest(".container") : null;
+    let label = container && container.querySelector('h2') ? container.querySelector('h2').textContent : fieldId;
+    // Coleta todos os inputs do container e junta seus valores (se houver mais de um, separados por vírgula)
+    let inputElements = container ? container.querySelectorAll('input') : [];
+    let inputsStr = Array.from(inputElements).map(inp => inp.value).join(', ');
+  
+    // Armazena um objeto com os detalhes no calcResults
+    window.calcResults[fieldId] = {
+         label: label,
+         inputs: inputsStr,
+         result: numericResult.toExponential(2).toUpperCase()
+    };
 }
 
 // Função para exibir erros no container correspondente

@@ -5,8 +5,15 @@ import br.com.emergia.database.AtributosFixos;
 public class CombustivelUsado extends AtributosFixos{
 
     private double horasTratorPorAno;
+    private String uHorasTrator = "Hrs";
     private double qtdTrator;
+    private String uQtdTrator = "U";
     private double litrosPorHora;
+    private String uLitrosCombustivelHora = "L";
+    private double resulCombustivelUsado;
+    private String uResulCombustivelUsado = "Unid/ano";
+    private double resulRefEmergiaSolarCombustivelUsado;
+    private String uResulRefEmergiaSolarCombustivelUsado = "seJ/unid";
 
     public CombustivelUsado(double horasTratorPorAno, double qtdTrator, double litrosPorHora) {
         this.horasTratorPorAno = horasTratorPorAno;
@@ -27,11 +34,14 @@ public class CombustivelUsado extends AtributosFixos{
         return litrosPorHora;
     }
 
-    public double calcCombustivelUsado() {
-        return (horasTratorPorAno * qtdTrator * getJoulesPorTonelada()) / getToneladaPorLitro();
+    public double calCU() {
+        resulCombustivelUsado = (horasTratorPorAno * qtdTrator * getJoulesPorTonelada()) / getToneladaPorLitro();
+        return resulCombustivelUsado;
     }
-    /*
-    o que atualizei:
-    - Retirei a variável resul e coloquei apenas return
-     */
+
+    public  double calRefEmergiaSolarCombustivelUsado(){
+        resulRefEmergiaSolarCombustivelUsado = calCU() * getTransformidadeCombustivelUsado();
+        return resulRefEmergiaSolarCombustivelUsado;
+    }
+
 }

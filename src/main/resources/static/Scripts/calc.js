@@ -265,6 +265,7 @@ function displayResult(fieldId, result) {
          inputs: inputsStr,
          result: numericResult.toExponential(2).toUpperCase()
     };
+    localStorage.setItem("calcResults", JSON.stringify(window.calcResults));
 }
 
 // Função para exibir erros no container correspondente
@@ -291,4 +292,19 @@ function displayError(fieldId, errorMessage) {
 
     // Atualiza o texto do erro
     errorElement.textContent = `Erro (${fieldId}): ${errorMessage}`;
+}
+
+// No seu calc.js, depois de gerar os resultados:
+function saveResultsToServer() {
+    localStorage.setItem("calcResults", JSON.stringify(window.calcResults));
+    fetch('storeResults', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(window.calcResults)
+    })
+    .then(response => response.json())
+    .then(data => console.log('Dados salvos com sucesso', data))
+    .catch(error => console.error('Erro ao salvar os dados:', error));
 }

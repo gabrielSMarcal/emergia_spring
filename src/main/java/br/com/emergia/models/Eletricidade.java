@@ -5,7 +5,11 @@ import br.com.emergia.database.AtributosFixos;
 public class Eletricidade extends AtributosFixos{
 
     private double energiaPORKWH;
-
+    private String uEnergiaKWH = "kWH";
+    private double resulEletricidade;
+    private String uResulEletricidade = "unid/ano";
+    private double resulRefEmergiaSolarEletricidade;
+    private String uResulRefEmergiaSolarEletricidade = "seJ/unid";
 
     public Eletricidade (double energiaPORKWH) {
         this.energiaPORKWH = energiaPORKWH;
@@ -16,11 +20,12 @@ public class Eletricidade extends AtributosFixos{
     }
 
     public double calcE() {
-        return (energiaPORKWH * getMesAno() * getKwhParaKcal()) * getEnergiaPorKcal();
+        resulEletricidade = (energiaPORKWH * getMesAno() * getKwhParaKcal()) * getEnergiaPorKcal();
+        return resulEletricidade;
     }
-    /*
-    o que atualizei:
-    - Retirei a variável resul e coloquei apenas return
-     */
 
+    public double calRefEmergiaSolarEletricidade(){
+        resulRefEmergiaSolarEletricidade = calcE() * getTransformidadeEletricidade();
+        return resulRefEmergiaSolarEletricidade;
+    }
 }

@@ -6,8 +6,15 @@ import br.com.emergia.database.AtributosFixos;
 public class Gado extends AtributosFixos {
 
     private double pesoKgMedia;
+    private String uPesoKgMedia = "Kg";
     private int numeroAnimais;
+    private String uNumeroAnimal = "U";
     private float anosVidamedia;
+    private String uAnosVida = "Ano";
+    private double resulGado;
+    private String uResulGado = "unid/ano";
+    private double resulRefEmergiaSolarGado;
+    private String uResulRefEmergiaSolarGado = "seJ/unid";
 
     public Gado (double pesoKgMedia, int numeroAnimais, float anosVida){
         this.pesoKgMedia = pesoKgMedia;
@@ -27,15 +34,15 @@ public class Gado extends AtributosFixos {
         return anosVidamedia;
     }
 
-    public double calcGado() {
+    public double calcG() {
 
-        return (pesoKgMedia * numeroAnimais )/ anosVidamedia * getPesoSecoPorAnimal() * getKcalPorGramaCarne() * getJoulesPorKcal() * getGramasPorKg();
+        resulGado = (pesoKgMedia * numeroAnimais )/ anosVidamedia * getPesoSecoPorAnimal() * getKcalPorGramaCarne() * getJoulesPorKcal() * getGramasPorKg();
+
+        return resulGado;
     }
 
-    /*
-    o que atualizei:
-    - Aqui não precisa fazer a cotação do dollar, só precisaria se fosse vender o gado. Este calculo é para saber a média de energia utilizada para à criação do gado.
-    - Retirei a variável resul e coloquei apenas return
-    - Mudei o getKcalPorGrama para getKcalPorGramaCarne, corrigindo o cálculo
-     */
+    public double calRefEmergiaSolarGado(){
+        resulRefEmergiaSolarGado = calcG() * getTransformidadeGado();
+        return resulRefEmergiaSolarGado;
+    }
 }

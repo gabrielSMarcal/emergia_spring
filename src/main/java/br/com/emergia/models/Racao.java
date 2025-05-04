@@ -6,9 +6,15 @@ import br.com.emergia.database.AtributosFixos;
 public class Racao extends AtributosFixos{
 
     private int saca;
-    private float valorSaca;
+    private String uSaca = "U";
+    private double valorSaca;
+    private String uValorSaca = "R$";
+    private double resulRacao;
+    private String uResulRacao = "unid/ano";
+    private double resulRefEmergiaSolarRacao;
+    private String uResulRefEmergiaSolarRacao = "seJ/unid";
 
-    public Racao (int saca, float valorSaca){
+    public Racao (int saca, double valorSaca){
         this.saca = saca;
         this.valorSaca = valorSaca;
     }
@@ -25,9 +31,16 @@ public class Racao extends AtributosFixos{
 
         try {
             double cotacaoDolar = ApiCotacaoDolar.getCotacaoDolar();
-            return (saca * valorSaca * getMesAno()) / cotacaoDolar;
+            resulRacao = (saca * valorSaca * getMesAno()) / cotacaoDolar;
+            return resulRacao;
         } catch (Exception e) {
             throw new RuntimeException("Erro ao calcular Racao: " + e.getMessage());
         }
     }
+
+    public  double calRefEmergiaSolarRacao(){
+        resulRefEmergiaSolarRacao = calcR() * getTransformidadeRacao();
+        return resulRefEmergiaSolarRacao;
+    }
 }
+

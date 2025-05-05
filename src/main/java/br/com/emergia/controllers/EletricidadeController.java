@@ -1,6 +1,8 @@
 package br.com.emergia.controllers;
 
 import br.com.emergia.models.Eletricidade;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,10 +13,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class EletricidadeController {
 
     @GetMapping("/eletrica/calc")
-    public double calcularEletricidade(@RequestParam double energiaPORKWH) {
+    public Map<String, Double> calcularEletricidade(@RequestParam double energiaPORKWH) {
         Eletricidade eletricidade = new Eletricidade(energiaPORKWH);
-        double emerEletricidade = eletricidade.calcE();
-
-        return emerEletricidade;
+        double calc   = eletricidade.calcE();
+        double ref    = eletricidade.calRefEmergiaSolarEletricidade();
+        double razao  = eletricidade.calcRazaoEletricidade();
+        
+        Map<String, Double> result = new HashMap<>();
+        result.put("calc", calc);
+        result.put("ref", ref);
+        result.put("razao", razao);
+        return result;
     }
 }

@@ -1,6 +1,8 @@
 package br.com.emergia.controllers;
 
 import br.com.emergia.models.Gado;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,11 +13,20 @@ import org.springframework.web.bind.annotation.RestController;
 public class GadoController {
 
     @GetMapping("/gado/calc")
-    public double calcularGado(@RequestParam double pesoKgMedia, @RequestParam int numeroAnimais,
-                               @RequestParam float anosVidaMedia) {
+    public Map<String, Double> calcularGado(
+           @RequestParam double pesoKgMedia,
+           @RequestParam int numeroAnimais,
+           @RequestParam float anosVidaMedia) {
+               
         Gado gado = new Gado(pesoKgMedia, numeroAnimais, anosVidaMedia);
-        double emerGado = gado.calcG();
-
-        return emerGado;
+        double calc   = gado.calcG();
+        double ref    = gado.calRefEmergiaSolarGado();
+        double razao  = gado.calcRazaoGado();
+        
+        Map<String, Double> result = new HashMap<>();
+        result.put("calc", calc);
+        result.put("ref", ref);
+        result.put("razao", razao);
+        return result;
     }
 }

@@ -1,6 +1,8 @@
 package br.com.emergia.controllers;
 
 import br.com.emergia.models.ValorConsumoManutencao;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,11 +13,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class ValorConsumoManutencaoController {
 
     @GetMapping("/consumoFazenda/calc")
-    public double calcularManutencao(@RequestParam double bens, @RequestParam int anos) {
-
+    public Map<String, Double> calcularManutencao(
+          @RequestParam double bens,
+          @RequestParam int anos) {
+              
         ValorConsumoManutencao consumo = new ValorConsumoManutencao(bens, anos);
-        double emerValorConsumoManutencao = consumo.calcBens();
-
-        return emerValorConsumoManutencao;
+        double calc   = consumo.calcBens();
+        double ref    = consumo.calRefEmergiaSolarVCM();
+        double razao  = consumo.calcRazaoVCM();
+        
+        Map<String, Double> result = new HashMap<>();
+        result.put("calc", calc);
+        result.put("ref", ref);
+        result.put("razao", razao);
+        return result;
     }
 }

@@ -228,42 +228,44 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Função para exibir o resultado abaixo do campo correspondente e armazená-lo
 function displayResult(fieldId, result) {
-    let numericResult = Number(result);
-    // Procura o elemento de resultado criado
+    let containerElem = document.getElementById(fieldId) || document.querySelector(`#${fieldId}`);
+    let container = containerElem ? containerElem.closest(".container") : null;
+    if (!container) {
+        console.warn(`Container não encontrado para o campo: ${fieldId}. Criando container padrão.`);
+        container = document.createElement("div");
+        container.className = "container";
+        document.body.appendChild(container);
+    }
+    
     let resultElement = document.getElementById(`${fieldId}-result`);
-  
-    // Se não existir, cria-o dentro do container
     if (!resultElement) {
-        let elem = document.getElementById(fieldId) || document.querySelector(`#${fieldId}`);
-        let container = elem ? elem.closest(".container") : null;
-        if (!container) {
-            console.warn(`Container não encontrado para o campo: ${fieldId}. Criando container padrão.`);
-            container = document.createElement("div");
-            container.className = "container";
-            document.body.appendChild(container);
-        }
         resultElement = document.createElement("div");
         resultElement.id = `${fieldId}-result`;
         resultElement.style.marginTop = "10px";
         container.appendChild(resultElement);
     }
-  
-    // Atualiza o texto do resultado no container
-    resultElement.textContent = `Resultado (${fieldId}): ${numericResult.toExponential(2).toUpperCase()}`;
-  
-    // Recupera o container para coletar o label e os inputs
-    let elem = document.getElementById(fieldId) || document.querySelector(`#${fieldId}`);
-    let container = elem ? elem.closest(".container") : null;
+
+    // Se o resultado for um objeto com as 3 propriedades, exibe todos
+    if (typeof result === 'object' && result.calc !== undefined && result.ref !== undefined && result.razao !== undefined) {
+        resultElement.innerHTML = `
+            <strong>Calc:</strong> ${Number(result.calc).toExponential(2).toUpperCase()}<br>
+            <strong>Ref:</strong> ${Number(result.ref).toExponential(2).toUpperCase()}<br>
+            <strong>Razão:</strong> ${Number(result.razao).toExponential(2).toUpperCase()}
+        `;
+    } else {
+        // fallback para resultado numérico único
+        let numericResult = Number(result);
+        resultElement.textContent = `Resultado (${fieldId}): ${numericResult.toExponential(2).toUpperCase()}`;
+    }
+    
+    // Atualiza objeto global com os detalhes
     let label = container && container.querySelector('h2') ? container.querySelector('h2').textContent : fieldId;
-    // Coleta todos os inputs do container e junta seus valores (se houver mais de um, separados por vírgula)
     let inputElements = container ? container.querySelectorAll('input') : [];
     let inputsStr = Array.from(inputElements).map(inp => inp.value).join(', ');
-  
-    // Armazena um objeto com os detalhes no calcResults
     window.calcResults[fieldId] = {
          label: label,
          inputs: inputsStr,
-         result: numericResult.toExponential(2).toUpperCase()
+         result: resultElement.innerHTML
     };
     localStorage.setItem("calcResults", JSON.stringify(window.calcResults));
 }

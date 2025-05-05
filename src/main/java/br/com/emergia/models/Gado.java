@@ -35,14 +35,18 @@ public class Gado extends AtributosFixos {
     }
 
     public double calcG() {
-
-        resulGado = (pesoKgMedia * numeroAnimais )/ anosVidamedia * getPesoSecoPorAnimal() * getKcalPorGramaCarne() * getJoulesPorKcal() * getGramasPorKg();
-
+        resulGado = (pesoKgMedia * numeroAnimais) / anosVidamedia * getPesoSecoPorAnimal() * getKcalPorGramaCarne() * getJoulesPorKcal() * getGramasPorKg();
         return resulGado;
     }
 
     public double calRefEmergiaSolarGado(){
         resulRefEmergiaSolarGado = calcG() * getTransformidadeGado();
         return resulRefEmergiaSolarGado;
+    }
+
+    public double calcRazaoGado(){
+        double base = calcG();
+        if(base == 0) return 0;
+        return calRefEmergiaSolarGado() / base;
     }
 }

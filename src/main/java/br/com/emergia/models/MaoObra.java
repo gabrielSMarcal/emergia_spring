@@ -36,13 +36,18 @@ public class MaoObra extends AtributosFixos{
 
     public double calcMO() {
         resulMaoObra = ((pessoa * horasTrabalhada * qtdDiasTrabalhado) / horasAnoReferencia) * getEnergiaPessoaAno();
-
         return resulMaoObra;
     }
 
     public double calRefEmergiaSolarMaoObra (){
         resulRefEmergiaSolarMaoObra = calcMO() * getTransformidadeMaoObra();
         return resulRefEmergiaSolarMaoObra;
+    }
+
+    public double calcRazaoMaoObra(){
+        double base = calcMO();
+        if(base == 0) return 0;
+        return calRefEmergiaSolarMaoObra() / base;
     }
 }
 

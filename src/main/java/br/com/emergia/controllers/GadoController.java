@@ -14,7 +14,7 @@ public class GadoController {
     public double calcularGado(@RequestParam double pesoKgMedia, @RequestParam int numeroAnimais,
                                @RequestParam float anosVidaMedia) {
         Gado gado = new Gado(pesoKgMedia, numeroAnimais, anosVidaMedia);
-        double emerGado = gado.calcGado();
+        double emerGado = gado.calcG();
 
         return emerGado;
     }

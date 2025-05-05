@@ -42,5 +42,11 @@ public class Racao extends AtributosFixos{
         resulRefEmergiaSolarRacao = calcR() * getTransformidadeRacao();
         return resulRefEmergiaSolarRacao;
     }
+
+    public double calcRazaoRacao(){
+        double base = calcR();
+        if(base == 0) return 0;
+        return calRefEmergiaSolarRacao() / base;
+    }
 }
 

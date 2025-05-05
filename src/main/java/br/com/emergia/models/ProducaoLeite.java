@@ -44,4 +44,10 @@ public class ProducaoLeite extends AtributosFixos {
 
         return resulRefEmergiaSolarProducaoLeite;
     }
+
+    public double calcRazaoProducaoLeite(){
+        double base = calcPL();
+        if(base == 0) return 0;
+        return calRefEmergiaSolarProducaoLeite() / base;
+    }
 }

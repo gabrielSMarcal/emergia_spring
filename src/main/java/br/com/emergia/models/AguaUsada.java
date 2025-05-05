@@ -46,4 +46,10 @@ public class AguaUsada extends AtributosFixos {
         return resulRefEmergiaSolarAguaUsada;
     }
 
+    public double calcRazaoAguaUsada(){
+        double base = calcAU();
+        if(base == 0) return 0;
+        return calRefEmergiaSolarAguaUsada() / base;
+    }
+
 }

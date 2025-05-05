@@ -34,14 +34,20 @@ public class CombustivelUsado extends AtributosFixos{
         return litrosPorHora;
     }
 
-    public double calCU() {
+    public double calCombustivelUsado() {
         resulCombustivelUsado = (horasTratorPorAno * qtdTrator * getJoulesPorTonelada()) / getToneladaPorLitro();
         return resulCombustivelUsado;
     }
 
     public  double calRefEmergiaSolarCombustivelUsado(){
-        resulRefEmergiaSolarCombustivelUsado = calCU() * getTransformidadeCombustivelUsado();
+        resulRefEmergiaSolarCombustivelUsado = calCombustivelUsado() * getTransformidadeCombustivelUsado();
         return resulRefEmergiaSolarCombustivelUsado;
+    }
+
+    public double calcRazaoCombustivelUsado(){
+        double base = calCombustivelUsado();
+        if(base == 0) return 0;
+        return calRefEmergiaSolarCombustivelUsado() / base;
     }
 
 }

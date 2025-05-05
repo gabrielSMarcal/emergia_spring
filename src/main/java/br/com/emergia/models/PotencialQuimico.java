@@ -29,13 +29,18 @@ public class PotencialQuimico extends AtributosFixos {
 
     public double calcPQ() {
         resulPotencialQuimico = haFazenda * mediaChuvaAnoMetros * getConversaoHaParaM2() * getKgPorM3() * getEnergiaPorKg();
-
         return resulPotencialQuimico;
     }
 
     public double calRefEmergiaSolarPotencialQuimico(){
         resulRefEmergiaSolarPotencialQuimico = calcPQ() * getTransformidadePontencialQuimico();
         return resulRefEmergiaSolarPotencialQuimico;
+    }
+
+    public double calcRazaoPotencialQuimico(){
+        double base = calcPQ();
+        if(base == 0) return 0;
+        return calRefEmergiaSolarPotencialQuimico() / base;
     }
 
 }

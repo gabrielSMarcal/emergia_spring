@@ -23,12 +23,17 @@ public class PerdaSolo extends AtributosFixos {
     public double calcPS(){
         resulPerdaSolo = perdaDeSoloToneladasPorAno * getConversaoToneladaParaGramas()
                 * getGramasMOporGramasSolo() * getKcalPorGrama() * getJoulesPorKcal();
-
-        return  resulPerdaSolo;
+        return resulPerdaSolo;
     }
 
     public double calRefEmergiaSolarPerdaSolo(){
         resulRefEmergiaSolarPerdaSolo = calcPS() * getTransformidadePerdaSolo();
         return resulRefEmergiaSolarPerdaSolo;
+    }
+
+    public double calcRazaoPerdaSolo(){
+        double base = calcPS();
+        if(base == 0) return 0;
+        return calRefEmergiaSolarPerdaSolo() / base;
     }
 }

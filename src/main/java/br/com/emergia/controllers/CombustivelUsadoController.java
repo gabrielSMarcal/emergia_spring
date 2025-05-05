@@ -14,7 +14,7 @@ public class CombustivelUsadoController {
     public double calcularCombustivelUsado(@RequestParam double horasTratorPorAno,@RequestParam double qtdTrator,
                                            @RequestParam double litrosPorHoras) {
         CombustivelUsado combustivel = new CombustivelUsado(horasTratorPorAno, qtdTrator, litrosPorHoras);
-        double emerCombustivel = combustivel.calcCombustivelUsado();
+        double emerCombustivel = combustivel.calCombustivelUsado();
 
         return emerCombustivel;
     }

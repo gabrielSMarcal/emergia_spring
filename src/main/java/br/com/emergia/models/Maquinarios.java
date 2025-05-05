@@ -28,7 +28,6 @@ public class Maquinarios extends AtributosFixos {
     }
 
     public double calcM() {
-
         try {
             double cotacaoDolar = ApiCotacaoDolar.getCotacaoDolar();
             resulMaquinario = (qtdHoraTrator * valorHoraTrator) / cotacaoDolar;
@@ -41,5 +40,11 @@ public class Maquinarios extends AtributosFixos {
     public double calRefEmergiaSolarMaquinario(){
         resulRefEmergiaSolarMaquinario = calcM() * getTransformidadeMaquinario();
         return resulRefEmergiaSolarMaquinario;
+    }
+
+    public double calcRazaoMaquinario(){
+        double base = calcM();
+        if(base == 0) return 0;
+        return calRefEmergiaSolarMaquinario() / base;
     }
 }

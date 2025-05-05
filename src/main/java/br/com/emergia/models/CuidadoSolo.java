@@ -28,14 +28,18 @@ public class CuidadoSolo extends AtributosFixos{
     }
 
     public double calcCS() {
-        /*getAreaPorHa()*/
         resulCuidadoSolo = (toneladasPorHa/ano) * getConversaoToneladaParaGramas() * areaDevastadaPeloGado;
-
         return resulCuidadoSolo;
     }
 
     public double calRefEmergiaSolarCuidadoSolo(){
         resulRefEmergiaSolarCuidadoSolo = calcCS() * getTransformidadeCuidadoSolo();
         return resulRefEmergiaSolarCuidadoSolo;
+    }
+
+    public double calcRazaoCuidadoSolo(){
+        double base = calcCS();
+        if(base == 0) return 0;
+        return calRefEmergiaSolarCuidadoSolo() / base;
     }
 }

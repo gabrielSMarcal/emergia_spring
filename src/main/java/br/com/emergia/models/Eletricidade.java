@@ -28,4 +28,10 @@ public class Eletricidade extends AtributosFixos{
         resulRefEmergiaSolarEletricidade = calcE() * getTransformidadeEletricidade();
         return resulRefEmergiaSolarEletricidade;
     }
+
+    public double calcRazaoEletricidade(){
+        double base = calcE();
+        if(base == 0) return 0;
+        return calRefEmergiaSolarEletricidade() / base;
+    }
 }

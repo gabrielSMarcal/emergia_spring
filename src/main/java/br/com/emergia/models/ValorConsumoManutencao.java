@@ -43,4 +43,10 @@ public class ValorConsumoManutencao extends AtributosFixos {
         resulRefEmergiaSolarVCM = calcBens() * getTransformidadeRacao();
         return resulRefEmergiaSolarVCM;
     }
+
+    public double calcRazaoVCM(){
+        double base = calcBens();
+        if(base == 0) return 0;
+        return calRefEmergiaSolarVCM() / base;
+    }
 }

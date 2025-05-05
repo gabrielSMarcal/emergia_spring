@@ -39,4 +39,46 @@ body {
     background-color: white;
     color: #1faa06;
   }
-  
+
+  /* Estilo para o main */
+  .conteudo-principal {
+    margin: 40px auto; /* Espaçamento vertical e centralização horizontal */
+    padding: 20px; /* Espaçamento interno */
+    max-width: 90%; /* Limita a largura máxima do conteúdo */
+    box-sizing: border-box; /* Inclui padding no cálculo da largura */
+  }
+
+  /* Estilo para a div que contém a tabela */
+  .table-wrapper {
+    margin: 20px auto; /* Centraliza horizontalmente e adiciona espaço vertical */
+    padding: 20px; /* Espaçamento interno */
+    max-width: 80%; /* Limita a largura máxima */
+    background-color: #ffffff; /* Fundo branco para destaque */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra para destaque */
+  }
+
+  /* Estilo para a tabela */
+  table {
+    width: 100%; /* A tabela ocupa toda a largura do container */
+    border-collapse: collapse; /* Remove espaçamento entre bordas */
+  }
+
+  th, td {
+    border: 1px solid #ccc; /* Bordas das células */
+    padding: 8px; /* Espaçamento interno das células */
+    text-align: center; /* Centraliza o texto */
+  }
+
+  thead tr {
+    background-color: #1faa06; /* Fundo do cabeçalho */
+    color: white; /* Texto branco no cabeçalho */
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: #f9f9f9; /* Fundo alternado para linhas pares */
+  }
+
+  tbody tr:nth-child(odd) {
+    background-color: #ffffff; /* Fundo alternado para linhas ímpares */
+  }

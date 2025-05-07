@@ -1,6 +1,6 @@
 package br.com.emergia.controllers;
 
-import br.com.emergia.models.PotencialQuimico;
+import br.com.emergia.models.contribuicaoAmbiental.energiaRenovavel.PotencialQuimico;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.web.bind.annotation.CrossOrigin;

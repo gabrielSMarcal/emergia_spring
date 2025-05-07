@@ -1,6 +1,6 @@
 package br.com.emergia.controllers;
 
-import br.com.emergia.models.CuidadoSolo;
+import br.com.emergia.models.contribuicaoHumana.CuidadoSolo;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.web.bind.annotation.CrossOrigin;

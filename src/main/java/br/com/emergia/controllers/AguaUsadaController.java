@@ -1,6 +1,6 @@
 package br.com.emergia.controllers;
 
-import br.com.emergia.models.AguaUsada;
+import br.com.emergia.models.contribuicaoAmbiental.energiaNaoRenovavel.AguaUsada;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.web.bind.annotation.CrossOrigin;

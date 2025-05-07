@@ -1,4 +1,4 @@
-package br.com.emergia.models;
+package br.com.emergia.models.producao;
 
 import br.com.emergia.database.AtributosFixos;
 

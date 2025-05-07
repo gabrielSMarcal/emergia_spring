@@ -1,4 +1,4 @@
-package br.com.emergia.models;
+package br.com.emergia.models.contribuicaoAmbiental.energiaRenovavel;
 
 import br.com.emergia.database.AtributosFixos;
 

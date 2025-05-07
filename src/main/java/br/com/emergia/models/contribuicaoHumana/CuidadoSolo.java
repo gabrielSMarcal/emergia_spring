@@ -1,4 +1,4 @@
-package br.com.emergia.models;
+package br.com.emergia.models.contribuicaoHumana;
 
 import br.com.emergia.database.AtributosFixos;
 

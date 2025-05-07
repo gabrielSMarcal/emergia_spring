@@ -1,6 +1,5 @@
-package br.com.emergia.models;
+package br.com.emergia.models.contribuicaoHumana.bens;
 
-import br.com.emergia.api.ApiCotacaoDolar;
 import br.com.emergia.database.AtributosFixos;
 
 public class ValorConsumoManutencao extends AtributosFixos {

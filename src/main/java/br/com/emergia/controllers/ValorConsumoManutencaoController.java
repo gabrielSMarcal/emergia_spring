@@ -1,6 +1,6 @@
 package br.com.emergia.controllers;
 
-import br.com.emergia.models.ValorConsumoManutencao;
+import br.com.emergia.models.contribuicaoHumana.bens.ValorConsumoManutencao;
 import java.util.HashMap;
 import java.util.Map;
 import org.springframework.web.bind.annotation.CrossOrigin;

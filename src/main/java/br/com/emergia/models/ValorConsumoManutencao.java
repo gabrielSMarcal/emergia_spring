@@ -30,8 +30,11 @@ public class ValorConsumoManutencao extends AtributosFixos {
     }
 
     public double calcBens(){
+
+        double dolarProvisorio = 6.7;
+
         try {
-            double cotacaoDolar = ApiCotacaoDolar.getCotacaoDolar();
+            double cotacaoDolar = dolarProvisorio;
             resulVCM = (bens / anos) / cotacaoDolar;
             return resulVCM;
         } catch (Exception e) {

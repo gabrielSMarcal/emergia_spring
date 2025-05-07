@@ -28,8 +28,11 @@ public class Maquinarios extends AtributosFixos {
     }
 
     public double calcM() {
+
+        double dolarProvisorio = 6.7;
+
         try {
-            double cotacaoDolar = ApiCotacaoDolar.getCotacaoDolar();
+            double cotacaoDolar = dolarProvisorio;
             resulMaquinario = (qtdHoraTrator * valorHoraTrator) / cotacaoDolar;
             return resulMaquinario;
         } catch (Exception e) {

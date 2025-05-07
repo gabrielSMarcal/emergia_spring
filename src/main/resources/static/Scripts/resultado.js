@@ -7,23 +7,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     const calcResults = JSON.parse(resultsString);
 
-    // Cria uma div container para centralizar a tabela
     let container = document.getElementById("tableContainer");
     if (!container) {
         container = document.createElement("div");
         container.id = "tableContainer";
-        container.className = "table-wrapper"; // Classe para estilização
+        container.className = "table-wrapper";
         document.body.appendChild(container);
     }
 
-    // Cria a tabela com as 4 colunas desejadas
     const table = document.createElement("table");
     table.style.borderCollapse = "collapse";
     table.style.width = "100%";
     table.style.textAlign = "center";
     table.style.fontFamily = "Arial, sans-serif";
 
-    // Cabeçalho da tabela
     const thead = document.createElement("thead");
     thead.innerHTML = `
         <tr style="background-color: #1faa06; color: white;">
@@ -35,12 +32,11 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
     table.appendChild(thead);
 
-    // Corpo da tabela
     const tbody = document.createElement("tbody");
 
     for (const key in calcResults) {
         const data = calcResults[key];
-        // Extrai os valores usando regex
+
         const calcMatch = data.result.match(/<strong>Calc:<\/strong>\s*([^<]+)/);
         const refMatch = data.result.match(/<strong>Ref:<\/strong>\s*([^<]+)/);
         const razaoMatch = data.result.match(/<strong>Razão:<\/strong>\s*([^<]+)/);

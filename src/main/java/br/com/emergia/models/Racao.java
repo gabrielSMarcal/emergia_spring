@@ -29,8 +29,10 @@ public class Racao extends AtributosFixos{
 
     public double calcR() {
 
+        double dolarProvisorio = 6.7;
+
         try {
-            double cotacaoDolar = ApiCotacaoDolar.getCotacaoDolar();
+            double cotacaoDolar = dolarProvisorio;
             resulRacao = (saca * valorSaca * getMesAno()) / cotacaoDolar;
             return resulRacao;
         } catch (Exception e) {

@@ -78,8 +78,16 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
 
-        // Cuidado do Solo
-        if (key === "cuidadoSolo") {
+        // Operações de Produção
+        if (
+            key === "racao" ||
+            key === "maquinario" ||
+            key === "maoObra" ||
+            key === "gado" ||
+            key === "eletrica" ||
+            key === "combustivel" ||
+            key === "solo"
+        ) {
             categories["Contribuição Humana"]["Operações de Produção"].push({
                 label: data.label,
                 calc: data.result.match(/<strong>Calc:<\/strong>\s*([^<]+)/)?.[1].trim() || "",
@@ -98,16 +106,9 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }
 
-        // Operações de Produção
-        if (
-            key === "racao" ||
-            key === "maquinario" ||
-            key === "maoObra" ||
-            key === "gado" ||
-            key === "eletrica" ||
-            key === "combustivel"
-        ) {
-            categories["Contribuição Humana"]["Operações de Produção"].push({
+        // Produção
+        if (key === "producaoLeite") {
+            categories["Produção"].push({
                 label: data.label,
                 calc: data.result.match(/<strong>Calc:<\/strong>\s*([^<]+)/)?.[1].trim() || "",
                 ref: refValue,
@@ -126,6 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
         tbody.appendChild(categoryRow);
 
         if (typeof subcategories === "object" && !Array.isArray(subcategories)) {
+            // Para cada subcategoria
             for (const [subcategory, rows] of Object.entries(subcategories)) {
                 const subcategoryRow = document.createElement("tr");
                 subcategoryRow.style.backgroundColor = "#f0f8ff";
@@ -134,6 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 `;
                 tbody.appendChild(subcategoryRow);
 
+                // Adiciona cada linha (item)
                 rows.forEach(row => {
                     const percentage = ((row.ref / totalRefEmergiaSolar) * 100).toFixed(2);
                     const tr = document.createElement("tr");
@@ -149,8 +152,50 @@ document.addEventListener("DOMContentLoaded", () => {
                     `;
                     tbody.appendChild(tr);
                 });
+
+                // Adiciona a linha de subtotal para a subcategoria, se houver itens
+                if (rows.length > 0) {
+                    const subTotalRef = rows.reduce((acc, curr) => acc + curr.ref, 0);
+                    const subPercentage = ((subTotalRef / totalRefEmergiaSolar) * 100).toFixed(2);
+                    const subTotalRow = document.createElement("tr");
+                    subTotalRow.style.backgroundColor = "#e2e3e5";
+                    subTotalRow.innerHTML = `
+                        <td style="border: 1px solid #ccc; padding: 8px;"></td>
+                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">Subtotal ${subcategory}</td>
+                        <td style="border: 1px solid #ccc; padding: 8px;"></td>
+                        <td style="border: 1px solid #ccc; padding: 8px;"></td>
+                        <td style="border: 1px solid #ccc; padding: 8px;"></td>
+                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">${subTotalRef.toExponential(2).toUpperCase()}</td>
+                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">${subPercentage}%</td>
+                    `;
+                    tbody.appendChild(subTotalRow);
+                }
+            }
+
+            // Se a categoria for "Contribuição Ambiental", somamos os subtotais de "Energia Renovável" e "Energia Não Renovável"
+            if (category === "Contribuição Ambiental") {
+                let totalAmbientalRef = 0;
+                // Somente se existirem itens em cada subcategoria
+                const renovavel = subcategories["Energia Renovável"];
+                const naoRenovavel = subcategories["Energia Não Renovável"];
+                if (Array.isArray(renovavel)) {
+                    totalAmbientalRef += renovavel.reduce((acc, curr) => acc + curr.ref, 0);
+                }
+                if (Array.isArray(naoRenovavel)) {
+                    totalAmbientalRef += naoRenovavel.reduce((acc, curr) => acc + curr.ref, 0);
+                }
+                const totalAmbientalPercentage = ((totalAmbientalRef / totalRefEmergiaSolar) * 100).toFixed(2);
+                const ambientalSubTotalRow = document.createElement("tr");
+                ambientalSubTotalRow.style.backgroundColor = "#ccc";
+                ambientalSubTotalRow.innerHTML = `
+                    <td colspan="5" style="border: 1px solid #ccc; padding: 8px; font-weight: bold; text-align: right;">Subtotal Ambiental</td>
+                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">${totalAmbientalRef.toExponential(2).toUpperCase()}</td>
+                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">${totalAmbientalPercentage}%</td>
+                `;
+                tbody.appendChild(ambientalSubTotalRow);
             }
         } else {
+            // Caso a categoria não esteja dividida em subcategorias (array simples)
             subcategories.forEach(row => {
                 const percentage = ((row.ref / totalRefEmergiaSolar) * 100).toFixed(2);
                 const tr = document.createElement("tr");
@@ -166,6 +211,22 @@ document.addEventListener("DOMContentLoaded", () => {
                 `;
                 tbody.appendChild(tr);
             });
+            if (subcategories.length > 0) {
+                const catSubtotalRef = subcategories.reduce((acc, curr) => acc + curr.ref, 0);
+                const catSubPercentage = ((catSubtotalRef / totalRefEmergiaSolar) * 100).toFixed(2);
+                const catSubtotalRow = document.createElement("tr");
+                catSubtotalRow.style.backgroundColor = "#e2e3e5";
+                catSubtotalRow.innerHTML = `
+                    <td style="border: 1px solid #ccc; padding: 8px;"></td>
+                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">Subtotal</td>
+                    <td style="border: 1px solid #ccc; padding: 8px;"></td>
+                    <td style="border: 1px solid #ccc; padding: 8px;"></td>
+                    <td style="border: 1px solid #ccc; padding: 8px;"></td>
+                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">${catSubtotalRef.toExponential(2).toUpperCase()}</td>
+                    <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">${catSubPercentage}%</td>
+                `;
+                tbody.appendChild(catSubtotalRow);
+            }
         }
     }
 

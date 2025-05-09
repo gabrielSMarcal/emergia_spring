@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (!isNaN(area) && !isNaN(chuva)) {
               // Parâmetros: haFazenda, mediaChuvaAnoMetros
               getDados(`potencialQuimico/calc?haFazenda=${area}&mediaChuvaAnoMetros=${chuva}`)
-                  .then(result => displayResult("potencialQuimico", result))
+                  .then(result => displayResult("potencialQuimico", result)) // Aqui o fieldId é "potencialQuimico"
                   .catch(error => console.error("Erro ao calcular potencial químico:", error));
           }
       });

@@ -1,4 +1,4 @@
-package br.com.emergia.api;
+package br.com.emergia.services;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

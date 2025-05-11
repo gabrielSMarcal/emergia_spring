@@ -224,6 +224,12 @@ document.addEventListener("DOMContentLoaded", () => {
           window.location.href = "resultado.html";
       });
   }
+
+  // Botão para salvar no banco
+  const salvarBtn = document.getElementById("salvarNoBanco");
+  if (salvarBtn) {
+      salvarBtn.addEventListener("click", saveResultsToServer);
+  }
 });
 
 // Função para exibir o resultado abaixo do campo correspondente e armazená-lo
@@ -268,6 +274,17 @@ function displayResult(fieldId, result) {
          result: resultElement.innerHTML
     };
     localStorage.setItem("calcResults", JSON.stringify(window.calcResults));
+
+    // Salva apenas os valores numéricos no objeto global
+    if (!window.calcResults) window.calcResults = {};
+    if (typeof result === 'object' && result.calc !== undefined && result.ref !== undefined && result.razao !== undefined) {
+        window.calcResults[fieldId] = {
+            calc: Number(result.calc),
+            ref: Number(result.ref),
+            razao: Number(result.razao)
+        };
+    }
+    localStorage.setItem("calcResults", JSON.stringify(window.calcResults));
 }
 
 // Função para exibir erros no container correspondente
@@ -299,7 +316,7 @@ function displayError(fieldId, errorMessage) {
 // No seu calc.js, depois de gerar os resultados:
 function saveResultsToServer() {
     localStorage.setItem("calcResults", JSON.stringify(window.calcResults));
-    fetch('storeResults', {
+    fetch('http://localhost:8081/storeResults', { // Corrija a URL aqui!
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -309,4 +326,10 @@ function saveResultsToServer() {
     .then(response => response.json())
     .then(data => console.log('Dados salvos com sucesso', data))
     .catch(error => console.error('Erro ao salvar os dados:', error));
+    console.log(window.calcResults);
 }
+
+// Exemplo de chamada ao clicar em um botão
+document.getElementById("salvarNoBanco").addEventListener("click", saveResultsToServer);
+
+localStorage.removeItem("calcResults");

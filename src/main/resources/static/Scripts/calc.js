@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (!isNaN(horas) && !isNaN(tratores) && !isNaN(litros)) {
               // Parâmetros: horasTratorPorAno, qtdTrator, litrosPorHoras
               getDados(`combustivel/calc?horasTratorPorAno=${horas}&qtdTrator=${tratores}&litrosPorHoras=${litros}`)
-                  .then(result => displayResult("combustivel", result))
+                  .then(result => displayResult("combustivelUsado", result))
                   .catch(error => console.error("Erro ao calcular combustível:", error));
           }
       });
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (!isNaN(toneladas) && !isNaN(anos) && !isNaN(area)) {
               // Parâmetros: toneladaPorHA, ano, areaDevastadaPeloGado
               getDados(`solo/calc?toneladaPorHA=${toneladas}&ano=${anos}&areaDevastadaPeloGado=${area}`)
-                  .then(result => displayResult("solo", result))
+                  .then(result => displayResult("cuidadoSolo", result))
                   .catch(error => console.error("Erro ao calcular cuidado do solo:", error));
           }
       });
@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const energiaPORKWH = parseFloat(eletricaInput.value);
       if (!isNaN(energiaPORKWH)) {
           getDados(`eletrica/calc?energiaPORKWH=${energiaPORKWH}`)
-              .then(result => displayResult("eletrica", result))
+              .then(result => displayResult("eletricidade", result))
               .catch(error => console.error("Erro ao calcular eletricidade:", error));
       }
   });
@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
           if (!isNaN(horas) && !isNaN(valor)) {
               // Parâmetros: qtdHoraTrator, valorHoraTrator
               getDados(`maquinario/calc?qtdHoraTrator=${horas}&valorHoraTrator=${valor}`)
-                  .then(result => displayResult("maquinario", result))
+                  .then(result => displayResult("maquinarios", result))
                   .catch(error => console.error("Erro ao calcular maquinários:", error));
           }
       });
@@ -208,7 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
           const anos = parseInt(consumoInputs.anos.value);
           if (!isNaN(valor) && !isNaN(anos)) {
               getDados(`consumoFazenda/calc?bens=${valor}&anos=${anos}`)
-                  .then(result => displayResult("consumoFazenda", result))
+                  .then(result => displayResult("bens", result))
                   .catch(error => console.error("Erro ao calcular consumo e manutenção:", error));
           }
       });
@@ -313,10 +313,10 @@ function displayError(fieldId, errorMessage) {
     errorElement.textContent = `Erro (${fieldId}): ${errorMessage}`;
 }
 
-// No seu calc.js, depois de gerar os resultados:
+
 function saveResultsToServer() {
     localStorage.setItem("calcResults", JSON.stringify(window.calcResults));
-    fetch('http://localhost:8081/storeResults', { // Corrija a URL aqui!
+    fetch('http://localhost:8081/storeResults', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

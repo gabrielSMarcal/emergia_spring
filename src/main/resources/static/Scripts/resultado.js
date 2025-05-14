@@ -127,17 +127,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     (async () => {
-        if (!resultsString || resultsString === "undefined") {
-            // Busca do backend
-            const backendData = await fetchLastResultsFromServer();
-            if (!backendData) return;
-            const relatorio = JSON.parse(backendData);
-            const adapted = adaptBackendResult(relatorio);
-            // Remove campos undefined
-            Object.keys(adapted).forEach(k => adapted[k] === undefined && delete adapted[k]);
-            resultsString = JSON.stringify(adapted);
-        }
-        const calcResults = JSON.parse(resultsString);
+        // Sempre busca do backend
+        const backendData = await fetchLastResultsFromServer();
+        if (!backendData) return;
+        const relatorio = JSON.parse(backendData);
+        const adapted = adaptBackendResult(relatorio);
+        // Remove campos undefined
+        Object.keys(adapted).forEach(k => adapted[k] === undefined && delete adapted[k]);
+        const calcResults = adapted;
 
         let container = document.getElementById("tableContainer");
         if (!container) {

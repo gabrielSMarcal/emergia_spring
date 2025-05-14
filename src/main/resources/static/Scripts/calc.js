@@ -331,5 +331,3 @@ function saveResultsToServer() {
 
 // Exemplo de chamada ao clicar em um botão
 document.getElementById("salvarNoBanco").addEventListener("click", saveResultsToServer);
-
-localStorage.removeItem("calcResults");

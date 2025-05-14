@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 public class Relatorio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "relat_id")
     private Long relatId;
 
     // Cuidado Solo

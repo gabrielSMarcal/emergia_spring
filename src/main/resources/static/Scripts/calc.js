@@ -65,14 +65,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Eletricidade
   const eletricaInput = document.getElementById("eletrica");
-  eletricaInput.addEventListener("input", () => {
-      const energiaPORKWH = parseFloat(eletricaInput.value);
-      if (!isNaN(energiaPORKWH)) {
-          getDados(`eletrica/calc?energiaPORKWH=${energiaPORKWH}`)
-              .then(result => displayResult("eletricidade", result))
-              .catch(error => console.error("Erro ao calcular eletricidade:", error));
-      }
-  });
+  if (eletricaInput) {
+      eletricaInput.addEventListener("input", () => {
+          const energiaPORKWH = parseFloat(eletricaInput.value);
+          if (!isNaN(energiaPORKWH)) {
+              getDados(`eletrica/calc?energiaPORKWH=${energiaPORKWH}`)
+                  .then(result => displayResult("eletricidade", result))
+                  .catch(error => console.error("Erro ao calcular eletricidade:", error));
+          }
+      });
+  }
 
   // Gado
   const gadoInputs = {
@@ -215,13 +217,29 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Botão para visualizar resultado
-  const visualizarBtn = document.getElementById("visualizarResultado");
-  if(visualizarBtn) {
-      visualizarBtn.addEventListener("click", () => {
-          // Salva os resultados em localStorage
+  const visualizarBtn = document.getElementById("visualizarResultado") || document.querySelector("button[onclick*='resultado.html']");
+  if (visualizarBtn) {
+      visualizarBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          // Salva os resultados no localStorage (opcional)
           localStorage.setItem("calcResults", JSON.stringify(window.calcResults));
-          // Redireciona para a página de resultados
-          window.location.href = "resultado.html";
+          // Salva no banco e só redireciona após sucesso
+          fetch('http://localhost:8081/storeResults', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(window.calcResults)
+          })
+          .then(response => response.json())
+          .then(data => {
+              // Redireciona para a página de resultados após salvar
+              window.location.href = "resultado.html";
+          })
+          .catch(error => {
+              alert("Erro ao salvar os dados no banco. Tente novamente.");
+              console.error('Erro ao salvar os dados:', error);
+          });
       });
   }
 
@@ -328,6 +346,3 @@ function saveResultsToServer() {
     .catch(error => console.error('Erro ao salvar os dados:', error));
     console.log(window.calcResults);
 }
-
-// Exemplo de chamada ao clicar em um botão
-document.getElementById("salvarNoBanco").addEventListener("click", saveResultsToServer);

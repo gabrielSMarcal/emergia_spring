@@ -118,6 +118,6 @@ public class RelatorioController {
 
     @GetMapping("/getLastResults")
     public Relatorio getLastResults() {
-        return relatorioRepository.buscarUltimoRelatorio();
+        return relatorioRepository.buscarUltimoRelatorio().orElse(null);
     }
 }

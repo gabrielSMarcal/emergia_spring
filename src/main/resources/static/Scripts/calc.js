@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
           const litros = parseFloat(combustivelInputs.litros.value);
           if (!isNaN(horas) && !isNaN(tratores) && !isNaN(litros)) {
               // Parâmetros: horasTratorPorAno, qtdTrator, litrosPorHoras
-              getDados(`combustivel/calc?horasTratorPorAno=${horas}&qtdTrator=${tratores}&litrosPorHoras=${litros}`)
+              getDados(`combustivel/calc?horasTratorPorAno=${horas}&qtdTrator=${tratores}&litrosPorHora=${litros}`)
                   .then(result => displayResult("combustivelUsado", result))
                   .catch(error => console.error("Erro ao calcular combustível:", error));
           }

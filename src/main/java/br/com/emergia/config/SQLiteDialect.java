@@ -13,6 +13,12 @@ public class SQLiteDialect extends Dialect {
     public IdentityColumnSupport getIdentityColumnSupport() {
         return new SQLiteIdentityColumnSupport();
     }
+
+    @Override
+    public String getTableTypeString() {
+        // Remove a definição redundante de primary key
+        return "";
+    }
 }
 
 // Nova classe de suporte à coluna identity:
@@ -29,7 +35,7 @@ class SQLiteIdentityColumnSupport extends org.hibernate.dialect.identity.Identit
 
     @Override
     public String getIdentityColumnString(int type) {
-        // Alterado para definir a coluna como chave primária com autoincremento
-        return "primary key autoincrement";
+        // Define apenas como INTEGER, sem duplicar PRIMARY KEY
+        return "INTEGER";
     }
 }

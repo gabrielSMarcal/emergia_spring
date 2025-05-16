@@ -16,9 +16,9 @@ public class CombustivelUsadoController {
     public Map<String, Double> calcularCombustivelUsado(
           @RequestParam double horasTratorPorAno,
           @RequestParam double qtdTrator,
-          @RequestParam double litrosPorHoras) {
+          @RequestParam double litrosPorHora) {
               
-        CombustivelUsado combustivel = new CombustivelUsado(horasTratorPorAno, qtdTrator, litrosPorHoras);
+        CombustivelUsado combustivel = new CombustivelUsado(horasTratorPorAno, qtdTrator, litrosPorHora);
         double calc   = combustivel.calCombustivelUsado();
         double ref    = combustivel.calRefEmergiaSolarCombustivelUsado();
         double razao  = combustivel.calcRazaoCombustivelUsado();

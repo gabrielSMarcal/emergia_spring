@@ -7,7 +7,7 @@ import jakarta.persistence.*;
 public class Relatorio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer relatId;
+    private Integer id;
 
     private String nomeDaFazenda;
 
@@ -72,12 +72,11 @@ public class Relatorio {
     private Double razaoBens;
 
     // Getters e setters para todos os campos...
-    public Integer getRelatId() { return relatId; }
-    public void setRelatId(Integer relatId) { this.relatId = relatId; }
+    public Integer getId() { return id; }
+    public void setId(Integer id) { this.id = id; }
 
     public String getNomeDaFazenda() { return nomeDaFazenda; }
     public void setNomeDaFazenda(String nomeDaFazenda) { this.nomeDaFazenda = nomeDaFazenda; }
-
 
     public Double getCalcCuidadoSolo() { return calcCuidadoSolo; }
     public void setCalcCuidadoSolo(Double calcCuidadoSolo) { this.calcCuidadoSolo = calcCuidadoSolo; }

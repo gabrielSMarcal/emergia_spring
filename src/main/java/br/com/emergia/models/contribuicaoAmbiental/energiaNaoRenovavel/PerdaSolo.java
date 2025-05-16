@@ -5,14 +5,15 @@ import br.com.emergia.database.AtributosFixos;
 public class PerdaSolo extends AtributosFixos {
 
     private double perdaDeSoloToneladasPorAno;
-    private String tPerdadeSolo = "T";
+
     private double resulPerdaSolo;
-    private String uResulPerdaSolo = "unid/ano";
     private double resulRefEmergiaSolarPerdaSolo;
-    private String uResulRefEmergiaSolarPerdaSolo = "seJ/unid";
+    private double razaoPerdaSolo;
+
+    private String unidadePerdaSolo = "J";
 
 
-    public PerdaSolo(double perdaDeSoloToneladasPorAno){
+    public PerdaSolo(double perdaDeSoloToneladasPorAno) {
         this.perdaDeSoloToneladasPorAno = perdaDeSoloToneladasPorAno;
     }
 
@@ -20,20 +21,30 @@ public class PerdaSolo extends AtributosFixos {
         return perdaDeSoloToneladasPorAno;
     }
 
-    public double calcPS(){
+    public String getUnidadePerdaSolo() {
+        return unidadePerdaSolo;
+    }
+
+    public double calcPS() {
+
         resulPerdaSolo = perdaDeSoloToneladasPorAno * getConversaoToneladaParaGramas()
                 * getGramasMOporGramasSolo() * getKcalPorGrama() * getJoulesPorKcal();
         return resulPerdaSolo;
     }
 
-    public double calRefEmergiaSolarPerdaSolo(){
+    public double calRefEmergiaSolarPerdaSolo() {
+
         resulRefEmergiaSolarPerdaSolo = calcPS() * getTransformidadePerdaSolo();
         return resulRefEmergiaSolarPerdaSolo;
     }
 
-    public double calcRazaoPerdaSolo(){
+    public double calcRazaoPerdaSolo() {
+        
         double base = calcPS();
         if(base == 0) return 0;
-        return calRefEmergiaSolarPerdaSolo() / base;
+
+        razaoPerdaSolo = calRefEmergiaSolarPerdaSolo() / base;
+
+        return razaoPerdaSolo;
     }
 }

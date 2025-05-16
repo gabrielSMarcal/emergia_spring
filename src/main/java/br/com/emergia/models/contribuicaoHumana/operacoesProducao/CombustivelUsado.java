@@ -2,18 +2,17 @@ package br.com.emergia.models.contribuicaoHumana.operacoesProducao;
 
 import br.com.emergia.database.AtributosFixos;
 
-public class CombustivelUsado extends AtributosFixos{
+public class CombustivelUsado extends AtributosFixos {
 
     private double horasTratorPorAno;
-    private String uHorasTrator = "Hrs";
     private double qtdTrator;
-    private String uQtdTrator = "U";
     private double litrosPorHora;
-    private String uLitrosCombustivelHora = "L";
+
     private double resulCombustivelUsado;
-    private String uResulCombustivelUsado = "Unid/ano";
     private double resulRefEmergiaSolarCombustivelUsado;
-    private String uResulRefEmergiaSolarCombustivelUsado = "seJ/unid";
+    private double razaoCombustivelUsado;
+
+    private String unidadeCombustivelUsado = "J";
 
     public CombustivelUsado(double horasTratorPorAno, double qtdTrator, double litrosPorHora) {
         this.horasTratorPorAno = horasTratorPorAno;
@@ -22,16 +21,8 @@ public class CombustivelUsado extends AtributosFixos{
 
     }
 
-    public double getHorasTratorPorAno() {
-        return horasTratorPorAno;
-    }
-
-    public double getQtdTrator() {
-        return qtdTrator;
-    }
-
-    public double getLitrosPorHora() {
-        return litrosPorHora;
+    public String getUnidadeCombustivelUsado() {
+        return unidadeCombustivelUsado;
     }
 
     public double calCombustivelUsado() {
@@ -39,15 +30,20 @@ public class CombustivelUsado extends AtributosFixos{
         return resulCombustivelUsado;
     }
 
-    public  double calRefEmergiaSolarCombustivelUsado(){
+    public  double calRefEmergiaSolarCombustivelUsado() {
+
         resulRefEmergiaSolarCombustivelUsado = calCombustivelUsado() * getTransformidadeCombustivelUsado();
         return resulRefEmergiaSolarCombustivelUsado;
     }
 
-    public double calcRazaoCombustivelUsado(){
+    public double calcRazaoCombustivelUsado() {
+        
         double base = calCombustivelUsado();
         if(base == 0) return 0;
-        return calRefEmergiaSolarCombustivelUsado() / base;
+
+        razaoCombustivelUsado = calRefEmergiaSolarCombustivelUsado() / base;
+
+        return razaoCombustivelUsado;
     }
 
 }

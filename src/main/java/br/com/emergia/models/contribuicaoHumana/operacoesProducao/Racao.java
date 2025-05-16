@@ -5,25 +5,22 @@ import br.com.emergia.database.AtributosFixos;
 public class Racao extends AtributosFixos{
 
     private int saca;
-    private String uSaca = "U";
     private double valorSaca;
-    private String uValorSaca = "R$";
-    private double resulRacao;
-    private String uResulRacao = "unid/ano";
-    private double resulRefEmergiaSolarRacao;
-    private String uResulRefEmergiaSolarRacao = "seJ/unid";
 
-    public Racao (int saca, double valorSaca){
+    private double resulRacao;
+    private double resulRefEmergiaSolarRacao;
+    private double razaoRacao;
+
+    private String unidadeRacao = "t";
+
+    public Racao (int saca, double valorSaca) {
+
         this.saca = saca;
         this.valorSaca = valorSaca;
     }
 
-    public int getSaca() {
-        return saca;
-    }
-
-    public double getValorSaca() {
-        return valorSaca;
+    public String getUnidadeRacao() {
+        return unidadeRacao;
     }
 
     public double calcR() {
@@ -39,15 +36,20 @@ public class Racao extends AtributosFixos{
         }
     }
 
-    public  double calRefEmergiaSolarRacao(){
+    public  double calRefEmergiaSolarRacao() {
+
         resulRefEmergiaSolarRacao = calcR() * getTransformidadeRacao();
         return resulRefEmergiaSolarRacao;
     }
 
-    public double calcRazaoRacao(){
+    public double calcRazaoRacao() {
+
         double base = calcR();
         if(base == 0) return 0;
-        return calRefEmergiaSolarRacao() / base;
+
+        razaoRacao = calRefEmergiaSolarRacao() / base;
+
+        return razaoRacao;
     }
 }
 

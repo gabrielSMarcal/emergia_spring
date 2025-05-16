@@ -2,21 +2,22 @@ package br.com.emergia.models.contribuicaoHumana.operacoesProducao;
 
 import br.com.emergia.database.AtributosFixos;
 
-public class Eletricidade extends AtributosFixos{
+public class Eletricidade extends AtributosFixos {
 
     private double energiaPORKWH;
-    private String uEnergiaKWH = "kWH";
+
     private double resulEletricidade;
-    private String uResulEletricidade = "unid/ano";
     private double resulRefEmergiaSolarEletricidade;
-    private String uResulRefEmergiaSolarEletricidade = "seJ/unid";
+    private double razaoEletricidade;
+
+    private String unidadeEletricidade = "J";
 
     public Eletricidade (double energiaPORKWH) {
         this.energiaPORKWH = energiaPORKWH;
     }
 
-    public double getEnergiaPorKWH() {
-        return energiaPORKWH;
+    public String getUnidadeEletricidade() {
+        return unidadeEletricidade;
     }
 
     public double calcE() {
@@ -24,14 +25,19 @@ public class Eletricidade extends AtributosFixos{
         return resulEletricidade;
     }
 
-    public double calRefEmergiaSolarEletricidade(){
+    public double calRefEmergiaSolarEletricidade() {
+
         resulRefEmergiaSolarEletricidade = calcE() * getTransformidadeEletricidade();
         return resulRefEmergiaSolarEletricidade;
     }
 
-    public double calcRazaoEletricidade(){
+    public double calcRazaoEletricidade() {
+        
         double base = calcE();
         if(base == 0) return 0;
-        return calRefEmergiaSolarEletricidade() / base;
+
+        razaoEletricidade = calRefEmergiaSolarEletricidade() / base;
+
+        return razaoEletricidade;
     }
 }

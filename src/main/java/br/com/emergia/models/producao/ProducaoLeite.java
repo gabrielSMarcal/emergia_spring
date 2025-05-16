@@ -6,27 +6,23 @@ public class ProducaoLeite extends AtributosFixos {
 
     // ha = hectares
     private double leitePorDia;
-    private String uLeitePorDia = "L";
     private double haFazendaLeite;
-    private String uHaFAzebdaLeite = "Ha";
+
     private double resulProducaoLeite;
     private double resulProducaoLeiteAno;
-
-    private String uResulProducaoLeite = "unid/ano";
     private double resulRefEmergiaSolarProducaoLeite;
-    private String uResulRefEmergiaSolarProducaoLeite = "seJ/unid";
+    private double razaoProducaoLeite;
+
+    private String unidadeProducaoLeite = "J";
 
     public ProducaoLeite(double leitePorDia, double haFazendaLeite) {
+
             this.haFazendaLeite = haFazendaLeite;
             this.leitePorDia = leitePorDia;
     }
 
-    public double getLeitePorDia() {
-        return leitePorDia;
-    }
-
-    public double getHaFazenda() {
-        return haFazendaLeite;
+    public String getUnidadeProducaoLeite() {
+        return unidadeProducaoLeite;
     }
 
     public double calcPL () {
@@ -39,15 +35,20 @@ public class ProducaoLeite extends AtributosFixos {
         return resulProducaoLeiteAno;
     }
 
-    public double calRefEmergiaSolarProducaoLeite (){
+    public double calRefEmergiaSolarProducaoLeite () {
+
         resulRefEmergiaSolarProducaoLeite = calcPL() * getTransformidadeProducaoleite();
 
         return resulRefEmergiaSolarProducaoLeite;
     }
 
-    public double calcRazaoProducaoLeite(){
+    public double calcRazaoProducaoLeite() {
+
         double base = calcPL();
         if(base == 0) return 0;
-        return calRefEmergiaSolarProducaoLeite() / base;
+
+        razaoProducaoLeite = calRefEmergiaSolarProducaoLeite() / base;
+
+        return razaoProducaoLeite;
     }
 }

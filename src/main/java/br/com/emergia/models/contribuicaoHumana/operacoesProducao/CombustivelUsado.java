@@ -14,6 +14,8 @@ public class CombustivelUsado extends AtributosFixos {
 
     private String unidadeCombustivelUsado = "J";
 
+    public CombustivelUsado() {}
+
     public CombustivelUsado(double horasTratorPorAno, double qtdTrator, double litrosPorHora) {
         this.horasTratorPorAno = horasTratorPorAno;
         this.litrosPorHora = litrosPorHora;
@@ -28,6 +30,10 @@ public class CombustivelUsado extends AtributosFixos {
     public double calCombustivelUsado() {
         resulCombustivelUsado = (horasTratorPorAno * qtdTrator * getJoulesPorTonelada()) / getToneladaPorLitro();
         return resulCombustivelUsado;
+    }
+
+    public double getResulRefEmergiaSolarCombustivelUsado() {
+        return resulRefEmergiaSolarCombustivelUsado;
     }
 
     public  double calRefEmergiaSolarCombustivelUsado() {

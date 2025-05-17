@@ -12,12 +12,18 @@ public class Eletricidade extends AtributosFixos {
 
     private String unidadeEletricidade = "J";
 
+    public Eletricidade() {}
+
     public Eletricidade (double energiaPORKWH) {
         this.energiaPORKWH = energiaPORKWH;
     }
 
     public String getUnidadeEletricidade() {
         return unidadeEletricidade;
+    }
+
+    public double getResulRefEmergiaSolarEletricidade() {
+        return resulRefEmergiaSolarEletricidade;
     }
 
     public double calcE() {

@@ -13,6 +13,8 @@ public class Racao extends AtributosFixos{
 
     private String unidadeRacao = "t";
 
+    public Racao () {}
+
     public Racao (int saca, double valorSaca) {
 
         this.saca = saca;
@@ -21,6 +23,10 @@ public class Racao extends AtributosFixos{
 
     public String getUnidadeRacao() {
         return unidadeRacao;
+    }
+
+    public double getResulRefEmergiaSolarRacao() {
+        return resulRefEmergiaSolarRacao;
     }
 
     public double calcR() {

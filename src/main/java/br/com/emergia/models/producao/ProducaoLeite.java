@@ -15,6 +15,8 @@ public class ProducaoLeite extends AtributosFixos {
 
     private String unidadeProducaoLeite = "J";
 
+    public ProducaoLeite() {}
+
     public ProducaoLeite(double leitePorDia, double haFazendaLeite) {
 
             this.haFazendaLeite = haFazendaLeite;
@@ -23,6 +25,10 @@ public class ProducaoLeite extends AtributosFixos {
 
     public String getUnidadeProducaoLeite() {
         return unidadeProducaoLeite;
+    }
+
+    public double getResulRefEmergiaSolarProducaoLeite() {
+        return resulRefEmergiaSolarProducaoLeite;
     }
 
     public double calcPL () {

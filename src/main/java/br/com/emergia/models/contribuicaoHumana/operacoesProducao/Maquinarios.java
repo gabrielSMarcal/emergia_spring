@@ -13,6 +13,7 @@ public class Maquinarios extends AtributosFixos {
 
     private String unidadeMaquinario = "J";
 
+    public Maquinarios() {}
 
     public Maquinarios(double qtdHoraTrator, double valorHoraTrator) {
         this.qtdHoraTrator = qtdHoraTrator;
@@ -21,6 +22,10 @@ public class Maquinarios extends AtributosFixos {
 
     public String getUnidadeMaquinario() {
         return unidadeMaquinario;
+    }
+
+    public double getResulRefEmergiaSolarMaquinario() {
+        return resulRefEmergiaSolarMaquinario;
     }
 
     public double calcM() {

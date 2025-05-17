@@ -12,6 +12,7 @@ public class PerdaSolo extends AtributosFixos {
 
     private String unidadePerdaSolo = "J";
 
+    public PerdaSolo() {}
 
     public PerdaSolo(double perdaDeSoloToneladasPorAno) {
         this.perdaDeSoloToneladasPorAno = perdaDeSoloToneladasPorAno;
@@ -23,6 +24,10 @@ public class PerdaSolo extends AtributosFixos {
 
     public String getUnidadePerdaSolo() {
         return unidadePerdaSolo;
+    }
+
+    public double getResulRefEmergiaSolarPerdaSolo() {
+        return resulRefEmergiaSolarPerdaSolo;
     }
 
     public double calcPS() {

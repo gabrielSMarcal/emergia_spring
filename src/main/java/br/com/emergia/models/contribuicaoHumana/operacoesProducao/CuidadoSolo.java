@@ -1,4 +1,4 @@
-package br.com.emergia.models.contribuicaoHumana;
+package br.com.emergia.models.contribuicaoHumana.operacoesProducao;
 
 import br.com.emergia.database.AtributosFixos;
 
@@ -11,9 +11,10 @@ public class CuidadoSolo extends AtributosFixos{
     private double resulCuidadoSolo;
     private double resulRefEmergiaSolarCuidadoSolo;
     private double razaoCuidadoSolo;
+
     private String unidadeCuidadoSolo = "J";
 
-
+    public CuidadoSolo() {}
 
     public double getToneladasPorHa() {
         return toneladasPorHa;
@@ -23,6 +24,10 @@ public class CuidadoSolo extends AtributosFixos{
 
     public String getUnidadeCuidadoSolo() {
         return unidadeCuidadoSolo;
+    }
+
+    public double getResulRefEmergiaSolarCuidadoSolo() {
+        return resulRefEmergiaSolarCuidadoSolo;
     }
 
     public CuidadoSolo (double toneladasPorHa, double areaDevastadaPeloGado, int ano) {

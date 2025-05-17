@@ -131,11 +131,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const backendData = await fetchLastResultsFromServer();
         if (!backendData) return;
         const relatorio = JSON.parse(backendData);
-        const adapted = adaptBackendResult(relatorio);
-        // Remove campos undefined
-        Object.keys(adapted).forEach(k => adapted[k] === undefined && delete adapted[k]);
-        const calcResults = adapted;
 
+        // Obtém ou cria o contêiner da tabela
         let container = document.getElementById("tableContainer");
         if (!container) {
             container = document.createElement("div");
@@ -143,6 +140,72 @@ document.addEventListener("DOMContentLoaded", () => {
             container.className = "table-wrapper";
             document.body.appendChild(container);
         }
+
+        // Cria e insere o título com o nome da fazenda acima da tabela
+        const title = document.createElement("h2");
+        title.textContent = `Nome da fazenda: ${relatorio.nomeDaFazenda}`;
+        title.style.textAlign = "center"; // Centraliza o título
+        title.style.marginBottom = "20px"; // Adiciona espaço entre o título e a tabela
+        container.insertBefore(title, container.firstChild);
+
+        // Cria o canvas para o gráfico
+        const chartContainer = document.createElement("div");
+        chartContainer.style.width = "30%"; // Reduz a largura do gráfico
+        chartContainer.style.margin = "0 auto 20px auto"; // Centraliza o gráfico
+        const canvas = document.createElement("canvas");
+        canvas.id = "pieChart";
+        canvas.style.maxWidth = "100%"; // Garante que o gráfico não ultrapasse o contêiner
+        canvas.style.height = "auto"; // Ajusta a altura proporcionalmente
+        chartContainer.appendChild(canvas);
+        container.insertBefore(chartContainer, title.nextSibling);
+
+        // Calcula os valores para o gráfico
+        const totalRenovavel = relatorio.calcPotencialQuimico || 0;
+        const totalNaoRenovavel = (relatorio.calcAguaUsada || 0) + (relatorio.calcPerdaSolo || 0);
+        const totalBens = relatorio.calcBens || 0;
+        const totalOperacoes = (relatorio.calcRacao || 0) + (relatorio.calcMaquinarios || 0) +
+                               (relatorio.calcMaoObra || 0) + (relatorio.calcGado || 0) +
+                               (relatorio.calcEletricidade || 0) + (relatorio.calcCombustivelUsado || 0) +
+                               (relatorio.calcCuidadoSolo || 0);
+        const totalProducao = relatorio.calcProducaoLeite || 0;
+
+        const totalGeral = totalRenovavel + totalNaoRenovavel + totalBens + totalOperacoes + totalProducao;
+
+        const data = {
+            labels: ["Renovável", "Não Renovável", "Bens", "Operações de Produção", "Produção"],
+            datasets: [{
+                data: [
+                    ((totalRenovavel / totalGeral) * 100).toFixed(2),
+                    ((totalNaoRenovavel / totalGeral) * 100).toFixed(2),
+                    ((totalBens / totalGeral) * 100).toFixed(2),
+                    ((totalOperacoes / totalGeral) * 100).toFixed(2),
+                    ((totalProducao / totalGeral) * 100).toFixed(2)
+                ],
+                backgroundColor: ["#4caf50", "#f44336", "#ff9800", "#2196f3", "#9c27b0"],
+                hoverOffset: 4
+            }]
+        };
+
+        // Configura o gráfico
+        const config = {
+            type: "pie",
+            data: data,
+            options: {
+                plugins: {
+                    legend: {
+                        position: "bottom"
+                    }
+                }
+            }
+        };
+
+        // Renderiza o gráfico
+        new Chart(canvas, config);
+
+        const adapted = adaptBackendResult(relatorio);
+        // Remove campos undefined
+        Object.keys(adapted).forEach(k => adapted[k] === undefined && delete adapted[k]);
+        const calcResults = adapted;
 
         const table = document.createElement("table");
         table.style.borderCollapse = "collapse";

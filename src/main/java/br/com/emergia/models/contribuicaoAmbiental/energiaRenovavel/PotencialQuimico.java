@@ -14,9 +14,15 @@ public class PotencialQuimico extends AtributosFixos {
 
     private String unidadePotencialQuimico = "J?";
 
+    public PotencialQuimico() {}
+
     public PotencialQuimico(double haFazenda, double mediaChuvaAnoMetros) {
         this.haFazenda = haFazenda;
         this.mediaChuvaAnoMetros = mediaChuvaAnoMetros;
+    }
+
+    public double getResulRefEmergiaSolarPotencialQuimico() {
+        return resulRefEmergiaSolarPotencialQuimico;
     }
 
     public String getUnidadePotencialQuimico() {

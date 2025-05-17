@@ -14,8 +14,10 @@ public class AguaUsada extends AtributosFixos {
 
     private String unidadeAguaUsada = "J";
 
-    public AguaUsada (double litroPorDiaAnimal, int qtdAnimal, double litrosAdicionalDia){
-        this.litroPorDiaAnimal= litroPorDiaAnimal;
+    public AguaUsada() {}
+
+    public AguaUsada (double litroPorDiaAnimal, int qtdAnimal, double litrosAdicionalDia) {
+        this.litroPorDiaAnimal = litroPorDiaAnimal;
         this.qtdAnimal = qtdAnimal;
         this.litrosAdicionalDia = litrosAdicionalDia;
     }
@@ -34,6 +36,10 @@ public class AguaUsada extends AtributosFixos {
 
     public double getLitrosAdicionalDia() {
         return litrosAdicionalDia;
+    }
+
+    public double getResulRefEmergiaSolarAguaUsada() {
+        return resulRefEmergiaSolarAguaUsada;
     }
 
     public double calcAU () {

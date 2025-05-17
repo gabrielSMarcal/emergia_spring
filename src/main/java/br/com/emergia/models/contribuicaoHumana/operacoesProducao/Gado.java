@@ -14,7 +14,8 @@ public class Gado extends AtributosFixos {
     private double razaoGado;
 
     private String unidadeGado = "J";
-    
+
+    public Gado() {}
 
     public Gado (double pesoKgMedia, int numeroAnimais, float anosVida) {
 
@@ -25,6 +26,10 @@ public class Gado extends AtributosFixos {
 
     public String getUnidadeGado() {
         return unidadeGado;
+    }
+
+    public double getResulRefEmergiaSolarGado() {
+        return resulRefEmergiaSolarGado;
     }
 
     public double calcG() {

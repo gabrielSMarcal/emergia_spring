@@ -13,10 +13,15 @@ public class ValorConsumoManutencao extends AtributosFixos {
 
     private String unidadeVCM = "$";
 
+    public ValorConsumoManutencao() {}
 
     public ValorConsumoManutencao (double bens, int anos) {
         this.bens = bens;
         this.anos = anos;
+    }
+
+    public double getResulRefEmergiaSolarVCM() {
+        return resulRefEmergiaSolarVCM;
     }
 
     public String getUnidadeVCM() {

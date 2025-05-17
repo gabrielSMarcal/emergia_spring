@@ -14,7 +14,8 @@ public class MaoObra extends AtributosFixos {
     private double razaoMaoObra;
 
     private String unidadeMaoObra = "J";
-    
+
+    public MaoObra() {}
 
     public MaoObra (int pessoa, double horasTrabalhada, int qtdDiasTrabalhado) {
 
@@ -25,6 +26,10 @@ public class MaoObra extends AtributosFixos {
 
     public String getUnidadeMaoObra() {
         return unidadeMaoObra;
+    }
+
+    public double getResulRefEmergiaSolarMaoObra() {
+        return resulRefEmergiaSolarMaoObra;
     }
 
     public double calcMO() {

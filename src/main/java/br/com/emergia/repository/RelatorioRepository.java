@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 
 public interface RelatorioRepository extends JpaRepository<Relatorio, Long> {
-
-    @Query("SELECT r FROM Relatorio r ORDER BY r.id DESC")
-    Optional<Relatorio> buscarUltimoRelatorio();
+    @Query(value = "SELECT * FROM relatorio ORDER BY id DESC LIMIT 1", nativeQuery = true)
+    Optional<Relatorio> findLatest();
 }

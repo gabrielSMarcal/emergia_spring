@@ -216,37 +216,42 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   });
 
-  // Botão para visualizar resultado
-  const visualizarBtn = document.getElementById("visualizarResultado") || document.querySelector("button[onclick*='resultado.html']");
-  if (visualizarBtn) {
-      visualizarBtn.addEventListener("click", (e) => {
+  // Botão para salvar no banco de dados
+  const salvarNoBancoBtn = document.getElementById("salvarNoBanco");
+  if (salvarNoBancoBtn) {
+      salvarNoBancoBtn.addEventListener("click", async (e) => {
           e.preventDefault();
-          // Salva os resultados no localStorage (opcional)
+          // Salva os resultados no localStorage para referência, se necessário
           localStorage.setItem("calcResults", JSON.stringify(window.calcResults));
-          // Salva no banco e só redireciona após sucesso
-          fetch('http://localhost:8081/storeResults', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(window.calcResults)
-          })
-          .then(response => response.json())
-          .then(data => {
-              // Redireciona para a página de resultados após salvar
-              window.location.href = "resultado.html";
-          })
-          .catch(error => {
+          try {
+              const response = await fetch('http://localhost:8081/storeResults', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify(window.calcResults)
+              });
+              console.log("Resposta do servidor:", response);
+              if (!response.ok) {
+                  throw new Error("Erro na resposta do servidor: " + response.status);
+              }
+              const data = await response.json();
+              console.log("Dados salvos com sucesso:", data);
+              alert("Dados salvos com sucesso!");
+          } catch (error) {
+              console.error("Erro ao salvar os dados no banco:", error);
               alert("Erro ao salvar os dados no banco. Tente novamente.");
-              console.error('Erro ao salvar os dados:', error);
-          });
+          }
       });
   }
 
-  // Botão para salvar no banco
-  const salvarBtn = document.getElementById("salvarNoBanco");
-  if (salvarBtn) {
-      salvarBtn.addEventListener("click", saveResultsToServer);
+  // Botão para visualizar resultado
+  const visualizarResultadoBtn = document.getElementById("visualizarResultado")
+                           || document.querySelector("button[onclick*='resultado.html']");
+  if (visualizarResultadoBtn) {
+      visualizarResultadoBtn.addEventListener("click", (e) => {
+          e.preventDefault();
+          // Apenas redireciona para a página de resultado
+          window.location.href = "resultado.html";
+      });
   }
 });
 

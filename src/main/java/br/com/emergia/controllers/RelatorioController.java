@@ -118,6 +118,7 @@ public class RelatorioController {
 
     @GetMapping("/getLastResults")
     public Relatorio getLastResults() {
-        return relatorioRepository.buscarUltimoRelatorio().orElse(null);
+        return relatorioRepository.findLatest()
+                 .orElseThrow(() -> new RuntimeException("Nenhum relatório encontrado"));
     }
 }

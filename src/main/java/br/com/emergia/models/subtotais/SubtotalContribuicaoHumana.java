@@ -1,8 +1,5 @@
 package br.com.emergia.models.subtotais;
 
-import br.com.emergia.models.contribuicaoHumana.bens.ValorConsumoManutencao;
-import br.com.emergia.models.contribuicaoHumana.operacoesProducao.*;
-
 public class SubtotalContribuicaoHumana {
 
     private double totalBens;
@@ -21,43 +18,25 @@ public class SubtotalContribuicaoHumana {
         return totalContribuicaoHumana;
     }
 
-    public double calcBens () {
-
-        // pega o valor ref de ValorConsumoManutencao
-        ValorConsumoManutencao vcm = new ValorConsumoManutencao();
-
-        totalBens = vcm.getResulRefEmergiaSolarVCM();
-
+    // Recebe o valor "ref" do ValorConsumoManutencao (Bens)
+    public double calcBens(double refVCM) {
+        totalBens = refVCM;
         return totalBens;
     }
 
-    public double calcOperacoesProducao () {
-
-        // pega o valor ref de operacoesProducao
-        CombustivelUsado comU = new CombustivelUsado();
-        Eletricidade     ele  = new Eletricidade();
-        Gado             gado = new Gado();
-        MaoObra          mo   = new MaoObra();
-        Maquinarios      maq  = new Maquinarios();
-        Racao            rac  = new Racao();
-        CuidadoSolo      cs   = new CuidadoSolo();
-
-        // totalOperacoesProducao = soma de todas as refs
-        totalOperacoesProducao = comU.getResulRefEmergiaSolarCombustivelUsado() +
-                ele.getResulRefEmergiaSolarEletricidade() +
-                gado.getResulRefEmergiaSolarGado() +
-                mo.getResulRefEmergiaSolarMaoObra() +
-                maq.getResulRefEmergiaSolarMaquinario() +
-                rac.getResulRefEmergiaSolarRacao() +
-                cs.getResulRefEmergiaSolarCuidadoSolo();
-
+    // Recebe os valores "ref" das demais referências de operações de produção
+    public double calcOperacoesProducao(double refCombustivel, double refEletricidade, double refGado,
+                                          double refMaoObra, double refMaquinario, double refRacao, double refCuidadoSolo) {
+        totalOperacoesProducao = refCombustivel + refEletricidade + refGado +
+                                 refMaoObra + refMaquinario + refRacao + refCuidadoSolo;
         return totalOperacoesProducao;
     }
 
-    public double calcContribuicaoHumana () {
-
-        totalContribuicaoHumana = calcBens() + calcOperacoesProducao();
-
+    // Soma os dois subtotais
+    public double calcContribuicaoHumana(double refVCM, double refCombustivel, double refEletricidade, double refGado,
+                                           double refMaoObra, double refMaquinario, double refRacao, double refCuidadoSolo) {
+        totalContribuicaoHumana = calcBens(refVCM) + calcOperacoesProducao(refCombustivel, refEletricidade,
+                                             refGado, refMaoObra, refMaquinario, refRacao, refCuidadoSolo);
         return totalContribuicaoHumana;
     }
 }

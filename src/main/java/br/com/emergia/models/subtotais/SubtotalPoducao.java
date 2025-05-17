@@ -1,7 +1,5 @@
 package br.com.emergia.models.subtotais;
 
-import br.com.emergia.models.producao.ProducaoLeite;
-
 public class SubtotalPoducao {
 
     private double totalProducaoLeite;
@@ -10,11 +8,10 @@ public class SubtotalPoducao {
         return totalProducaoLeite;
     }
 
-    public double calcProducaoLeite () {
+    public double calcProducaoLeite (double refProducaoLeite) {
 
-        // pega o valor ref de ProducaoLeite;
-        ProducaoLeite prodL = new ProducaoLeite();
-        totalProducaoLeite = prodL.getResulRefEmergiaSolarProducaoLeite();
+        // pega o valor ref de ProducaoLeite
+        totalProducaoLeite = refProducaoLeite;
 
         return totalProducaoLeite;
     }

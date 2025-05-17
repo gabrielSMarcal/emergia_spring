@@ -1,9 +1,5 @@
 package br.com.emergia.models.subtotais;
 
-import br.com.emergia.models.contribuicaoAmbiental.energiaNaoRenovavel.AguaUsada;
-import br.com.emergia.models.contribuicaoAmbiental.energiaNaoRenovavel.PerdaSolo;
-import br.com.emergia.models.contribuicaoAmbiental.energiaRenovavel.PotencialQuimico;
-
 public class SubtotalAmbiental {
 
     private double totalRenovavel;
@@ -22,30 +18,20 @@ public class SubtotalAmbiental {
         return totalAmbiental;
     }
 
-    public double calcRenovavel () {
-
-        // pega o valor ref de PotencialQuimico
-        PotencialQuimico pq = new PotencialQuimico();
-        totalRenovavel = pq.getResulRefEmergiaSolarPotencialQuimico();
-
+    // Agora o método recebe como parâmetro o valor "ref" de PotencialQuimico vindo do banco de dados
+    public double calcRenovavel(double refPotencialQuimico) {
+        totalRenovavel = refPotencialQuimico;
         return totalRenovavel;
     }
 
-    public double calcNaoRenovavel () {
-
-        // pega o valor ref de AguaUsada e PerdaSolo
-        AguaUsada au = new AguaUsada();
-        PerdaSolo ps = new PerdaSolo();
-
-        totalNaoRenovavel = au.getResulRefEmergiaSolarAguaUsada() + ps.getResulRefEmergiaSolarPerdaSolo();
-
+    // Recebe os valores "ref" de AguaUsada e PerdaSolo
+    public double calcNaoRenovavel(double refAguaUsada, double refPerdaSolo) {
+        totalNaoRenovavel = refAguaUsada + refPerdaSolo;
         return totalNaoRenovavel;
     }
 
-    public double somaAmbiental () {
-
-        totalAmbiental = calcRenovavel() + calcNaoRenovavel();
-
+    public double somaAmbiental() {
+        totalAmbiental = totalRenovavel + totalNaoRenovavel;
         return totalAmbiental;
     }
 }

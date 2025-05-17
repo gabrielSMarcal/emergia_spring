@@ -1,6 +1,7 @@
 package br.com.emergia.controllers;
 
 import br.com.emergia.database.Relatorio;
+import br.com.emergia.models.subtotais.CalculoTotal;
 import br.com.emergia.repository.RelatorioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,9 @@ public class RelatorioController {
 
     @Autowired
     private RelatorioRepository relatorioRepository;
+    
+    @Autowired
+    private CalculoTotal calculoTotal; // Injeção pelo Spring
 
     // Método auxiliar movido para fora do método salvarResultados
     private Double getDoubleValue(Map<String, Object> map, String key) {
@@ -131,5 +135,11 @@ public class RelatorioController {
     public Relatorio getLastResults() {
         return relatorioRepository.findLatest()
                  .orElseThrow(() -> new RuntimeException("Nenhum relatório encontrado"));
+    }
+    
+    @GetMapping("/getCalculoTotal")
+    public CalculoTotal getCalculoTotal() {
+        calculoTotal.calcularTotais();
+        return calculoTotal;
     }
 }

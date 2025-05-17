@@ -1,14 +1,23 @@
 document.addEventListener("DOMContentLoaded", () => {
-    let resultsString = localStorage.getItem("calcResults");
 
     async function fetchLastResultsFromServer() {
         try {
             const response = await fetch("http://localhost:8081/getLastResults");
             if (!response.ok) throw new Error("Erro ao buscar do servidor");
-            const data = await response.json();
-            return JSON.stringify(data);
+            return await response.json();
         } catch (e) {
             document.body.innerHTML = "<h2>Não foi possível carregar os resultados.</h2>";
+            return null;
+        }
+    }
+
+    async function fetchCalculoTotal() {
+        try {
+            const response = await fetch("http://localhost:8081/getCalculoTotal");
+            if (!response.ok) throw new Error("Erro ao buscar os cálculos totais do servidor");
+            return await response.json();
+        } catch (e) {
+            document.body.innerHTML = "<h2>Não foi possível carregar os cálculos totais.</h2>";
             return null;
         }
     }
@@ -127,10 +136,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     (async () => {
-        // Sempre busca do backend
-        const backendData = await fetchLastResultsFromServer();
-        if (!backendData) return;
-        const relatorio = JSON.parse(backendData);
+        const relatorio = await fetchLastResultsFromServer();
+        const calculoTotal = await fetchCalculoTotal();
+        if (!relatorio || !calculoTotal) return;
 
         // Obtém ou cria o contêiner da tabela
         let container = document.getElementById("tableContainer");
@@ -141,52 +149,29 @@ document.addEventListener("DOMContentLoaded", () => {
             document.body.appendChild(container);
         }
 
-        // Cria e insere o título com o nome da fazenda acima da tabela
+        // Cria o título com o nome da fazenda
         const title = document.createElement("h2");
         title.textContent = `Nome da fazenda: ${relatorio.nomeDaFazenda}`;
-        title.style.textAlign = "center"; // Centraliza o título
-        title.style.marginBottom = "20px"; // Adiciona espaço entre o título e a tabela
+        title.style.textAlign = "center";
+        title.style.marginBottom = "20px";
         container.insertBefore(title, container.firstChild);
 
-        // Cria o canvas para o gráfico
-        const chartContainer = document.createElement("div");
-        chartContainer.style.width = "30%"; // Reduz a largura do gráfico
-        chartContainer.style.margin = "0 auto 20px auto"; // Centraliza o gráfico
-        const canvas = document.createElement("canvas");
-        canvas.id = "pieChart";
-        canvas.style.maxWidth = "100%"; // Garante que o gráfico não ultrapasse o contêiner
-        canvas.style.height = "auto"; // Ajusta a altura proporcionalmente
-        chartContainer.appendChild(canvas);
-        container.insertBefore(chartContainer, title.nextSibling);
-
-        // Calcula os valores para o gráfico
-        const totalRenovavel = relatorio.calcPotencialQuimico || 0;
-        const totalNaoRenovavel = (relatorio.calcAguaUsada || 0) + (relatorio.calcPerdaSolo || 0);
-        const totalBens = relatorio.calcBens || 0;
-        const totalOperacoes = (relatorio.calcRacao || 0) + (relatorio.calcMaquinarios || 0) +
-                               (relatorio.calcMaoObra || 0) + (relatorio.calcGado || 0) +
-                               (relatorio.calcEletricidade || 0) + (relatorio.calcCombustivelUsado || 0) +
-                               (relatorio.calcCuidadoSolo || 0);
-        const totalProducao = relatorio.calcProducaoLeite || 0;
-
-        const totalGeral = totalRenovavel + totalNaoRenovavel + totalBens + totalOperacoes + totalProducao;
-
+        // Atualiza o gráfico usando os percentuais calculados no back-end
         const data = {
             labels: ["Renovável", "Não Renovável", "Bens", "Operações de Produção", "Produção"],
             datasets: [{
                 data: [
-                    ((totalRenovavel / totalGeral) * 100).toFixed(2),
-                    ((totalNaoRenovavel / totalGeral) * 100).toFixed(2),
-                    ((totalBens / totalGeral) * 100).toFixed(2),
-                    ((totalOperacoes / totalGeral) * 100).toFixed(2),
-                    ((totalProducao / totalGeral) * 100).toFixed(2)
+                    Number(calculoTotal.porcentagemRenovavel).toFixed(2),
+                    Number(calculoTotal.porcentagemNaoRenovavel).toFixed(2),
+                    Number(calculoTotal.porcentagemBens).toFixed(2),
+                    Number(calculoTotal.porcentagemOperacoesProducao).toFixed(2),
+                    Number(calculoTotal.porcentagemProducao).toFixed(2)
                 ],
                 backgroundColor: ["#4caf50", "#f44336", "#ff9800", "#2196f3", "#9c27b0"],
                 hoverOffset: 4
             }]
         };
 
-        // Configura o gráfico
         const config = {
             type: "pie",
             data: data,
@@ -199,14 +184,23 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         };
 
-        // Renderiza o gráfico
+        // Cria o canvas e renderiza o gráfico
+        const chartContainer = document.createElement("div");
+        chartContainer.style.width = "30%";
+        chartContainer.style.margin = "0 auto 20px auto";
+        const canvas = document.createElement("canvas");
+        canvas.id = "pieChart";
+        canvas.style.maxWidth = "100%";
+        canvas.style.height = "auto";
+        chartContainer.appendChild(canvas);
+        container.insertBefore(chartContainer, title.nextSibling);
         new Chart(canvas, config);
 
         const adapted = adaptBackendResult(relatorio);
-        // Remove campos undefined
         Object.keys(adapted).forEach(k => adapted[k] === undefined && delete adapted[k]);
         const calcResults = adapted;
 
+        // Cria a tabela detalhada
         const table = document.createElement("table");
         table.style.borderCollapse = "collapse";
         table.style.width = "100%";
@@ -229,7 +223,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const tbody = document.createElement("tbody");
 
-        // Agrupamento por categorias e subcategorias
+        // Agrupamento por categorias e subcategorias (os itens detalhados permanecem e os subtotais usam os percentuais do back-end)
         const categories = {
             "Contribuição Ambiental": {
                 "Energia Renovável": [],
@@ -242,99 +236,107 @@ document.addEventListener("DOMContentLoaded", () => {
             "Produção": []
         };
 
-        let totalRefEmergiaSolar = 0;
-
-        // Organiza os resultados em categorias e subcategorias
-        for (const key in calcResults) {
+        // Organiza os itens em categorias conforme a chave
+        Object.keys(calcResults).forEach(key => {
             const data = calcResults[key];
-            // Adicione esta verificação:
-            if (!data || typeof data.result !== "string") continue;
+            if (!data || typeof data.result !== "string") return;
 
-            const refMatch = data.result.match(/<strong>Ref:<\/strong>\s*([^<]+)/);
-            const refValue = refMatch ? parseFloat(refMatch[1].trim()) : 0;
-            totalRefEmergiaSolar += refValue;
-
-            // Energia Renovável
+            // Para os itens detalhados, deixamos a célula de percentual em branco
             if (key === "potencialQuimico") {
                 categories["Contribuição Ambiental"]["Energia Renovável"].push({
                     label: data.label,
                     calc: data.result.match(/<strong>Calc:<\/strong>\s*([^<]+)/)?.[1].trim() || "",
-                    ref: refValue,
+                    ref: data.result.match(/<strong>Ref:<\/strong>\s*([^<]+)/)?.[1].trim() || "",
                     razao: data.result.match(/<strong>Razão:<\/strong>\s*([^<]+)/)?.[1].trim() || ""
                 });
             }
-
-            // Energia Não Renovável
             if (key === "aguaUsada" || key === "perdaSolo") {
                 categories["Contribuição Ambiental"]["Energia Não Renovável"].push({
                     label: data.label,
                     calc: data.result.match(/<strong>Calc:<\/strong>\s*([^<]+)/)?.[1].trim() || "",
-                    ref: refValue,
+                    ref: data.result.match(/<strong>Ref:<\/strong>\s*([^<]+)/)?.[1].trim() || "",
                     razao: data.result.match(/<strong>Razão:<\/strong>\s*([^<]+)/)?.[1].trim() || ""
                 });
             }
-
-            // Operações de Produção
-            if (
-                key === "racao" ||
-                key === "maquinario" ||
-                key === "maoObra" ||
-                key === "gado" ||
-                key === "eletrica" ||
-                key === "combustivel" ||
-                key === "solo"
-            ) {
+            if (key === "racao" || key === "maquinario" || key === "maoObra" ||
+                key === "gado" || key === "eletrica" || key === "combustivel" || key === "solo") {
                 categories["Contribuição Humana"]["Operações de Produção"].push({
                     label: data.label,
                     calc: data.result.match(/<strong>Calc:<\/strong>\s*([^<]+)/)?.[1].trim() || "",
-                    ref: refValue,
+                    ref: data.result.match(/<strong>Ref:<\/strong>\s*([^<]+)/)?.[1].trim() || "",
                     razao: data.result.match(/<strong>Razão:<\/strong>\s*([^<]+)/)?.[1].trim() || ""
                 });
             }
-
-            // Bens
             if (key === "consumoFazenda") {
                 categories["Contribuição Humana"]["Bens"].push({
                     label: data.label,
                     calc: data.result.match(/<strong>Calc:<\/strong>\s*([^<]+)/)?.[1].trim() || "",
-                    ref: refValue,
+                    ref: data.result.match(/<strong>Ref:<\/strong>\s*([^<]+)/)?.[1].trim() || "",
                     razao: data.result.match(/<strong>Razão:<\/strong>\s*([^<]+)/)?.[1].trim() || ""
                 });
             }
-
-            // Produção
             if (key === "producaoLeite") {
                 categories["Produção"].push({
                     label: data.label,
                     calc: data.result.match(/<strong>Calc:<\/strong>\s*([^<]+)/)?.[1].trim() || "",
-                    ref: refValue,
+                    ref: data.result.match(/<strong>Ref:<\/strong>\s*([^<]+)/)?.[1].trim() || "",
                     razao: data.result.match(/<strong>Razão:<\/strong>\s*([^<]+)/)?.[1].trim() || ""
                 });
             }
+        });
+
+        // Função auxiliar para obter o percentual do back-end com base na categoria ou subcategoria
+        function getBackendPercentage(category, subcategory = null) {
+            if(category === "Contribuição Ambiental"){
+                if(subcategory === "Energia Renovável"){
+                    return Number(calculoTotal.porcentagemRenovavel).toFixed(2) + "%";
+                }
+                if(subcategory === "Energia Não Renovável"){
+                    return Number(calculoTotal.porcentagemNaoRenovavel).toFixed(2) + "%";
+                }
+                // Para o subtotal ambiental
+                return Number(calculoTotal.porcentagemAmbiental).toFixed(2) + "%";
+            }
+            if(category === "Contribuição Humana"){
+                if(subcategory === "Bens"){
+                    return Number(calculoTotal.porcentagemBens).toFixed(2) + "%";
+                }
+                if(subcategory === "Operações de Produção"){
+                    return Number(calculoTotal.porcentagemOperacoesProducao).toFixed(2) + "%";
+                }
+            }
+            if(category === "Produção"){
+                return Number(calculoTotal.porcentagemProducao).toFixed(2) + "%";
+            }
+            return "";
         }
 
-        // Adiciona as linhas agrupadas por categoria e subcategoria
-        for (const [category, subcategories] of Object.entries(categories)) {
+        // Cria as linhas da tabela com os itens e os subtotais usando os percentuais do back-end
+        Object.entries(categories).forEach(([category, subcategories]) => {
+            // Linha de categoria
             const categoryRow = document.createElement("tr");
             categoryRow.style.backgroundColor = "#d4edda";
             categoryRow.innerHTML = `
-                <td colspan="7" style="border: 1px solid #ccc; padding: 8px; font-weight: bold; text-align: left;">${category}</td>
+                <td colspan="7" style="border: 1px solid #ccc; padding: 8px; font-weight: bold; text-align: left;">
+                    ${category}
+                </td>
             `;
             tbody.appendChild(categoryRow);
-
+            
             if (typeof subcategories === "object" && !Array.isArray(subcategories)) {
-                // Para cada subcategoria
-                for (const [subcategory, rows] of Object.entries(subcategories)) {
+                Object.entries(subcategories).forEach(([subcategory, rows]) => {
+                    // Linha de subcategoria
                     const subcategoryRow = document.createElement("tr");
                     subcategoryRow.style.backgroundColor = "#f0f8ff";
                     subcategoryRow.innerHTML = `
-                        <td colspan="7" style="border: 1px solid #ccc; padding: 8px; font-weight: bold; text-align: left;">${subcategory}</td>
+                        <td colspan="7" style="border: 1px solid #ccc; padding: 8px; font-weight: bold; text-align: left;">
+                            ${subcategory}
+                        </td>
                     `;
                     tbody.appendChild(subcategoryRow);
 
-                    // Adiciona cada linha (item)
                     rows.forEach(row => {
-                        const percentage = ((row.ref / totalRefEmergiaSolar) * 100).toFixed(2);
+                        // Linha detalhada – deixamos a coluna de percentual vazia
                         const tr = document.createElement("tr");
                         tr.style.backgroundColor = "#f4f4f4";
                         tr.innerHTML = `
@@ -343,16 +345,15 @@ document.addEventListener("DOMContentLoaded", () => {
                             <td style="border: 1px solid #ccc; padding: 8px;">${row.label}</td>
                             <td style="border: 1px solid #ccc; padding: 8px;">${row.calc}</td>
                             <td style="border: 1px solid #ccc; padding: 8px;">${row.razao}</td>
-                            <td style="border: 1px solid #ccc; padding: 8px;">${row.ref.toExponential(2).toUpperCase()}</td>
-                            <td style="border: 1px solid #ccc; padding: 8px;">${percentage}%</td>
+                            <td style="border: 1px solid #ccc; padding: 8px;">${row.ref}</td>
+                            <td style="border: 1px solid #ccc; padding: 8px;"></td>
                         `;
                         tbody.appendChild(tr);
                     });
 
-                    // Adiciona a linha de subtotal para a subcategoria, se houver itens
+                    // Linha de subtotal para a subcategoria (usa o percentual do back-end)
                     if (rows.length > 0) {
-                        const subTotalRef = rows.reduce((acc, curr) => acc + curr.ref, 0);
-                        const subPercentage = ((subTotalRef / totalRefEmergiaSolar) * 100).toFixed(2);
+                        const subTotalRef = rows.reduce((acc, curr) => acc + Number(curr.ref), 0);
                         const subTotalRow = document.createElement("tr");
                         subTotalRow.style.backgroundColor = "#e2e3e5";
                         subTotalRow.innerHTML = `
@@ -362,38 +363,31 @@ document.addEventListener("DOMContentLoaded", () => {
                             <td style="border: 1px solid #ccc; padding: 8px;"></td>
                             <td style="border: 1px solid #ccc; padding: 8px;"></td>
                             <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">${subTotalRef.toExponential(2).toUpperCase()}</td>
-                            <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">${subPercentage}%</td>
+                            <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">
+                                ${getBackendPercentage(category, subcategory)}
+                            </td>
                         `;
                         tbody.appendChild(subTotalRow);
                     }
-                }
-
-                // Se a categoria for "Contribuição Ambiental", somamos os subtotais de "Energia Renovável" e "Energia Não Renovável"
+                });
+                // Linha de subtotal por categoria (para "Contribuição Ambiental" usamos o percentual consolidado)
                 if (category === "Contribuição Ambiental") {
-                    let totalAmbientalRef = 0;
-                    // Somente se existirem itens em cada subcategoria
-                    const renovavel = subcategories["Energia Renovável"];
-                    const naoRenovavel = subcategories["Energia Não Renovável"];
-                    if (Array.isArray(renovavel)) {
-                        totalAmbientalRef += renovavel.reduce((acc, curr) => acc + curr.ref, 0);
-                    }
-                    if (Array.isArray(naoRenovavel)) {
-                        totalAmbientalRef += naoRenovavel.reduce((acc, curr) => acc + curr.ref, 0);
-                    }
-                    const totalAmbientalPercentage = ((totalAmbientalRef / totalRefEmergiaSolar) * 100).toFixed(2);
-                    const ambientalSubTotalRow = document.createElement("tr");
-                    ambientalSubTotalRow.style.backgroundColor = "#ccc";
-                    ambientalSubTotalRow.innerHTML = `
-                        <td colspan="5" style="border: 1px solid #ccc; padding: 8px; font-weight: bold; text-align: right;">Subtotal Ambiental</td>
-                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">${totalAmbientalRef.toExponential(2).toUpperCase()}</td>
-                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">${totalAmbientalPercentage}%</td>
+                    const ambientalRow = document.createElement("tr");
+                    ambientalRow.style.backgroundColor = "#ccc";
+                    ambientalRow.innerHTML = `
+                        <td colspan="5" style="border: 1px solid #ccc; padding: 8px; font-weight: bold; text-align: right;">
+                            Subtotal Ambiental
+                        </td>
+                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;"></td>
+                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">
+                            ${getBackendPercentage(category)}
+                        </td>
                     `;
-                    tbody.appendChild(ambientalSubTotalRow);
+                    tbody.appendChild(ambientalRow);
                 }
             } else {
-                // Caso a categoria não esteja dividida em subcategorias (array simples)
+                // Se a categoria não apresentar subcategorias (array simples)
                 subcategories.forEach(row => {
-                    const percentage = ((row.ref / totalRefEmergiaSolar) * 100).toFixed(2);
                     const tr = document.createElement("tr");
                     tr.style.backgroundColor = "#f4f4f4";
                     tr.innerHTML = `
@@ -402,14 +396,13 @@ document.addEventListener("DOMContentLoaded", () => {
                         <td style="border: 1px solid #ccc; padding: 8px;">${row.label}</td>
                         <td style="border: 1px solid #ccc; padding: 8px;">${row.calc}</td>
                         <td style="border: 1px solid #ccc; padding: 8px;">${row.razao}</td>
-                        <td style="border: 1px solid #ccc; padding: 8px;">${row.ref.toExponential(2).toUpperCase()}</td>
-                        <td style="border: 1px solid #ccc; padding: 8px;">${percentage}%</td>
+                        <td style="border: 1px solid #ccc; padding: 8px;">${row.ref}</td>
+                        <td style="border: 1px solid #ccc; padding: 8px;"></td>
                     `;
                     tbody.appendChild(tr);
                 });
                 if (subcategories.length > 0) {
-                    const catSubtotalRef = subcategories.reduce((acc, curr) => acc + curr.ref, 0);
-                    const catSubPercentage = ((catSubtotalRef / totalRefEmergiaSolar) * 100).toFixed(2);
+                    const catSubtotalRef = subcategories.reduce((acc, curr) => acc + Number(curr.ref), 0);
                     const catSubtotalRow = document.createElement("tr");
                     catSubtotalRow.style.backgroundColor = "#e2e3e5";
                     catSubtotalRow.innerHTML = `
@@ -419,19 +412,21 @@ document.addEventListener("DOMContentLoaded", () => {
                         <td style="border: 1px solid #ccc; padding: 8px;"></td>
                         <td style="border: 1px solid #ccc; padding: 8px;"></td>
                         <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">${catSubtotalRef.toExponential(2).toUpperCase()}</td>
-                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">${catSubPercentage}%</td>
+                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">${getBackendPercentage(category)}</td>
                     `;
                     tbody.appendChild(catSubtotalRow);
                 }
             }
-        }
+        });
 
-        // Adiciona o total geral
+        // Linha de total geral (100%)
         const totalRow = document.createElement("tr");
         totalRow.style.backgroundColor = "#d4edda";
         totalRow.innerHTML = `
-            <td colspan="5" style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">Total Geral</td>
-            <td style="border: 1px solid #ccc; padding: 8px;">${totalRefEmergiaSolar.toExponential(2).toUpperCase()}</td>
+            <td colspan="5" style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">
+                Total Geral
+            </td>
+            <td style="border: 1px solid #ccc; padding: 8px;"></td>
             <td style="border: 1px solid #ccc; padding: 8px;">100%</td>
         `;
         tbody.appendChild(totalRow);

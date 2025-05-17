@@ -221,6 +221,15 @@ document.addEventListener("DOMContentLoaded", () => {
   if (salvarNoBancoBtn) {
       salvarNoBancoBtn.addEventListener("click", async (e) => {
           e.preventDefault();
+          // Solicita que o usuário insira o nome da fazenda
+          const nomeFazenda = prompt("Por favor, insira o nome da fazenda:");
+          if (!nomeFazenda) {
+              alert("Nome da fazenda é obrigatório!");
+              return;
+          }
+          // Adiciona o nome da fazenda ao objeto global de resultados com a chave esperada
+          window.calcResults["nomeFazenda"] = nomeFazenda;
+          
           // Salva os resultados no localStorage para referência, se necessário
           localStorage.setItem("calcResults", JSON.stringify(window.calcResults));
           try {

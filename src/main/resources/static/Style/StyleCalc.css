@@ -17,17 +17,16 @@ h1 {
 }
 
 .grid-container {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  padding: 20px;
-  justify-items: center;
-  align-items: start;
+  display: block;        /* não mais grid */
+  width: 60%;            /* ocupar 60% da tela */
+  margin: 0 auto;        /* centralizar horizontalmente */
+  padding: 20px 0;       
 }
 
 .container {
   width: 100%;
-  max-width: 250px;
+  /* max-width: 400px; */
+  max-width: none;      
   background: white;
   padding: 20px;
   border-radius: 12px;
@@ -81,4 +80,19 @@ button:hover {
   text-align: center;
   font-size: 18px;
   font-weight: bold;
+}
+
+.section-container {
+  grid-column: span 1;
+  width: 100%;           
+  border: 2px solid #888;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 20px;
+}
+
+.section-container legend {
+  font-size: 1.1em;
+  font-weight: bold;
+  padding: 0 8px;
 }

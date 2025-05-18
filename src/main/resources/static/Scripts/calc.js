@@ -305,6 +305,20 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.href = "resultado.html";
     });
   }
+
+  // impede valor zero e já pula para o próximo input
+  const inputsNum = document.querySelectorAll('input[type="number"]');
+  inputsNum.forEach((inp, i) => {
+    inp.addEventListener('change', () => {
+      if (parseFloat(inp.value) === 0) {
+        inp.classList.add('input-error');
+        const nxt = inputsNum[i + 1];
+        if (nxt) nxt.focus();
+      } else {
+        inp.classList.remove('input-error');
+      }
+    });
+  });
 });
 
 // Função para exibir o resultado abaixo do campo correspondente e armazená-lo

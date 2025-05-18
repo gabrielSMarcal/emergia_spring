@@ -12,6 +12,54 @@
 
   <div class="grid-container">
 
+    <!-- Energia Renovável -->
+
+    <fieldset class="section-container">
+      <legend>Energia Renovável</legend>
+      <div class="container" id="potencialQuimico">
+        <h2>Potencial Químico</h2>
+        <label for="potencialQuimicoArea">Área da Fazenda (hectares):</label>
+          <input type="number" id="potencialQuimicoArea" step="0.01">
+        <label for="potencialQuimicoChuva">Média de Chuva por Ano (m³):</label>
+          <input type="number" id="potencialQuimicoChuva" step="0.01">
+      </div>
+    </fieldset>
+
+    <!-- Energia Não Renovável -->
+
+    <fieldset class="section-container">
+      <legend>Energia Não Renovável</legend>
+      <div class="container">
+        <h2>Água Usada</h2>
+        <label for="aguaUsada">Litros de Água Usada:</label>
+          <input type="number" id="aguaUsada">
+        <label for="qtdAnima">Quantide de Animais:</label>
+          <input type="number" id="qtdAnima">
+        <label for="litrosAdicionalDia">Litros adicionais por dia:</label>
+          <input type="number" id="litrosAdicionalDia">
+      </div>
+      <div class="container">
+        <h2>Perda do Solo</h2>
+        <label for="perdaSolo">Perda do Solo (toneladas/ano):</label>
+          <input type="number" id="perdaSolo" step="0.01">
+      </div>
+    </fieldset>
+
+    <!-- Contribuição Humana -->
+
+    <!-- Bens -->
+    <fieldset class="section-container">
+      <legend>Bens</legend>
+      <div class="container" id="bens">
+        <h2>Consumo e Manutenção</h2>
+        <label for="consumoFazendaValor">Valor de Consumo e Manutenção (R$):</label>
+          <input type="number" id="consumoFazendaValor" step="0.01">
+        <label for="consumoFazendaAnos">Anos:</label>
+          <input type="number" id="consumoFazendaAnos" step="1">
+      </div>
+    </fieldset>
+
+    <!-- Operação -->
     <fieldset class="section-container">
       <legend>Operação &amp; Produção</legend>
       <div class="container" id="combustivelUsado">
@@ -46,6 +94,13 @@
         <label for="gadoAnos">Anos de Vida Média:</label>
           <input type="number" id="gadoAnos" step="0.01">
       </div>
+      <div class="container" id="maquinarios">
+        <h2>Maquinários</h2>
+        <label for="maquinarioHoras">Horas de Uso:</label>
+          <input type="number" id="maquinarioHoras" step="0.01">
+        <label for="maquinarioValor">Valor por Hora (R$):</label>
+          <input type="number" id="maquinarioValor" step="0.01">
+      </div>
       <div class="container" id="maoObra">
         <h2>Mão de Obra</h2>
         <label for="maoObraPessoas">Quantidade de Pessoas:</label>
@@ -55,53 +110,6 @@
         <label for="maoObraDias">Dias Trabalhados:</label>
           <input type="number" id="maoObraDias" step="1">
       </div>
-      <div class="container" id="maquinarios">
-        <h2>Maquinários</h2>
-        <label for="maquinarioHoras">Horas de Uso:</label>
-          <input type="number" id="maquinarioHoras" step="0.01">
-        <label for="maquinarioValor">Valor por Hora (R$):</label>
-          <input type="number" id="maquinarioValor" step="0.01">
-      </div>
-      <div class="container" id="producaoLeite">
-        <h2>Produção de Leite</h2>
-        <label for="producaoLeiteArea">Área da Fazenda (hectares):</label>
-          <input type="number" id="producaoLeiteArea" step="0.01">
-        <label for="producaoLeiteLitros">Produção de Leite (litros/dia):</label>
-          <input type="number" id="producaoLeiteLitros" step="0.01">
-      </div>
-    </fieldset>
-
-    <fieldset class="section-container">
-      <legend>Energia Não Renovável</legend>
-      <div class="container">
-        <h2>Água Usada</h2>
-        <label for="aguaUsada">Litros de Água Usada:</label>
-          <input type="number" id="aguaUsada">
-        <label for="qtdAnima">Quantide de Animais:</label>
-          <input type="number" id="qtdAnima">
-        <label for="litrosAdicionalDia">Litros adicionais por dia:</label>
-          <input type="number" id="litrosAdicionalDia">
-      </div>
-      <div class="container">
-        <h2>Perda do Solo</h2>
-        <label for="perdaSolo">Perda do Solo (toneladas/ano):</label>
-          <input type="number" id="perdaSolo" step="0.01">
-      </div>
-    </fieldset>
-
-    <fieldset class="section-container">
-      <legend>Energia Renovável</legend>
-      <div class="container" id="potencialQuimico">
-        <h2>Potencial Químico</h2>
-        <label for="potencialQuimicoArea">Área da Fazenda (hectares):</label>
-          <input type="number" id="potencialQuimicoArea" step="0.01">
-        <label for="potencialQuimicoChuva">Média de Chuva por Ano (m³):</label>
-          <input type="number" id="potencialQuimicoChuva" step="0.01">
-      </div>
-    </fieldset>
-
-    <fieldset class="section-container">
-      <legend>Contribuição Humana</legend>
       <div class="container" id="racao">
         <h2>Ração</h2>
         <label for="racaoSacas">Quantidade de Ração (sacas):</label>
@@ -109,12 +117,17 @@
         <label for="racaoValor">Valor da Saca (R$):</label>
           <input type="number" id="racaoValor" step="0.01">
       </div>
-      <div class="container" id="bens">
-        <h2>Consumo e Manutenção</h2>
-        <label for="consumoFazendaValor">Valor de Consumo e Manutenção (R$):</label>
-          <input type="number" id="consumoFazendaValor" step="0.01">
-        <label for="consumoFazendaAnos">Anos:</label>
-          <input type="number" id="consumoFazendaAnos" step="1">
+    </fieldset>
+
+    <!-- Produção -->
+    <fieldset class="section-container">
+      <legend>Produção</legend>
+      <div class="container" id="producaoLeite">
+        <h2>Produção de Leite</h2>
+        <label for="producaoLeiteArea">Área da Fazenda (hectares):</label>
+          <input type="number" id="producaoLeiteArea" step="0.01">
+        <label for="producaoLeiteLitros">Produção de Leite (litros/dia):</label>
+          <input type="number" id="producaoLeiteLitros" step="0.01">
       </div>
     </fieldset>
 

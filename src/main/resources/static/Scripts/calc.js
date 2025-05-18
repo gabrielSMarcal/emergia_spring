@@ -216,51 +216,94 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   });
 
+  /**
+   * Retorna true se TODOS os inputs numéricos estiverem preenchidos
+   */
+  function areAllInputsFilled() {
+    const inputs = document.querySelectorAll(".grid-container input[type='number']");
+    return Array.from(inputs).every(i => i.value.trim() !== "");
+  }
+
+  /**
+   * Retorna o título (h2) do primeiro container que tiver algum input vazio
+   * ou null se tudo estiver ok.
+   */
+  function findIncompleteContainer() {
+    const containers = document.querySelectorAll(".grid-container .container");
+    for (const container of containers) {
+      const inputs = container.querySelectorAll("input[type='number']");
+      if (Array.from(inputs).some(i => i.value.trim() === "")) {
+        // pega o texto do <h2> ou, se não existir, o id do container
+        return container.querySelector("h2")?.textContent || container.id;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Retorna um array com o texto de todos os <h2> cujos inputs não estão totalmente preenchidos
+   */
+  function findAllIncompleteContainers() {
+    const containers = document.querySelectorAll(".grid-container .container");
+    return Array.from(containers)
+      .filter(container => {
+        const inputs = container.querySelectorAll("input[type='number']");
+        return Array.from(inputs).some(i => i.value.trim() === "");
+      })
+      .map(container => container.querySelector("h2")?.textContent || container.id);
+  }
+
   // Botão para salvar no banco de dados
   const salvarNoBancoBtn = document.getElementById("salvarNoBanco");
   if (salvarNoBancoBtn) {
-      salvarNoBancoBtn.addEventListener("click", async (e) => {
-          e.preventDefault();
-          // Solicita que o usuário insira o nome da fazenda
-          const nomeFazenda = prompt("Por favor, insira o nome da fazenda:");
-          if (!nomeFazenda) {
-              alert("Nome da fazenda é obrigatório!");
-              return;
+    salvarNoBancoBtn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      const faltantes = findAllIncompleteContainers();
+      if (faltantes.length) {
+        alert(`Por favor, preencha as seções: ${faltantes.join(", ")}.`);
+        highlightMissing();
+        return;
+      }
+      // Solicita que o usuário insira o nome da fazenda
+      const nomeFazenda = prompt("Por favor, insira o nome da fazenda:");
+      if (!nomeFazenda) {
+          alert("Nome da fazenda é obrigatório!");
+          return;
+      }
+      // Adiciona o nome da fazenda ao objeto global de resultados com a chave esperada
+      window.calcResults["nomeFazenda"] = nomeFazenda;
+      
+      // Salva os resultados no localStorage para referência, se necessário
+      localStorage.setItem("calcResults", JSON.stringify(window.calcResults));
+      try {
+          const response = await fetch('http://localhost:8081/storeResults', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(window.calcResults)
+          });
+          console.log("Resposta do servidor:", response);
+          if (!response.ok) {
+              throw new Error("Erro na resposta do servidor: " + response.status);
           }
-          // Adiciona o nome da fazenda ao objeto global de resultados com a chave esperada
-          window.calcResults["nomeFazenda"] = nomeFazenda;
-          
-          // Salva os resultados no localStorage para referência, se necessário
-          localStorage.setItem("calcResults", JSON.stringify(window.calcResults));
-          try {
-              const response = await fetch('http://localhost:8081/storeResults', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify(window.calcResults)
-              });
-              console.log("Resposta do servidor:", response);
-              if (!response.ok) {
-                  throw new Error("Erro na resposta do servidor: " + response.status);
-              }
-              const data = await response.json();
-              console.log("Dados salvos com sucesso:", data);
-              alert("Dados salvos com sucesso!");
-          } catch (error) {
-              console.error("Erro ao salvar os dados no banco:", error);
-              alert("Erro ao salvar os dados no banco. Tente novamente.");
-          }
-      });
+          const data = await response.json();
+          console.log("Dados salvos com sucesso:", data);
+          alert("Dados salvos com sucesso!");
+      } catch (error) {
+          console.error("Erro ao salvar os dados no banco:", error);
+          alert("Erro ao salvar os dados no banco. Tente novamente.");
+      }
+    });
   }
 
   // Botão para visualizar resultado
   const visualizarResultadoBtn = document.getElementById("visualizarResultado")
                            || document.querySelector("button[onclick*='resultado.html']");
   if (visualizarResultadoBtn) {
-      visualizarResultadoBtn.addEventListener("click", (e) => {
-          e.preventDefault();
-          // Apenas redireciona para a página de resultado
-          window.location.href = "resultado.html";
-      });
+    visualizarResultadoBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      // removida validação de campos obrigatórios para permitir sempre ir a resultado.html
+      window.location.href = "resultado.html";
+    });
   }
 });
 
@@ -359,4 +402,15 @@ function saveResultsToServer() {
     .then(data => console.log('Dados salvos com sucesso', data))
     .catch(error => console.error('Erro ao salvar os dados:', error));
     console.log(window.calcResults);
+}
+
+// Função para destacar campos numéricos obrigatórios que estão vazios
+function highlightMissing() {
+  document.querySelectorAll(".grid-container input[type='number']").forEach(input => {
+    if (input.value.trim() === "") {
+      input.classList.add("input-error");
+    } else {
+      input.classList.remove("input-error");
+    }
+  });
 }

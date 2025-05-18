@@ -21,7 +21,7 @@ public class CalculoTotal {
     private double calculoTotal;
 
     @Autowired
-    private RelatorioRepository relatorioRepository; // agora injetado automaticamente
+    private RelatorioRepository relatorioRepository;
 
     public double getCalculoTotal() {
         return calculoTotal;

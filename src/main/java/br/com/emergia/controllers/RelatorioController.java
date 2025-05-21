@@ -136,10 +136,4 @@ public class RelatorioController {
         return relatorioRepository.findLatest()
                  .orElseThrow(() -> new RuntimeException("Nenhum relatório encontrado"));
     }
-    
-    @GetMapping("/getCalculoTotal")
-    public CalculoTotal getCalculoTotal() {
-        calculoTotal.calcularTotais();
-        return calculoTotal;
-    }
 }

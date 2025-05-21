@@ -299,23 +299,36 @@ document.addEventListener("DOMContentLoaded", () => {
       if (faltantes.length) {
         alert(`Por favor, preencha todos os campos das seções: ${faltantes.join(", ")}`);
         highlightMissing();
-      } else {
-        saveResultsToServer();
-        
-        // Feedback visual
-        const btn = salvarNoBancoBtn;
-        btn.disabled = true;
-        btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Salvando...';
+        return;
+      }
+      
+      // Solicitar o nome da fazenda se não estiver definido
+      if (!window.calcResults.nomeFazenda) {
+        const nomeFazenda = prompt("Por favor, informe o nome da fazenda:");
+        if (nomeFazenda && nomeFazenda.trim() !== "") {
+           window.calcResults.nomeFazenda = nomeFazenda.trim();
+        } else {
+           alert("Nome da fazenda é obrigatório para salvar os dados.");
+           return;
+        }
+      }
+      
+      // Salva os dados no servidor
+      saveResultsToServer();
+      
+      // Feedback visual
+      const btn = salvarNoBancoBtn;
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Salvando...';
+      
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-check-circle me-2"></i>Salvo com Sucesso';
         
         setTimeout(() => {
-          btn.disabled = false;
-          btn.innerHTML = '<i class="fas fa-check-circle me-2"></i>Salvo com Sucesso';
-          
-          setTimeout(() => {
-            btn.innerHTML = '<i class="fas fa-save me-2"></i>Salvar no Banco';
-          }, 3000);
-        }, 1500);
-      }
+          btn.innerHTML = '<i class="fas fa-save me-2"></i>Salvar no Banco';
+        }, 3000);
+      }, 1500);
     });
   }
 

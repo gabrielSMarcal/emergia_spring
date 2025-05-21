@@ -7,11 +7,11 @@ import br.com.emergia.models.subtotais.SubtotalContribuicaoHumana;
 import br.com.emergia.repository.RelatorioRepository;
 
 public class EIR {
-    private RelatorioRepository relatorioRepository;
-
+    private final RelatorioRepository repo;
+    public EIR(RelatorioRepository repo) { this.repo = repo; }
 
     public double calEIR(){
-        Relatorio ultimo = relatorioRepository.findLatest()
+        Relatorio ultimo = repo.findLatest()
                 .orElseThrow(() -> new RuntimeException("Nenhum relatório encontrado"));
 
         SubtotalAmbiental subtotalAmbiental = new SubtotalAmbiental();

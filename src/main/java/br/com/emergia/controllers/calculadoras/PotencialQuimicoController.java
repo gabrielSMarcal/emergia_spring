@@ -1,4 +1,4 @@
-package br.com.emergia.controllers;
+package br.com.emergia.controllers.calculadoras;
 
 import br.com.emergia.models.contribuicaoAmbiental.energiaRenovavel.PotencialQuimico;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package br.com.emergia.controllers;
+package br.com.emergia.controllers.calculadoras;
 
 import br.com.emergia.models.contribuicaoHumana.bens.ValorConsumoManutencao;
 import java.util.HashMap;

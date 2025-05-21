@@ -5,21 +5,13 @@ import br.com.emergia.database.Relatorio;
 import br.com.emergia.repository.RelatorioRepository;
 
 public class ESI {
-    private RelatorioRepository relatorioRepository;
-
-
+    private final RelatorioRepository repo;
+    public ESI(RelatorioRepository repo) { this.repo = repo; }
 
     public double calESI(){
-        Relatorio ultimo = relatorioRepository.findLatest()
-                .orElseThrow(() -> new RuntimeException("Nenhum relatório encontrado"));
-
-        EYR eyr = new EYR();
-        ELR elr = new ELR();
-        // ESI = EYR / ELR
-        // indicador que avalia o potencial de sustentabilidade de um sistema, relacionando o benefício ambiental com a carga ambiental que ele gera.
-        double resulESI = eyr.calEYR() / elr.calELR();
-
-        return resulESI;
+        double eyr = new EYR(repo).calEYR();
+        double elr = new ELR(repo).calELR();
+        return eyr / elr;
 
         /*
         ESI > 10: Sistema altamente sustentável.

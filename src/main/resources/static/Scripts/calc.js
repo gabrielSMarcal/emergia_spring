@@ -281,13 +281,18 @@ document.addEventListener("DOMContentLoaded", () => {
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify(window.calcResults)
           });
-          console.log("Resposta do servidor:", response);
-          if (!response.ok) {
-              throw new Error("Erro na resposta do servidor: " + response.status);
-          }
+          if (!response.ok) throw new Error("Erro na resposta do servidor: " + response.status);
           const data = await response.json();
-          console.log("Dados salvos com sucesso:", data);
           alert("Dados salvos com sucesso!");
+
+          // --- nova chamada para calcular e salvar sustentabilidade ---
+          const respSust = await fetch('http://localhost:8081/sustentabilidade/calcular', {
+              method: 'POST'
+          });
+          if (!respSust.ok) throw new Error("Falha ao calcular sustentabilidade");
+          const sustData = await respSust.json();
+          console.log("Sustentabilidade salva:", sustData);
+          alert("Índice de sustentabilidade salvo!");
       } catch (error) {
           console.error("Erro ao salvar os dados no banco:", error);
           alert("Erro ao salvar os dados no banco. Tente novamente.");

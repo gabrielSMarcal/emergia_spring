@@ -433,5 +433,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
         table.appendChild(tbody);
         container.appendChild(table);
+
+        // --- busca e exibe sustentabilidade ---
+        try {
+            const resSust = await fetch("http://localhost:8081/sustentabilidade/ultima");
+            if (resSust.ok) {
+                const sust = await resSust.json();
+                const div = document.createElement("div");
+                div.style.marginTop = "30px";
+                div.innerHTML = `
+                  <h3 style="text-align:center;">Índices de Sustentabilidade</h3>
+                  <table style="margin:0 auto; border-collapse:collapse;">
+                    <thead>
+                      <tr>
+                        <th style="border:1px solid #ccc;padding:6px;">EYR</th>
+                        <th style="border:1px solid #ccc;padding:6px;">ELR</th>
+                        <th style="border:1px solid #ccc;padding:6px;">ESI</th>
+                        <th style="border:1px solid #ccc;padding:6px;">EIR</th>
+                        <th style="border:1px solid #ccc;padding:6px;">Data</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td style="border:1px solid #ccc;padding:6px;">${Number(sust.eyr).toFixed(2)}</td>
+                        <td style="border:1px solid #ccc;padding:6px;">${Number(sust.elr).toFixed(2)}</td>
+                        <td style="border:1px solid #ccc;padding:6px;">${Number(sust.esi).toFixed(2)}</td>
+                        <td style="border:1px solid #ccc;padding:6px;">${Number(sust.eir).toFixed(2)}</td>
+                        <td style="border:1px solid #ccc;padding:6px;">${new Date(sust.criadoEm).toLocaleString()}</td>
+                      </tr>
+                    </tbody>
+                  </table>`;
+                container.appendChild(div);
+            }
+        } catch(e) {
+            console.warn("Não foi possível carregar índices de sustentabilidade", e);
+        }
+
     })();
 });

@@ -1,42 +1,44 @@
 package br.com.emergia.services;
 
 import br.com.emergia.database.Sustentabilidade;
-import br.com.emergia.repository.*;
-import br.com.emergia.models.sustentabilidade.*;
+import br.com.emergia.repository.RelatorioRepository;
+import br.com.emergia.repository.SustentabilidadeRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SustentabilidadeService  {
+public class SustentabilidadeService {
 
-    private final RelatorioRepository relRepo;
-    private final SustentabilidadeRepository susRepo;
+    private final SustentabilidadeRepository repo;
+    private final RelatorioRepository relRepo; // injete também seu RelatorioRepository
+    private final CalculoTotal calculoTotal;
 
-    public SustentabilidadeService(RelatorioRepository relRepo,
-                                   SustentabilidadeRepository susRepo) {
+    public SustentabilidadeService(SustentabilidadeRepository repo,
+                                   RelatorioRepository relRepo,
+                                   CalculoTotal calculoTotal) {
+        this.repo = repo;
         this.relRepo = relRepo;
-        this.susRepo = susRepo;
+        this.calculoTotal = calculoTotal;
     }
 
     public Sustentabilidade calcularESalvar() {
+        // Exemplo de fluxo: busca último relatório, calcula índices...
         var rel = relRepo.findLatest()
-            .orElseThrow(() -> new RuntimeException("Nenhum relatório"));
-
-        double eyr = new EYR(relRepo).calEYR();
-        double elr = new ELR(relRepo).calELR();
-        double esi = new ESI(relRepo).calESI();
-        double eir = new EIR(relRepo).calEIR();
+            .orElseThrow(() -> new RuntimeException("Nenhum relatório para processar"));
 
         Sustentabilidade s = new Sustentabilidade();
         s.setRelatorio(rel);
-        s.setEyr(eyr);
-        s.setElr(elr);
-        s.setEsi(esi);
-        s.setEir(eir);
-        return susRepo.save(s);
+
+        // preencha eyr, elr, esi, eir usando calculoTotal ou sua lógica
+        calculoTotal.calcularTotais();
+        s.setEyr(calculoTotal.getEyr());
+        s.setElr(calculoTotal.getElr());
+        s.setEsi(calculoTotal.getEsi());
+        s.setEir(calculoTotal.getEir());
+        return repo.save(s);
     }
 
     public Sustentabilidade buscarUltima() {
-        return susRepo.findFirstByOrderByIdDesc()
-            .orElseThrow(() -> new RuntimeException("Nenhuma sustentabilidade registrada"));
+        return repo.findLatest()
+                   .orElseThrow(() -> new RuntimeException("Nenhum índice de sustentabilidade encontrado"));
     }
 }

@@ -377,13 +377,27 @@ function findAllIncompleteContainers() {
 
 // Função para exibir o resultado abaixo do campo correspondente e armazená-lo
 function displayResult(fieldId, result) {
+  // Mapear o fieldId utilizado nos cálculos para a chave esperada no relatório
+  const keyMapping = {
+    potencialQuimicoArea: 'calcPotencialQuimico',
+    aguaUsada: 'calcAguaUsada',
+    perdaSolo: 'calcPerdaSolo',
+    combustivelHoras: 'calcCombustivelUsado',
+    eletrica: 'calcEletricidade',
+    gadoPeso: 'calcGado',
+    maoObraPessoas: 'calcMaoObra',
+    maquinarioHoras: 'calcMaquinarios',
+    racaoSacas: 'calcRacao',
+    producaoLeiteArea: 'calcProducaoLeite',
+    consumoFazendaValor: 'calcBens'
+  };
+  const reportKey = keyMapping[fieldId] || fieldId;
+  
   let resultElement = document.getElementById(`${fieldId}-result`);
   
   if (resultElement) {
-    // Remove a classe d-none para mostrar o resultado
     resultElement.classList.remove('d-none');
     
-    // Se o resultado for um objeto com as 3 propriedades, exibe todos
     if (typeof result === 'object' && result.calc !== undefined && result.ref !== undefined && result.razao !== undefined) {
       resultElement.innerHTML = `
         <div class="row">
@@ -399,7 +413,6 @@ function displayResult(fieldId, result) {
         </div>
       `;
     } else {
-      // fallback para resultado numérico único
       let numericResult = Number(result);
       resultElement.innerHTML = `Resultado: ${numericResult.toExponential(2).toUpperCase()}`;
     }
@@ -408,32 +421,21 @@ function displayResult(fieldId, result) {
     let containerElem = document.getElementById(fieldId) || document.querySelector(`#${fieldId}`);
     let container = containerElem ? containerElem.closest(".card-body, .accordion-body") : null;
     let label = "";
-    
     if (container) {
       const heading = container.closest('.card')?.querySelector('.card-header h5') || 
-                     container.closest('.accordion-item')?.querySelector('.accordion-button');
+                      container.closest('.accordion-item')?.querySelector('.accordion-button');
       label = heading?.textContent || fieldId;
-      
-      let inputElements = container.querySelectorAll('input');
-      let inputsStr = Array.from(inputElements).map(inp => inp.value).join(', ');
-      
-      window.calcResults[fieldId] = {
-        label: label,
-        inputs: inputsStr,
-        result: resultElement.innerHTML
-      };
     }
     
-    // Salva apenas os valores numéricos no objeto global
+    // Salvar os valores numéricos com a chave padronizada para o relatório
     if (!window.calcResults) window.calcResults = {};
     if (typeof result === 'object' && result.calc !== undefined && result.ref !== undefined && result.razao !== undefined) {
-      window.calcResults[fieldId] = {
+      window.calcResults[reportKey] = {
         calc: Number(result.calc),
         ref: Number(result.ref),
         razao: Number(result.razao)
       };
     }
-    
     localStorage.setItem("calcResults", JSON.stringify(window.calcResults));
   }
 }

@@ -390,21 +390,36 @@ function findAllIncompleteContainers() {
 
 // Função para exibir o resultado abaixo do campo correspondente e armazená-lo
 function displayResult(fieldId, result) {
-  // Mapear o fieldId utilizado nos cálculos para a chave esperada no relatório
-  const keyMapping = {
-    potencialQuimicoArea: 'calcPotencialQuimico',
-    aguaUsada: 'calcAguaUsada',
-    perdaSolo: 'calcPerdaSolo',
-    combustivelHoras: 'calcCombustivelUsado',
-    eletrica: 'calcEletricidade',
-    gadoPeso: 'calcGado',
-    maoObraPessoas: 'calcMaoObra',
-    maquinarioHoras: 'calcMaquinarios',
-    racaoSacas: 'calcRacao',
-    producaoLeiteArea: 'calcProducaoLeite',
-    consumoFazendaValor: 'calcBens'
+  // Mapeia o fieldId para a chave do grupo esperada pelo backend
+  const groupMapping = {
+    potencialQuimicoArea: 'potencialQuimico',
+    potencialQuimicoChuva: 'potencialQuimico',
+    aguaUsada: 'aguaUsada',
+    qtdAnima: 'aguaUsada',
+    litrosAdicionalDia: 'aguaUsada',
+    soloToneladas: 'cuidadoSolo',
+    soloAnos: 'cuidadoSolo',
+    soloArea: 'cuidadoSolo',
+    combustivelHoras: 'combustivelUsado',
+    combustivelTratores: 'combustivelUsado',
+    combustivelLitros: 'combustivelUsado',
+    eletrica: 'eletricidade',
+    gadoPeso: 'gado',
+    gadoQuantidade: 'gado',
+    gadoAnos: 'gado',
+    maoObraPessoas: 'maoObra',
+    maoObraHoras: 'maoObra',
+    maoObraDias: 'maoObra',
+    maquinarioHoras: 'maquinarios',
+    maquinarioValor: 'maquinarios',
+    racaoSacas: 'racao',
+    racaoValor: 'racao',
+    producaoLeiteArea: 'producaoLeite',
+    producaoLeiteLitros: 'producaoLeite',
+    consumoFazendaValor: 'bens',
+    consumoFazendaAnos: 'bens'
   };
-  const reportKey = keyMapping[fieldId] || fieldId;
+  const groupKey = groupMapping[fieldId] || fieldId;
   
   let resultElement = document.getElementById(`${fieldId}-result`);
   
@@ -430,25 +445,16 @@ function displayResult(fieldId, result) {
       resultElement.innerHTML = `Resultado: ${numericResult.toExponential(2).toUpperCase()}`;
     }
     
-    // Atualiza objeto global com os detalhes
-    let containerElem = document.getElementById(fieldId) || document.querySelector(`#${fieldId}`);
-    let container = containerElem ? containerElem.closest(".card-body, .accordion-body") : null;
-    let label = "";
-    if (container) {
-      const heading = container.closest('.card')?.querySelector('.card-header h5') || 
-                      container.closest('.accordion-item')?.querySelector('.accordion-button');
-      label = heading?.textContent || fieldId;
-    }
-    
-    // Salvar os valores numéricos com a chave padronizada para o relatório
+    // Atualiza objeto global agrupando os resultados conforme esperado
     if (!window.calcResults) window.calcResults = {};
     if (typeof result === 'object' && result.calc !== undefined && result.ref !== undefined && result.razao !== undefined) {
-      window.calcResults[reportKey] = {
+      window.calcResults[groupKey] = {
         calc: Number(result.calc),
         ref: Number(result.ref),
         razao: Number(result.razao)
       };
     }
+    // Também persiste no localStorage
     localStorage.setItem("calcResults", JSON.stringify(window.calcResults));
   }
 }

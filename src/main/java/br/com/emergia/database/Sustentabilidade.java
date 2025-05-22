@@ -11,7 +11,7 @@ public class Sustentabilidade {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "relatorio_id", nullable = false)
+    @JoinColumn(name = "relatorio_id", foreignKey = @ForeignKey(value = ConstraintMode.NO_CONSTRAINT))
     private Relatorio relatorio;
 
     private Double eyr;

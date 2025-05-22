@@ -497,7 +497,15 @@ function saveResultsToServer() {
   })
   .then(response => response.json())
   .then(data => {
-    console.log('Dados salvos com sucesso', data);
+    // Supondo que o backend retorna o relatório salvo com id
+    if (data.id) {
+        // Chama o endpoint para calcular e salvar os índices de sustentabilidade
+        fetch(`http://localhost:8081/sustentabilidade/calcular/${data.id}`, { method: 'POST' })
+            .then(res => res.json())
+            .then(sust => {
+                console.log('Índices de sustentabilidade salvos:', sust);
+            });
+    }
     showToast('Dados salvos com sucesso!', 'success');
   })
   .catch(error => {

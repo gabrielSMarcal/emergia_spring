@@ -19,8 +19,6 @@ public class Sustentabilidade {
     private Double esi;
     private Double eir;
 
-    private LocalDateTime criadoEm = LocalDateTime.now();
-
     // getters/setters
     public Long getId() { return id; }
     public Relatorio getRelatorio() { return relatorio; }
@@ -33,5 +31,4 @@ public class Sustentabilidade {
     public void setEsi(Double esi) { this.esi = esi; }
     public Double getEir() { return eir; }
     public void setEir(Double eir) { this.eir = eir; }
-    public LocalDateTime getCriadoEm() { return criadoEm; }
 }

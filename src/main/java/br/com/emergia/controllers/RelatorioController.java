@@ -139,7 +139,7 @@ public class RelatorioController {
 
     @GetMapping("/getCalculoTotal")
     public CalculoTotal getCalculoTotal() {
-        // Retorna o objeto injetado com os cálculos totais
+        calculoTotal.calcularTotais();
         return calculoTotal;
     }
 }

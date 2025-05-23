@@ -30,8 +30,8 @@ public class SubtotalAmbiental {
         return totalNaoRenovavel;
     }
 
-    public double somaAmbiental() {
-        totalAmbiental = totalRenovavel + totalNaoRenovavel;
+    public double somaAmbiental(double refPotencialQuimico, double refAguaUsada, double refPerdaSolo) {
+        totalAmbiental = calcRenovavel(refPotencialQuimico) + calcNaoRenovavel(refAguaUsada, refPerdaSolo);
         return totalAmbiental;
     }
 }

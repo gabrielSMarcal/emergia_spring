@@ -22,7 +22,8 @@ public class EIR {
         // Mede quanto da energia total usada vem da sociedade urbana em relação à energia fornecida pela natureza.
         double resulEIR = subtotalContribuicaoHumana.calcContribuicaoHumana(
                 ultimo.getRefBens(), ultimo.getRefCombustivelUsado(), ultimo.getRefEletricidade(), ultimo.getRefGado(),
-                ultimo.getRefMaoObra(), ultimo.getRefMaquinarios(), ultimo.getRefRacao(), ultimo.getRefCuidadoSolo()) / subtotalAmbiental.somaAmbiental();
+                ultimo.getRefMaoObra(), ultimo.getRefMaquinarios(), ultimo.getRefRacao(), ultimo.getRefCuidadoSolo())
+                / subtotalAmbiental.somaAmbiental(ultimo.getRefPotencialQuimico(), ultimo.getRefAguaUsada(), ultimo.getRefPerdaSolo());
 
         return resulEIR;
 

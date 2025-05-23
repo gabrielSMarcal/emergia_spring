@@ -36,7 +36,9 @@ public class CalculoTotal {
         SubtotalAmbiental subtotalAmbiental = new SubtotalAmbiental();
         totalRenovavel = subtotalAmbiental.calcRenovavel(ultimo.getRefPotencialQuimico());
         totalNaoRenovavel = subtotalAmbiental.calcNaoRenovavel(ultimo.getRefAguaUsada(), ultimo.getRefPerdaSolo());
-        totalAmbiental = subtotalAmbiental.somaAmbiental();
+        totalAmbiental = subtotalAmbiental.somaAmbiental(ultimo.getRefPotencialQuimico(),
+                ultimo.getRefAguaUsada(),
+                ultimo.getRefPerdaSolo());
 
         SubtotalContribuicaoHumana subtotalContribuicaoHumana = new SubtotalContribuicaoHumana();
         totalBens = subtotalContribuicaoHumana.calcBens(ultimo.getRefBens());

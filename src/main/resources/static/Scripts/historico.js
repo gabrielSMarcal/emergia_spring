@@ -37,14 +37,14 @@ document.addEventListener("DOMContentLoaded", async function() {
             // Ensure relatorio and relatorio.id exist before fetching
             if (item.relatorio && item.relatorio.id) {
                 return fetch(`http://localhost:8081/relatorio/${item.relatorio.id}`)
-                    .then(res => res.ok ? res.json() : { nomeFazenda: "Não encontrado" })
+                    .then(res => res.ok ? res.json() : { nomeDaFazenda: "Não encontrado" })
                     .catch(err => {
                         console.error(`Erro ao buscar relatório ${item.relatorio.id}:`, err);
-                        return { nomeFazenda: "Erro ao buscar" };
+                        return { nomeDaFazenda: "Erro ao buscar" };
                     });
             } else {
                 console.warn("Registro de sustentabilidade sem ID de relatório:", item);
-                return Promise.resolve({ nomeFazenda: "Relatório ausente" });
+                return Promise.resolve({ nomeDaFazenda: "Relatório ausente" });
             }
         });
 
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", async function() {
             card.className = "historico-item";
             
             const formattedDate = new Date(item.criadoEm).toLocaleString('pt-BR');
-            const farmName = reportDetails[index]?.nomeFazenda || "Não informado";
+            const farmName = item.nomeDaFazenda || "Não informado";
             
             card.innerHTML = `
                 <h3>Registro #${item.id}</h3>
@@ -78,7 +78,6 @@ document.addEventListener("DOMContentLoaded", async function() {
                         <tr><td>EIR</td><td>${Number(item.eir).toFixed(2)}</td></tr>
                     </tbody>
                 </table>
-                <p class="data">Data: ${formattedDate}</p>
             `;
             
             historicoContainer.appendChild(card);

@@ -19,6 +19,9 @@ public class Sustentabilidade {
     private Double esi;
     private Double eir;
 
+    @Column(name = "nome_da_fazenda")
+    private String nomeDaFazenda;
+
     // getters/setters
     public Long getId() { return id; }
     public Relatorio getRelatorio() { return relatorio; }
@@ -31,4 +34,6 @@ public class Sustentabilidade {
     public void setEsi(Double esi) { this.esi = esi; }
     public Double getEir() { return eir; }
     public void setEir(Double eir) { this.eir = eir; }
+    public String getNomeDaFazenda() {return nomeDaFazenda;}
+    public void setNomeDaFazenda(String nomeDaFazenda) {this.nomeDaFazenda = nomeDaFazenda;}
 }

@@ -1,6 +1,6 @@
 import getDados from "./getDados.js";
 
-window.calcResults = {}; // Armazena os resultados globalmente
+window.calcResults = {};
 
 // Definição das seções e seus campos
 const sectionFields = {
@@ -487,31 +487,40 @@ function displayError(fieldId, errorMessage) {
 }
 
 function saveResultsToServer() {
+  const baseUrl = 'http://localhost:8081';
+
   localStorage.setItem("calcResults", JSON.stringify(window.calcResults));
-  fetch('http://localhost:8081/storeResults', {
+
+  fetch(`${baseUrl}/storeResults`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(window.calcResults)
   })
-  .then(response => response.json())
+  .then(res => {
+    if (!res.ok) throw new Error(`Erro ao salvar relatório: ${res.statusText}`);
+    return res.json();
+  })
   .then(data => {
-    // Supondo que o backend retorna o relatório salvo com id
     if (data.id) {
-        // Chama o endpoint para calcular e salvar os índices de sustentabilidade
-        fetch(`http://localhost:8081/sustentabilidade/calcular/${data.id}`, { method: 'POST' })
-            .then(res => res.json())
-            .then(sust => {
-                console.log('Índices de sustentabilidade salvos:', sust);
-            });
+      return fetch(`${baseUrl}/sustentabilidade/calcular/${data.id}`, {
+        method: 'POST'
+      });
     }
-    showToast('Dados salvos com sucesso!', 'success');
+    throw new Error('ID do relatório não retornado');
+  })
+  .then(res => {
+    if (!res.ok) throw new Error(`Erro ao calcular sustentabilidade: ${res.statusText}`);
+    return res.json();
+  })
+  .then(sust => {
+    console.log('Índices de sustentabilidade salvos:', sust);
+    showToast('Dados e índices salvos com sucesso!', 'success');
   })
   .catch(error => {
-    console.error('Erro ao salvar os dados:', error);
-    showToast('Erro ao salvar os dados. Tente novamente.', 'danger');
+    console.error(error);
+    showToast(`Erro: ${error.message}`, 'danger');
   });
+  
   console.log(window.calcResults);
 }
 

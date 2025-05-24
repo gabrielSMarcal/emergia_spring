@@ -48,6 +48,7 @@ public class SustentabilidadeService {
         sustentabilidade.setElr(elrValue);
         sustentabilidade.setEsi(esiValue);
         sustentabilidade.setEir(eirValue);
+        sustentabilidade.setNomeDaFazenda(relatorio.getNomeDaFazenda());
         
         return sustentabilidadeRepository.save(sustentabilidade);
     }

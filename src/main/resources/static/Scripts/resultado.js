@@ -9,6 +9,12 @@ document.addEventListener("DOMContentLoaded", function() {
             if (!response.ok) throw new Error("Erro ao buscar dados do relatório");
             const data = await response.json();
 
+            const title = document.createElement("h2");
+            title.textContent = `Fazenda: ${data.nomeDaFazenda || ""}`;
+            title.style.textAlign = "center";
+            title.style.marginBottom = "20px";
+            container.appendChild(title);
+
             // 2. Buscar totais do backend
             const totalResponse = await fetch("http://localhost:8081/getCalculoTotal");
             if (!totalResponse.ok) throw new Error("Erro ao buscar totais");

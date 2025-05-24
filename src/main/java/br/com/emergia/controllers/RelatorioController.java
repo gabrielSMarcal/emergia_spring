@@ -15,7 +15,7 @@ public class RelatorioController {
     private RelatorioRepository relatorioRepository;
     
     @Autowired
-    private CalculoTotal calculoTotal; // Injeção pelo Spring
+    private CalculoTotal calculoTotal;
 
     // Método auxiliar movido para fora do método salvarResultados
     private Double getDoubleValue(Map<String, Object> map, String key) {

@@ -47,13 +47,13 @@ document.addEventListener("DOMContentLoaded", function() {
                 document.head.appendChild(faLink);
             }
 
-            // Adicionar cabeçalho da tabela
-            // Aqui contém a explicação sobre o que é cada cálculo emergético
+            // Adicionar cabeçalho da tabela: mover <th>Unidade</th> entre Item e Unid/Ano
             thead.innerHTML = `
                 <tr style="background-color: #343a40; color: white;">
                     <th style="border: 1px solid #ccc; padding: 8px;">Categoria</th>
                     <th style="border: 1px solid #ccc; padding: 8px;">Subcategoria</th>
                     <th style="border: 1px solid #ccc; padding: 8px;">Item</th>
+                    <th style="border: 1px solid #ccc; padding: 8px;">Unidade</th>
                     <th style="border: 1px solid #ccc; padding: 8px;">
                         Unid/Ano 
                         <i class="fas fa-question-circle" style="cursor:help;" 
@@ -89,7 +89,8 @@ document.addEventListener("DOMContentLoaded", function() {
                                     label: "Potencial Químico",
                                     calc: data.calcPotencialQuimico,
                                     razao: data.razaoPotencialQuimico,
-                                    ref: data.refPotencialQuimico
+                                    ref: data.refPotencialQuimico,
+                                    unidade: "J"
                                 }
                             ]
                         },
@@ -100,13 +101,15 @@ document.addEventListener("DOMContentLoaded", function() {
                                     label: "Água Usada",
                                     calc: data.calcAguaUsada,
                                     razao: data.razaoAguaUsada,
-                                    ref: data.refAguaUsada
+                                    ref: data.refAguaUsada,
+                                    unidade: "J"
                                 },
                                 {
                                     label: "Perda de Solo",
                                     calc: data.calcPerdaSolo,
                                     razao: data.razaoPerdaSolo,
-                                    ref: data.refPerdaSolo
+                                    ref: data.refPerdaSolo,
+                                    unidade: "J"
                                 }
                             ]
                         }
@@ -123,7 +126,8 @@ document.addEventListener("DOMContentLoaded", function() {
                                     label: "Valor Consumo/Manutenção",
                                     calc: data.calcBens,
                                     razao: data.razaoBens,
-                                    ref: data.refBens
+                                    ref: data.refBens,
+                                    unidade: "$"
                                 }
                             ]
                         },
@@ -134,43 +138,50 @@ document.addEventListener("DOMContentLoaded", function() {
                                     label: "Combustível Usado",
                                     calc: data.calcCombustivelUsado,
                                     razao: data.razaoCombustivelUsado,
-                                    ref: data.refCombustivelUsado
+                                    ref: data.refCombustivelUsado,
+                                    unidade: "J"
                                 },
                                 {
                                     label: "Eletricidade",
                                     calc: data.calcEletricidade,
                                     razao: data.razaoEletricidade,
-                                    ref: data.refEletricidade
+                                    ref: data.refEletricidade,
+                                    unidade: "J"
                                 },
                                 {
                                     label: "Gado",
                                     calc: data.calcGado,
                                     razao: data.razaoGado,
-                                    ref: data.refGado
+                                    ref: data.refGado,
+                                    unidade: "J"
                                 },
                                 {
                                     label: "Mão de Obra",
                                     calc: data.calcMaoObra,
                                     razao: data.razaoMaoObra,
-                                    ref: data.refMaoObra
+                                    ref: data.refMaoObra,
+                                    unidade: "J"
                                 },
                                 {
                                     label: "Maquinários",
                                     calc: data.calcMaquinarios,
                                     razao: data.razaoMaquinarios,
-                                    ref: data.refMaquinarios
+                                    ref: data.refMaquinarios,
+                                    unidade: "J"
                                 },
                                 {
                                     label: "Ração",
                                     calc: data.calcRacao,
                                     razao: data.razaoRacao,
-                                    ref: data.refRacao
+                                    ref: data.refRacao,
+                                    unidade: "t"
                                 },
                                 {
                                     label: "Cuidado com o Solo",
                                     calc: data.calcCuidadoSolo,
                                     razao: data.razaoCuidadoSolo,
-                                    ref: data.refCuidadoSolo
+                                    ref: data.refCuidadoSolo,
+                                    unidade: "J"
                                 }
                             ]
                         }
@@ -187,7 +198,8 @@ document.addEventListener("DOMContentLoaded", function() {
                                     label: "Produção de Leite",
                                     calc: data.calcProducaoLeite,
                                     razao: data.razaoProducaoLeite,
-                                    ref: data.refProducaoLeite
+                                    ref: data.refProducaoLeite,
+                                    unidade: "J"
                                 }
                             ]
                         }
@@ -204,9 +216,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         subcategoryRow.innerHTML = `
                             <td style="border: 1px solid #ccc; padding: 8px;"></td>
                             <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">${subcategory.label}</td>
-                            <td style="border: 1px solid #ccc; padding: 8px;"></td>
-                            <td style="border: 1px solid #ccc; padding: 8px;"></td>
-                            <td style="border: 1px solid #ccc; padding: 8px;"></td>
+                            <td colspan="4" style="border:1px solid #ccc; padding:8px;"></td>
                             <td style="border: 1px solid #ccc; padding: 8px;"></td>
                             <td style="border: 1px solid #ccc; padding: 8px;"></td>
                         `;
@@ -221,6 +231,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                 <td style="border: 1px solid #ccc; padding: 8px;"></td>
                                 <td style="border: 1px solid #ccc; padding: 8px;"></td>
                                 <td style="border: 1px solid #ccc; padding: 8px;">${item.label}</td>
+                                <td style="border: 1px solid #ccc; padding: 8px;">${item.unidade || ""}</td>
                                 <td style="border: 1px solid #ccc; padding: 8px;">${
                                     isFinite(item.calc) ? Number(item.calc).toExponential(2).toUpperCase() : (item.calc ?? "")
                                 }</td>
@@ -241,67 +252,87 @@ document.addEventListener("DOMContentLoaded", function() {
                         if (category === "ambiental" && subcategory.label === "Energia Renovável") {
                             const renovavelRow = document.createElement("tr");
                             renovavelRow.style.backgroundColor = "#f1f8e9";
+                            // Subtotal Renovável
                             renovavelRow.innerHTML = `
-                                <td></td>
-                                <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">Subtotal Renovável</td>
-                                <td colspan="3"></td>
-                                <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">
-                                    ${totais.totalRenovavel !== undefined ? Number(totais.totalRenovavel).toExponential(2).toUpperCase() : ""}
-                                </td>
-                                <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">
-                                    ${totais.porcentagemRenovavel !== undefined ? Number(totais.porcentagemRenovavel).toFixed(2) + "%" : ""}
-                                </td>
-                            `;
+                            <td style="border:1px solid #ccc; padding:8px;"></td>
+                            <td style="border:1px solid #ccc; padding:8px; font-weight:bold;">Subtotal Renovável</td>
+                            <td colspan="4" style="border:1px solid #ccc; padding:8px;"></td>
+                            <td style="border:1px solid #ccc; padding:8px; font-weight:bold;">
+                                ${Number(totais.totalRenovavel).toExponential(2).toUpperCase()}
+                            </td>
+                            <td style="border:1px solid #ccc; padding:8px; font-weight:bold;">
+                                ${Number(totais.porcentagemRenovavel).toFixed(2)}%
+                            </td>
+                            `;      
+                            
                             tbody.appendChild(renovavelRow);
                         }
                         if (category === "ambiental" && subcategory.label === "Energia Não Renovável") {
                             const naoRenovavelRow = document.createElement("tr");
                             naoRenovavelRow.style.backgroundColor = "#fff3cd";
+                            // Subtotal Não Renovável
                             naoRenovavelRow.innerHTML = `
-                                <td></td>
-                                <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">Subtotal Não Renovável</td>
-                                <td colspan="3"></td>
-                                <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">
-                                    ${totais.totalNaoRenovavel !== undefined ? Number(totais.totalNaoRenovavel).toExponential(2).toUpperCase() : ""}
-                                </td>
-                                <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">
-                                    ${totais.porcentagemNaoRenovavel !== undefined ? Number(totais.porcentagemNaoRenovavel).toFixed(2) + "%" : ""}
-                                </td>
+                              <td style="border:1px solid #ccc; padding:8px;"></td>
+                              <td style="border:1px solid #ccc; padding:8px; font-weight:bold;">
+                                Subtotal Não Renovável
+                              </td>
+                              <td colspan="4" style="border:1px solid #ccc; padding:8px;"></td>
+                              <td style="border:1px solid #ccc; padding:8px; font-weight:bold;">
+                                ${totais.totalNaoRenovavel !== undefined 
+                                  ? Number(totais.totalNaoRenovavel).toExponential(2).toUpperCase() 
+                                  : ""}
+                              </td>
+                              <td style="border:1px solid #ccc; padding:8px; font-weight:bold;">
+                                ${totais.porcentagemNaoRenovavel !== undefined 
+                                  ? Number(totais.porcentagemNaoRenovavel).toFixed(2) + "%" 
+                                  : ""}
+                              </td>
                             `;
                             tbody.appendChild(naoRenovavelRow);
                         }
                         if (category === "humana" && subcategory.label === "Operações de Produção") {
                             const operacoesRow = document.createElement("tr");
                             operacoesRow.style.backgroundColor = "#e3f2fd";
+                            // Subtotal Operações de Produção
                             operacoesRow.innerHTML = `
-                                <td></td>
-                                <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">Subtotal Operações de Produção</td>
-                                <td colspan="3"></td>
-                                <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">
-                                    ${totais.totalOperacoesProducao !== undefined ? Number(totais.totalOperacoesProducao).toExponential(2).toUpperCase() : ""}
-                                </td>
-                                <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">
-                                    ${totais.porcentagemOperacoesProducao !== undefined ? Number(totais.porcentagemOperacoesProducao).toFixed(2) + "%" : ""}
-                                </td>
+                              <td style="border:1px solid #ccc; padding:8px;"></td>
+                              <td style="border:1px solid #ccc; padding:8px; font-weight:bold;">
+                                Subtotal Operações de Produção
+                              </td>
+                              <td colspan="4" style="border:1px solid #ccc; padding:8px;"></td>
+                              <td style="border:1px solid #ccc; padding:8px; font-weight:bold;">
+                                ${totais.totalOperacoesProducao !== undefined 
+                                  ? Number(totais.totalOperacoesProducao).toExponential(2).toUpperCase() 
+                                  : ""}
+                              </td>
+                              <td style="border:1px solid #ccc; padding:8px; font-weight:bold;">
+                                ${totais.porcentagemOperacoesProducao !== undefined 
+                                  ? Number(totais.porcentagemOperacoesProducao).toFixed(2) + "%" 
+                                  : ""}
+                              </td>
                             `;
                             tbody.appendChild(operacoesRow);
                         }
                         if (category === "humana" && subcategory.label === "Bens") {
                             const bensRow = document.createElement("tr");
                             bensRow.style.backgroundColor = "#fce4ec";
+                            // Subtotal Bens
                             bensRow.innerHTML = `
-                                <td></td>
-                                <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">Subtotal Bens</td>
-                                <td colspan="3"></td>
-                                <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">
-                                    ${totais.totalBens !== undefined ? Number(totais.totalBens).toExponential(2).toUpperCase() : ""}
-                                </td>
-                                <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">
-                                    ${totais.porcentagemBens !== undefined
-                                        ? Number(totais.porcentagemBens).toFixed(2) + "%"
-                                        : ""
-                                    }
-                                </td>
+                              <td style="border:1px solid #ccc; padding:8px;"></td>
+                              <td style="border:1px solid #ccc; padding:8px; font-weight:bold;">
+                                Subtotal Bens
+                              </td>
+                              <td colspan="4" style="border:1px solid #ccc; padding:8px;"></td>
+                              <td style="border:1px solid #ccc; padding:8px; font-weight:bold;">
+                                ${totais.totalBens !== undefined 
+                                  ? Number(totais.totalBens).toExponential(2).toUpperCase() 
+                                  : ""}
+                              </td>
+                              <td style="border:1px solid #ccc; padding:8px; font-weight:bold;">
+                                ${totais.porcentagemBens !== undefined 
+                                  ? Number(totais.porcentagemBens).toFixed(2) + "%" 
+                                  : ""}
+                              </td>
                             `;
                             tbody.appendChild(bensRow);
                         }
@@ -310,13 +341,13 @@ document.addEventListener("DOMContentLoaded", function() {
                         const subtotalRow = document.createElement("tr");
                         subtotalRow.style.backgroundColor = "#e2e3e5";
                         subtotalRow.innerHTML = `
-                            <td style="border: 1px solid #ccc; padding: 8px;"></td>
-                            <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">Subtotal</td>
-                            <td style="border: 1px solid #ccc; padding: 8px;"></td>
-                            <td style="border: 1px solid #ccc; padding: 8px;"></td>
-                            <td style="border: 1px solid #ccc; padding: 8px;"></td>
-                            <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">${subtotalRef.toExponential(2).toUpperCase()}</td>
-                            <td style="border: 1px solid #ccc; padding: 8px;"></td>
+                          <td colspan="6" style="border:1px solid #ccc; padding:8px;"></td>
+                          <td style="border:1px solid #ccc; padding:8px; font-weight:bold;">
+                            ${subtotalRef.toExponential(2).toUpperCase()}
+                          </td>
+                          <td style="border:1px solid #ccc; padding:8px; font-weight:bold;">
+                            ${getBackendPercentage(category)}
+                          </td>
                         `;
                         tbody.appendChild(subtotalRow);
                     });
@@ -336,18 +367,26 @@ document.addEventListener("DOMContentLoaded", function() {
                     }
                     const totalCatRow = document.createElement("tr");
                     totalCatRow.style.backgroundColor = "#d1ecf1";
+                    // alinhando subtotal da categoria nas colunas 7 e 8 (como nos subtotais de subcategoria)
                     totalCatRow.innerHTML = `
-                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">${label}</td>
-                        <td style="border: 1px solid #ccc; padding: 8px;"></td>
-                        <td style="border: 1px solid #ccc; padding: 8px;"></td>
-                        <td style="border: 1px solid #ccc; padding: 8px;"></td>
-                        <td style="border: 1px solid #ccc; padding: 8px;"></td>
-                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">
-                            ${subtotalBackend !== "" ? Number(subtotalBackend).toExponential(2).toUpperCase() : ""}
-                        </td>
-                        <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">
-                            ${percentualBackend !== "" ? Number(percentualBackend).toFixed(2) + "%" : ""}
-                        </td>
+                    <td style="border:1px solid #ccc; padding:8px; font-weight:bold;">
+                        ${label}
+                    </td>
+                    <td style="border:1px solid #ccc; padding:8px;"></td>
+                    <td style="border:1px solid #ccc; padding:8px;"></td>
+                    <td style="border:1px solid #ccc; padding:8px;"></td>
+                    <td style="border:1px solid #ccc; padding:8px;"></td>
+                    <td style="border:1px solid #ccc; padding:8px;"></td>
+                    <td style="border:1px solid #ccc; padding:8px; font-weight:bold;">
+                        ${subtotalBackend !== "" 
+                            ? Number(subtotalBackend).toExponential(2).toUpperCase() 
+                            : ""}
+                    </td>
+                    <td style="border:1px solid #ccc; padding:8px; font-weight:bold;">
+                        ${percentualBackend !== "" 
+                            ? Number(percentualBackend).toFixed(2) + "%" 
+                            : ""}
+                    </td>
                     `;
                     tbody.appendChild(totalCatRow);
 
@@ -369,6 +408,7 @@ document.addEventListener("DOMContentLoaded", function() {
                             <td style="border: 1px solid #ccc; padding: 8px;">${
                                 isFinite(row.ref) ? Number(row.ref).toExponential(2).toUpperCase() : (row.ref ?? "")
                             }</td>
+                            <td style="border: 1px solid #ccc; padding: 8px;"></td>
                             <td style="border: 1px solid #ccc; padding: 8px;"></td>
                         `;
                         tbody.appendChild(tr);
@@ -395,13 +435,17 @@ document.addEventListener("DOMContentLoaded", function() {
             const totalRow = document.createElement("tr");
             totalRow.style.backgroundColor = "#d4edda";
             totalRow.innerHTML = `
-                <td colspan="5" style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">
+                <td colspan="6" style="border:1px solid #ccc; padding:8px; font-weight:bold;">
                     Total Geral
                 </td>
-                <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">
-                    ${totais.calculoTotal ? Number(totais.calculoTotal).toExponential(2).toUpperCase() : ""}
+                <td style="border:1px solid #ccc; padding:8px; font-weight:bold;">
+                    ${totais.calculoTotal 
+                        ? Number(totais.calculoTotal).toExponential(2).toUpperCase() 
+                        : ""}
                 </td>
-                <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">100%</td>
+                <td style="border:1px solid #ccc; padding:8px; font-weight:bold;">
+                    100%
+                </td>
             `;
             tbody.appendChild(totalRow);
             table.appendChild(tbody);
@@ -413,11 +457,31 @@ document.addEventListener("DOMContentLoaded", function() {
                 if (resSust.ok) {
                     const sust = await resSust.json();
 
-                    const analiseIndice = valor => {
-                        if (valor < 1.0) return "Sustentável";
-                        if (valor === 1.0) return "Equilibrado";
-                        if (valor > 1.0) return "Não sustentável";
-                        return "-";
+                    // Substituir a análise genérica por análises específicas:
+                    const analiseEYR = valor => {
+                        if (valor > 5) return "Muito alto: Sistema altamente eficiente e produtivo.";
+                        if (valor >= 2) return "Moderado: Traz mais emergia do que consome, mas com menor margem.";
+                        if (valor >= 1) return "Baixo: Sistema consome quase o mesmo que produz.";
+                        return "Muito baixo: Consome mais emergia da economia do que gera. Sistema ineficiente.";
+                    };
+
+                    const analiseELR = valor => {
+                        if (valor < 1) return "Uso predominantemente renovável, baixa carga ambiental.";
+                        if (valor === 1) return "Uso equilibrado entre emergias renováveis e não renováveis.";
+                        if (valor <= 10) return "Uso mais intenso de recursos não renováveis, alta carga ambiental.";
+                        return "Pressão ambiental crítica e insustentável.";
+                    };
+
+                    const analiseESI = valor => {
+                        if (valor > 10) return "Sistema altamente sustentável.";
+                        if (valor >= 1) return "Sustentabilidade moderada.";
+                        return "Baixa sustentabilidade, alto impacto ambiental.";
+                    };
+
+                    const analiseEIR = valor => {
+                        if (valor < 1) return "Boa sustentabilidade: A natureza fornece mais energia do que a sociedade investe.";
+                        if (valor === 1) return "Equilíbrio entre natureza e sociedade.";
+                        return "Alta dependência da economia: Sistema depende mais de bens e serviços humanos.";
                     };
 
                     const tabelaSust = document.createElement("table");
@@ -435,22 +499,22 @@ document.addEventListener("DOMContentLoaded", function() {
                             <tr>
                                 <td style="border:1px solid #ccc;padding:8px;">EYR</td>
                                 <td style="border:1px solid #ccc;padding:8px;text-align:center;">${Number(sust.eyr).toFixed(2)}</td>
-                                <td style="border:1px solid #ccc;padding:8px;text-align:center;">${analiseIndice(Number(sust.eyr))}</td>
+                                <td style="border:1px solid #ccc;padding:8px;text-align:center;">${analiseEYR(Number(sust.eyr))}</td>
                             </tr>
                             <tr>
                                 <td style="border:1px solid #ccc;padding:8px;">ELR</td>
                                 <td style="border:1px solid #ccc;padding:8px;text-align:center;">${Number(sust.elr).toFixed(2)}</td>
-                                <td style="border:1px solid #ccc;padding:8px;text-align:center;">${analiseIndice(Number(sust.elr))}</td>
+                                <td style="border:1px solid #ccc;padding:8px;text-align:center;">${analiseELR(Number(sust.elr))}</td>
                             </tr>
                             <tr>
                                 <td style="border:1px solid #ccc;padding:8px;">ESI</td>
                                 <td style="border:1px solid #ccc;padding:8px;text-align:center;">${Number(sust.esi).toFixed(2)}</td>
-                                <td style="border:1px solid #ccc;padding:8px;text-align:center;">${analiseIndice(Number(sust.esi))}</td>
+                                <td style="border:1px solid #ccc;padding:8px;text-align:center;">${analiseESI(Number(sust.esi))}</td>
                             </tr>
                             <tr>
                                 <td style="border:1px solid #ccc;padding:8px;">EIR</td>
                                 <td style="border:1px solid #ccc;padding:8px;text-align:center;">${Number(sust.eir).toFixed(2)}</td>
-                                <td style="border:1px solid #ccc;padding:8px;text-align:center;">${analiseIndice(Number(sust.eir))}</td>
+                                <td style="border:1px solid #ccc;padding:8px;text-align:center;">${analiseEIR(Number(sust.eir))}</td>
                             </tr>
                         </tbody>
                     `;

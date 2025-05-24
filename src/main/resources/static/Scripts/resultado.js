@@ -38,15 +38,38 @@ document.addEventListener("DOMContentLoaded", function() {
             table.style.marginBottom = "20px";
             
             const thead = document.createElement("thead");
+
+            // Add Font Awesome link if not already present in HTML
+            if (!document.querySelector('link[href*="font-awesome"]')) {
+                const faLink = document.createElement('link');
+                faLink.rel = 'stylesheet';
+                faLink.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css';
+                document.head.appendChild(faLink);
+            }
+
+            // Adicionar cabeçalho da tabela
+            // Aqui contém a explicação sobre o que é cada cálculo emergético
             thead.innerHTML = `
                 <tr style="background-color: #343a40; color: white;">
                     <th style="border: 1px solid #ccc; padding: 8px;">Categoria</th>
                     <th style="border: 1px solid #ccc; padding: 8px;">Subcategoria</th>
                     <th style="border: 1px solid #ccc; padding: 8px;">Item</th>
-                    <th style="border: 1px solid #ccc; padding: 8px;">Calculado</th>
-                    <th style="border: 1px solid #ccc; padding: 8px;">Razão</th>
-                    <th style="border: 1px solid #ccc; padding: 8px;">Referência</th>
-                    <th style="border: 1px solid #ccc; padding: 8px;">%</th>
+                    <th style="border: 1px solid #ccc; padding: 8px;">
+                        Unid/Ano 
+                        <i class="fas fa-question-circle" style="cursor:help;" 
+                           title="Valor de emergia calculado para este item, baseado nos dados de entrada fornecidos e na transformidade de referência. Representa a contribuição energética real do item para o sistema (em seJ)."></i>
+                    </th>
+                    <th style="border: 1px solid #ccc; padding: 8px;">
+                        Transformidade seJ/unid. 
+                        <i class="fas fa-question-circle" style="cursor:help;" 
+                           title="Indica uma relação específica ou proporção associada a este item no balanço energético. Pode representar a eficiência, a intensidade ou a comparação com outros fluxos."></i>
+                    </th>
+                    <th style="border: 1px solid #ccc; padding: 8px;">
+                        Emergia solar 
+                        <i class="fas fa-question-circle" style="cursor:help;" 
+                           title="Valor de referência (Transformidade) para este item, obtido da literatura científica (e.g., Odum). Usado como fator de conversão para calcular a emergia (em seJ/unidade)."></i>
+                    </th>
+                    <th style="border: 1px solid #ccc; padding: 8px;">% total de Emergia</th>
                 </tr>
             `;
             table.appendChild(thead);
@@ -274,7 +297,10 @@ document.addEventListener("DOMContentLoaded", function() {
                                     ${totais.totalBens !== undefined ? Number(totais.totalBens).toExponential(2).toUpperCase() : ""}
                                 </td>
                                 <td style="border: 1px solid #ccc; padding: 8px; font-weight: bold;">
-                                    ${totais.porcentagemBens !== undefined ? Number(totais.porcentagemBens).toFixed(2) + "%" : ""}
+                                    ${totais.porcentagemBens !== undefined
+                                        ? Number(totais.porcentagemBens).toFixed(2) + "%"
+                                        : ""
+                                    }
                                 </td>
                             `;
                             tbody.appendChild(bensRow);

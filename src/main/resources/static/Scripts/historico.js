@@ -54,33 +54,70 @@ document.addEventListener("DOMContentLoaded", async function() {
         // Limpar mensagem de processamento
         historicoContainer.innerHTML = '';
 
+        // Adicionar funções de análise de índices
+        const analiseEYR = valor => {
+            if (valor > 5) return "Muito sustentável";
+            if (valor >= 2) return "Moderado";
+            if (valor >= 1) return "Pouco sustentável";
+            return "Muito pouco sustentável";
+        };
+        const analiseELR = valor => {
+            if (valor < 1) return "Baixa carga ambiental";
+            if (valor === 1) return "Equilibrado";
+            if (valor <= 10) return "Alta carga ambiental";
+            return "Insistentável.";
+        };
+        const analiseESI = valor => {
+            if (valor > 10) return "Alta sustentabilidade";
+            if (valor >= 1) return "Sustentável.";
+            return "Baixa sustentabilidade";
+        };
+        const analiseEIR = valor => {
+            if (valor < 1) return "Boa sustentabilidade";
+            if (valor === 1) return "Equilíbrado";
+            return "Alta dependência da economia";
+        };
+
         // Criar e exibir os cards de histórico
         data.forEach((item, index) => {
             const card = document.createElement("div");
             card.className = "historico-item";
-            
-            const formattedDate = new Date(item.criadoEm).toLocaleString('pt-BR');
-            const farmName = item.nomeDaFazenda || "Não informado";
-            
+
             card.innerHTML = `
                 <h3>Registro #${item.id}</h3>
-                <p style="text-align:center; font-weight:bold; margin-bottom:10px;">Fazenda: ${farmName}</p>
+                <p style="text-align:center; font-weight:bold; margin-bottom:10px;">Fazenda: ${item.nomeDaFazenda || "Não informado"}</p>
                 <table>
                     <thead>
                         <tr>
                             <th>Índice</th>
                             <th>Valor</th>
+                            <th>Análise</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr><td>EYR</td><td>${Number(item.eyr).toFixed(2)}</td></tr>
-                        <tr><td>ELR</td><td>${Number(item.elr).toFixed(2)}</td></tr>
-                        <tr><td>ESI</td><td>${Number(item.esi).toFixed(2)}</td></tr>
-                        <tr><td>EIR</td><td>${Number(item.eir).toFixed(2)}</td></tr>
+                        <tr>
+                            <td>EYR</td>
+                            <td>${Number(item.eyr).toFixed(2)}</td>
+                            <td>${analiseEYR(Number(item.eyr))}</td>
+                        </tr>
+                        <tr>
+                            <td>ELR</td>
+                            <td>${Number(item.elr).toFixed(2)}</td>
+                            <td>${analiseELR(Number(item.elr))}</td>
+                        </tr>
+                        <tr>
+                            <td>ESI</td>
+                            <td>${Number(item.esi).toFixed(2)}</td>
+                            <td>${analiseESI(Number(item.esi))}</td>
+                        </tr>
+                        <tr>
+                            <td>EIR</td>
+                            <td>${Number(item.eir).toFixed(2)}</td>
+                            <td>${analiseEIR(Number(item.eir))}</td>
+                        </tr>
                     </tbody>
                 </table>
             `;
-            
             historicoContainer.appendChild(card);
         });
         

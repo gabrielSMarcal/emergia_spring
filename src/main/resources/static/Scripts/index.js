@@ -12,7 +12,7 @@ window.addEventListener('scroll', function () {
       const element = document.getElementById(id);
       if (element) {
         window.scrollTo({
-          top: element.offsetTop - 100, // ajusta para o nav fixo
+          top: element.offsetTop - 100,
           behavior: "smooth"
         });
       }

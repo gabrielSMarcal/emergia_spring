@@ -1,12 +1,11 @@
 document.addEventListener("DOMContentLoaded", async function() {
     const historicoContainer = document.getElementById("historico-container");
-    
-    // Clear the loading message
+
     historicoContainer.innerHTML = 
         '<p style="width: 100%; text-align: center; color: #888; font-style: italic;">Carregando histórico...</p>'; 
     
     try {
-        // Fetch all sustainability records from the backend
+        // Buscar todos os registros de sustentabilidade
         const response = await fetch("http://localhost:8081/sustentabilidade/all");
         
         if (!response.ok) {
@@ -15,7 +14,7 @@ document.addEventListener("DOMContentLoaded", async function() {
         
         const data = await response.json();
         
-        // Clear loading message before processing
+        // Limpar mensagem de carregamento
         historicoContainer.innerHTML = 
             '<p style="width: 100%; text-align: center; color: #888; font-style: italic;">Processando registros...</p>';
         
@@ -29,12 +28,14 @@ document.addEventListener("DOMContentLoaded", async function() {
             return;
         }
         
-        // Sort data by date (most recent first)
+        // Organizar os dados por data de criação, do mais recente para o mais antigo,
+        // por ordem de ID na entidade
         data.sort((a, b) => new Date(b.criadoEm) - new Date(a.criadoEm));
         
-        // Fetch report details (including farm name) for each sustainability record
+        // Buscar detalhes do relatório para cada registro
         const reportPromises = data.map(item => {
-            // Ensure relatorio and relatorio.id exist before fetching
+
+            // Validar relatórios
             if (item.relatorio && item.relatorio.id) {
                 return fetch(`http://localhost:8081/relatorio/${item.relatorio.id}`)
                     .then(res => res.ok ? res.json() : { nomeDaFazenda: "Não encontrado" })
@@ -50,10 +51,10 @@ document.addEventListener("DOMContentLoaded", async function() {
 
         const reportDetails = await Promise.all(reportPromises);
         
-        // Clear processing message
+        // Limpar mensagem de processamento
         historicoContainer.innerHTML = '';
 
-        // Create and append cards for each record
+        // Criar e exibir os cards de histórico
         data.forEach((item, index) => {
             const card = document.createElement("div");
             card.className = "historico-item";

@@ -5,6 +5,6 @@ export default function getDados(endpoint) {
         .then(responde => responde.json())
         .catch(error => {
             console.error('Erro ao buscar dados:', error);
-            throw error; // Re-throw the error for further handling if needed
+            throw error;
         })
 }

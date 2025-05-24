@@ -19,12 +19,15 @@ const sectionFields = {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
+
   // Inicializar tooltips do Bootstrap
-  const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+  const tooltipTriggerList = [].slice.call(document
+                                .querySelectorAll('[data-bs-toggle="tooltip"]'));
   tooltipTriggerList.map(function (tooltipTriggerEl) {
     return new bootstrap.Tooltip(tooltipTriggerEl);
   });
 
+  /* Ordem alfabética dos campos de entrada de dados e seus elementos para enviar ao Back*/
   // Água Usada
   const aguaInputs = {
     litros: document.getElementById("aguaUsada"),
@@ -196,7 +199,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const area = parseFloat(potencialQuimicoInputs.area.value);
       const chuva = parseFloat(potencialQuimicoInputs.chuva.value);
       if (!isNaN(area) && !isNaN(chuva)) {
-        // Parâmetros: haFazenda, mediaChuvaAnoMetros
         getDados(`potencialQuimico/calc?haFazenda=${area}&mediaChuvaAnoMetros=${chuva}`)
           .then(result => {
             displayResult("potencialQuimicoArea", result);
@@ -346,33 +348,8 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /**
- * Retorna true se TODOS os inputs numéricos estiverem preenchidos
- */
-function areAllInputsFilled() {
-  const inputs = document.querySelectorAll("input[type='number']");
-  return Array.from(inputs).every(i => i.value.trim() !== "");
-}
-
-/**
- * Retorna o título (h2) do primeiro container que tiver algum input vazio
- * ou null se tudo estiver ok.
- */
-function findIncompleteContainer() {
-  const containers = document.querySelectorAll(".card-body, .accordion-body");
-  for (const container of containers) {
-    const inputs = container.querySelectorAll("input[type='number']");
-    if (Array.from(inputs).some(i => i.value.trim() === "")) {
-      // pega o texto do <h5> ou, se não existir, o id do container
-      const heading = container.closest('.card')?.querySelector('.card-header h5') || 
-                     container.closest('.accordion-item')?.querySelector('.accordion-button');
-      return heading?.textContent || container.id;
-    }
-  }
-  return null;
-}
-
-/**
- * Retorna um array com o texto de todos os <h2> cujos inputs não estão totalmente preenchidos
+ * Retorna um array com o texto de todos os <h2> 
+ * cujos inputs não estão totalmente preenchidos
  */
 function findAllIncompleteContainers() {
   const containers = document.querySelectorAll(".card-body, .accordion-body");
@@ -383,13 +360,15 @@ function findAllIncompleteContainers() {
     })
     .map(container => {
       const heading = container.closest('.card')?.querySelector('.card-header h5') || 
-                     container.closest('.accordion-item')?.querySelector('.accordion-button');
+                     container.closest('.accordion-item')?.
+                     querySelector('.accordion-button');
       return heading?.textContent || container.id;
     });
 }
 
 // Função para exibir o resultado abaixo do campo correspondente e armazená-lo
 function displayResult(fieldId, result) {
+
   // Mapeia o fieldId para a chave do grupo esperada pelo backend
   const groupMapping = {
     potencialQuimicoArea: 'potencialQuimico',
@@ -426,7 +405,9 @@ function displayResult(fieldId, result) {
   if (resultElement) {
     resultElement.classList.remove('d-none');
     
-    if (typeof result === 'object' && result.calc !== undefined && result.ref !== undefined && result.razao !== undefined) {
+    if (typeof result === 'object' && result.calc !== undefined 
+      && result.ref !== undefined && result.razao !== undefined) {
+        
       resultElement.innerHTML = `
         <div class="row">
           <div class="col-md-4">
@@ -447,7 +428,8 @@ function displayResult(fieldId, result) {
     
     // Atualiza objeto global agrupando os resultados conforme esperado
     if (!window.calcResults) window.calcResults = {};
-    if (typeof result === 'object' && result.calc !== undefined && result.ref !== undefined && result.razao !== undefined) {
+    if (typeof result === 'object' && result.calc !== undefined 
+      && result.ref !== undefined && result.razao !== undefined) {
       window.calcResults[groupKey] = {
         calc: Number(result.calc),
         ref: Number(result.ref),
@@ -459,33 +441,7 @@ function displayResult(fieldId, result) {
   }
 }
 
-// Função para exibir erros no container correspondente
-function displayError(fieldId, errorMessage) {
-  let errorElement = document.getElementById(`${fieldId}-error`);
-  
-  // Localiza o container correspondente
-  let containerElem = document.getElementById(fieldId) || document.querySelector(`#${fieldId}`);
-  let container = containerElem ? containerElem.closest(".card-body, .accordion-body") : null;
-  
-  if (!container) {
-    console.warn(`Container não encontrado para o campo: ${fieldId}. Criando um container padrão.`);
-    container = document.createElement("div");
-    container.className = "card-body";
-    document.body.appendChild(container);
-  }
-  
-  // Se o elemento de erro não existir, cria um novo
-  if (!errorElement) {
-    errorElement = document.createElement("div");
-    errorElement.id = `${fieldId}-error`;
-    errorElement.className = "alert alert-danger mt-3";
-    container.appendChild(errorElement);
-  }
-  
-  // Atualiza o texto do erro
-  errorElement.textContent = `Erro (${fieldId}): ${errorMessage}`;
-}
-
+// Função para salvar os resultados no servidor
 function saveResultsToServer() {
   const baseUrl = 'http://localhost:8081';
 
@@ -551,7 +507,8 @@ function findSectionForField(fieldId) {
 // Função para atualizar a barra de progresso geral
 function updateProgressBar() {
   const totalInputs = document.querySelectorAll('input[type="number"]').length;
-  const filledInputs = Array.from(document.querySelectorAll('input[type="number"]')).filter(input => 
+  const filledInputs = Array.from(document
+    .querySelectorAll('input[type="number"]')).filter(input => 
     input.value.trim() !== '' && parseFloat(input.value) > 0
   ).length;
   const percentage = Math.round((filledInputs / totalInputs) * 100);

@@ -381,7 +381,7 @@ document.addEventListener("DOMContentLoaded", function() {
             table.appendChild(tbody);
             container.appendChild(table);
             
-            // --- busca e exibe sustentabilidade ---
+            // Buscar e exibir sustentabilidade
             try {
                 const resSust = await fetch("http://localhost:8081/sustentabilidade/latest");
                 if (resSust.ok) {
@@ -454,6 +454,7 @@ document.addEventListener("DOMContentLoaded", function() {
             chartContainer.appendChild(canvas);
             
             const ctx = canvas.getContext("2d");
+            
             // Dados para o gráfico
             const chartData = {
                 labels: [

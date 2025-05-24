@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     <th style="border: 1px solid #ccc; padding: 8px;">Item</th>
                     <th style="border: 1px solid #ccc; padding: 8px;">Unidade</th>
                     <th style="border: 1px solid #ccc; padding: 8px;">
-                        Unid/Ano 
+                        Unid./Ano 
                         <i class="fas fa-question-circle" style="cursor:help;" 
                            title="Valor de emergia calculado para este item, baseado nos dados de entrada fornecidos e na transformidade de referência. Representa a contribuição energética real do item para o sistema (em seJ)."></i>
                     </th>

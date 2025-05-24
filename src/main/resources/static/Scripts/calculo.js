@@ -345,6 +345,27 @@ document.addEventListener("DOMContentLoaded", () => {
   // Inicializar barras de progresso
   updateProgressBar();
   updateAllSectionProgress();
+
+  // Sincronizar campos que se repetem
+  const syncFields = ids => {
+    ids.forEach(id => {
+      const src = document.getElementById(id);
+      const targets = ids.filter(x => x !== id).map(x => document.getElementById(x));
+      src.addEventListener('input', () => {
+        targets.forEach(t => {
+          if (t.value !== src.value) {
+            t.value = src.value;
+            t.dispatchEvent(new Event('input', { bubbles: true }));
+          }
+        });
+      });
+    });
+  };
+
+  // Quantidade de Animais em Água Usada ↔ Gado
+  syncFields(['qtdAnima', 'gadoQuantidade']);
+  // Área da Fazenda em Potencial Químico ↔ Produção de Leite
+  syncFields(['potencialQuimicoArea', 'producaoLeiteArea']);
 });
 
 /**
@@ -411,13 +432,13 @@ function displayResult(fieldId, result) {
       resultElement.innerHTML = `
         <div class="row">
           <div class="col-md-4">
-            <strong>Calc:</strong> ${Number(result.calc).toExponential(2).toUpperCase()}
+            <strong>Unid./Ano:</strong> ${Number(result.calc).toExponential(2).toUpperCase()}
           </div>
           <div class="col-md-4">
-            <strong>Ref:</strong> ${Number(result.ref).toExponential(2).toUpperCase()}
+            <strong>Transformidade:</strong> ${Number(result.ref).toExponential(2).toUpperCase()}
           </div>
           <div class="col-md-4">
-            <strong>Razão:</strong> ${Number(result.razao).toExponential(2).toUpperCase()}
+            <strong>Emergia solar:</strong> ${Number(result.razao).toExponential(2).toUpperCase()}
           </div>
         </div>
       `;

@@ -497,24 +497,64 @@ document.addEventListener("DOMContentLoaded", function() {
                         </thead>
                         <tbody>
                             <tr>
-                                <td style="border:1px solid #ccc;padding:8px;">EYR</td>
-                                <td style="border:1px solid #ccc;padding:8px;text-align:center;">${Number(sust.eyr).toFixed(2)}</td>
-                                <td style="border:1px solid #ccc;padding:8px;text-align:center;">${analiseEYR(Number(sust.eyr))}</td>
+                                <td style="border:1px solid #ccc;padding:8px;">
+                                    EYR 
+                                    <i class="fas fa-question-circle" 
+                                       title="EYR (Emergy Yield Ratio): (R+N+F)/F | mede quanto de emergia total é gerada a partir da emergia importada.
+                                       Referências: >5 muito alto; 2–5 moderado; ≈1 baixo; <1 muito baixo." 
+                                       style="cursor:help;"></i>
+                                </td>
+                                <td style="border:1px solid #ccc;padding:8px;text-align:center;">
+                                    ${Number(sust.eyr).toFixed(2)}
+                                </td>
+                                <td style="border:1px solid #ccc;padding:8px;text-align:center;">
+                                    ${analiseEYR(Number(sust.eyr))}
+                                </td>
                             </tr>
                             <tr>
-                                <td style="border:1px solid #ccc;padding:8px;">ELR</td>
-                                <td style="border:1px solid #ccc;padding:8px;text-align:center;">${Number(sust.elr).toFixed(2)}</td>
-                                <td style="border:1px solid #ccc;padding:8px;text-align:center;">${analiseELR(Number(sust.elr))}</td>
+                                <td style="border:1px solid #ccc;padding:8px;">
+                                    ELR 
+                                    <i class="fas fa-question-circle" 
+                                       title="ELR (Environmental Loading Ratio): (N+F)/R | carga ambiental em função de recursos não-renováveis e contribuições humanas vs. recursos renováveis.
+                                       Referências: <1 baixo; ≈1 equilíbrio; >1 alto." 
+                                       style="cursor:help;"></i>
+                                </td>
+                                <td style="border:1px solid #ccc;padding:8px;text-align:center;">
+                                    ${Number(sust.elr).toFixed(2)}
+                                </td>
+                                <td style="border:1px solid #ccc;padding:8px;text-align:center;">
+                                    ${analiseELR(Number(sust.elr))}
+                                </td>
                             </tr>
                             <tr>
-                                <td style="border:1px solid #ccc;padding:8px;">ESI</td>
-                                <td style="border:1px solid #ccc;padding:8px;text-align:center;">${Number(sust.esi).toFixed(2)}</td>
-                                <td style="border:1px solid #ccc;padding:8px;text-align:center;">${analiseESI(Number(sust.esi))}</td>
+                                <td style="border:1px solid #ccc;padding:8px;">
+                                    ESI 
+                                    <i class="fas fa-question-circle" 
+                                       title="ESI (Emergy Sustainability Index): EYR/ELR | avalia a sustentabilidade integrando eficiência produtiva e carga ambiental.
+                                       Referências: >10 alta; 1–10 moderada; <1 baixa." 
+                                       style="cursor:help;"></i>
+                                </td>
+                                <td style="border:1px solid #ccc;padding:8px;text-align:center;">
+                                    ${Number(sust.esi).toFixed(2)}
+                                </td>
+                                <td style="border:1px solid #ccc;padding:8px;text-align:center;">
+                                    ${analiseESI(Number(sust.esi))}
+                                </td>
                             </tr>
                             <tr>
-                                <td style="border:1px solid #ccc;padding:8px;">EIR</td>
-                                <td style="border:1px solid #ccc;padding:8px;text-align:center;">${Number(sust.eir).toFixed(2)}</td>
-                                <td style="border:1px solid #ccc;padding:8px;text-align:center;">${analiseEIR(Number(sust.eir))}</td>
+                                <td style="border:1px solid #ccc;padding:8px;">
+                                    EIR 
+                                    <i class="fas fa-question-circle" 
+                                       title="EIR (Emergy Investment Ratio): F/I | mede quanto da energia total usada vem da sociedade vs. fornecida pela natureza.
+                                       Referências: <1 bom; ≈1 equilíbrio; >1 alta dependência." 
+                                       style="cursor:help;"></i>
+                                </td>
+                                <td style="border:1px solid #ccc;padding:8px;text-align:center;">
+                                    ${Number(sust.eir).toFixed(2)}
+                                </td>
+                                <td style="border:1px solid #ccc;padding:8px;text-align:center;">
+                                    ${analiseEIR(Number(sust.eir))}
+                                </td>
                             </tr>
                         </tbody>
                     `;

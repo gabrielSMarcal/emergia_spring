@@ -78,6 +78,14 @@ document.addEventListener("DOMContentLoaded", async function() {
             return "Alta dependência da economia";
         };
 
+        // Formata número: se tiver mais de 2 dígitos antes da vírgula, usa notação científica
+        const formatValor = valor => {
+            const abs = Math.abs(valor);
+            return abs >= 100 
+                ? valor.toExponential(1) 
+                : valor.toFixed(1);
+        };
+
         // Criar e exibir os cards de histórico
         data.forEach((item, index) => {
             const card = document.createElement("div");
@@ -85,7 +93,9 @@ document.addEventListener("DOMContentLoaded", async function() {
 
             card.innerHTML = `
                 <h3>Registro #${item.id}</h3>
-                <p style="text-align:center; font-weight:bold; margin-bottom:10px;">Fazenda: ${item.nomeDaFazenda || "Não informado"}</p>
+                <p style="text-align:center; font-weight:bold; margin-bottom:10px;">
+                    Fazenda: ${item.nomeDaFazenda || "Não informado"}
+                </p>
                 <table>
                     <thead>
                         <tr>
@@ -97,22 +107,22 @@ document.addEventListener("DOMContentLoaded", async function() {
                     <tbody>
                         <tr>
                             <td>EYR</td>
-                            <td>${Number(item.eyr).toFixed(2)}</td>
+                            <td>${formatValor(Number(item.eyr))}</td>
                             <td>${analiseEYR(Number(item.eyr))}</td>
                         </tr>
                         <tr>
                             <td>ELR</td>
-                            <td>${Number(item.elr).toFixed(2)}</td>
+                            <td>${formatValor(Number(item.elr))}</td>
                             <td>${analiseELR(Number(item.elr))}</td>
                         </tr>
                         <tr>
                             <td>ESI</td>
-                            <td>${Number(item.esi).toFixed(2)}</td>
+                            <td>${formatValor(Number(item.esi))}</td>
                             <td>${analiseESI(Number(item.esi))}</td>
                         </tr>
                         <tr>
                             <td>EIR</td>
-                            <td>${Number(item.eir).toFixed(2)}</td>
+                            <td>${formatValor(Number(item.eir))}</td>
                             <td>${analiseEIR(Number(item.eir))}</td>
                         </tr>
                     </tbody>

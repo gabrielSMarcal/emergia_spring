@@ -12,8 +12,6 @@ public class CombustivelUsado extends AtributosFixos {
     private double resulRefEmergiaSolarCombustivelUsado;
     private double razaoCombustivelUsado;
 
-    private String unidadeCombustivelUsado = "J";
-
     public CombustivelUsado() {}
 
     public CombustivelUsado(double horasTratorPorAno, double qtdTrator, double litrosPorHora) {

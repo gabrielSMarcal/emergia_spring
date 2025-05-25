@@ -12,9 +12,7 @@ public class ProducaoLeite extends AtributosFixos {
     private double resulProducaoLeiteAno;
     private double resulRefEmergiaSolarProducaoLeite;
     private double razaoProducaoLeite;
-
-    private String unidadeProducaoLeite = "J";
-
+    
     public ProducaoLeite() {}
 
     public ProducaoLeite(double leitePorDia, double haFazendaLeite) {

@@ -11,8 +11,6 @@ public class Maquinarios extends AtributosFixos {
     private double resulRefEmergiaSolarMaquinario;
     private double razaoMaquinario;
 
-    private String unidadeMaquinario = "J";
-
     public Maquinarios() {}
 
     public Maquinarios(double qtdHoraTrator, double valorHoraTrator) {

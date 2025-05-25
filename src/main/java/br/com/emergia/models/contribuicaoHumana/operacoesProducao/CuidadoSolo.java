@@ -12,8 +12,6 @@ public class CuidadoSolo extends AtributosFixos{
     private double resulRefEmergiaSolarCuidadoSolo;
     private double razaoCuidadoSolo;
 
-    private String unidadeCuidadoSolo = "J";
-
     public CuidadoSolo() {}
 
     public double getToneladasPorHa() {

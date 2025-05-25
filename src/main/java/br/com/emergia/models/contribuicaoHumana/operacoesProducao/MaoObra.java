@@ -13,8 +13,6 @@ public class MaoObra extends AtributosFixos {
     private double resulRefEmergiaSolarMaoObra;
     private double razaoMaoObra;
 
-    private String unidadeMaoObra = "J";
-
     public MaoObra() {}
 
     public MaoObra (int pessoa, double horasTrabalhada, int qtdDiasTrabalhado) {

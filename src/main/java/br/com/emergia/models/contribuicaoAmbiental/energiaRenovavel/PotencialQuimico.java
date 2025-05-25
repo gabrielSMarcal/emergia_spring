@@ -12,8 +12,6 @@ public class PotencialQuimico extends AtributosFixos {
     private double resulRefEmergiaSolarPotencialQuimico;
     private double razaoPotencialQuimico;
 
-    private String unidadePotencialQuimico = "J?";
-
     public PotencialQuimico() {}
 
     public PotencialQuimico(double haFazenda, double mediaChuvaAnoMetros) {

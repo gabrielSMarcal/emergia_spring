@@ -12,8 +12,6 @@ public class AguaUsada extends AtributosFixos {
     private double resulRefEmergiaSolarAguaUsada;
     private double razaoAguaUsada;
 
-    private String unidadeAguaUsada = "J";
-
     public AguaUsada() {}
 
     public AguaUsada (double litroPorDiaAnimal, int qtdAnimal, double litrosAdicionalDia) {

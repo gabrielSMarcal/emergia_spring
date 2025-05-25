@@ -11,8 +11,6 @@ public class Racao extends AtributosFixos{
     private double resulRefEmergiaSolarRacao;
     private double razaoRacao;
 
-    private String unidadeRacao = "t";
-
     public Racao () {}
 
     public Racao (int saca, double valorSaca) {

@@ -11,8 +11,6 @@ public class ValorConsumoManutencao extends AtributosFixos {
     private double resulRefEmergiaSolarVCM;
     private double razaoVCM;
 
-    private String unidadeVCM = "$";
-
     public ValorConsumoManutencao() {}
 
     public ValorConsumoManutencao (double bens, int anos) {
@@ -30,7 +28,7 @@ public class ValorConsumoManutencao extends AtributosFixos {
 
     public double calcBens() {
 
-        double dolarProvisorio = 6.7;
+
 
         try {
 

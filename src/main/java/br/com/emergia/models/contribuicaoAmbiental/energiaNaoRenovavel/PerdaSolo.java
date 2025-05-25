@@ -10,8 +10,6 @@ public class PerdaSolo extends AtributosFixos {
     private double resulRefEmergiaSolarPerdaSolo;
     private double razaoPerdaSolo;
 
-    private String unidadePerdaSolo = "J";
-
     public PerdaSolo() {}
 
     public PerdaSolo(double perdaDeSoloToneladasPorAno) {

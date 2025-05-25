@@ -10,8 +10,6 @@ public class Eletricidade extends AtributosFixos {
     private double resulRefEmergiaSolarEletricidade;
     private double razaoEletricidade;
 
-    private String unidadeEletricidade = "J";
-
     public Eletricidade() {}
 
     public Eletricidade (double energiaPORKWH) {

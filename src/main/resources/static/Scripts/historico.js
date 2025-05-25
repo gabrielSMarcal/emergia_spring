@@ -116,14 +116,14 @@ document.addEventListener("DOMContentLoaded", async function() {
                             <td>${analiseELR(Number(item.elr))}</td>
                         </tr>
                         <tr>
-                            <td>ESI</td>
-                            <td>${formatValor(Number(item.esi))}</td>
-                            <td>${analiseESI(Number(item.esi))}</td>
-                        </tr>
-                        <tr>
                             <td>EIR</td>
                             <td>${formatValor(Number(item.eir))}</td>
                             <td>${analiseEIR(Number(item.eir))}</td>
+                        </tr>
+                        <tr>
+                            <td>ESI</td>
+                            <td>${formatValor(Number(item.esi))}</td>
+                            <td>${analiseESI(Number(item.esi))}</td>
                         </tr>
                     </tbody>
                 </table>

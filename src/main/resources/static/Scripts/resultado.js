@@ -174,7 +174,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                     calc: data.calcRacao,
                                     razao: data.razaoRacao,
                                     ref: data.refRacao,
-                                    unidade: "t"
+                                    unidade: "$"
                                 },
                                 {
                                     label: "Cuidado com o Solo",
@@ -528,21 +528,6 @@ document.addEventListener("DOMContentLoaded", function() {
                             </tr>
                             <tr>
                                 <td style="border:1px solid #ccc;padding:8px;">
-                                    ESI 
-                                    <i class="fas fa-question-circle" 
-                                       title="ESI (Emergy Sustainability Index): EYR/ELR | avalia a sustentabilidade integrando eficiência produtiva e carga ambiental.
-                                       Referências: >10 alta; 1–10 moderada; <1 baixa." 
-                                       style="cursor:help;"></i>
-                                </td>
-                                <td style="border:1px solid #ccc;padding:8px;text-align:center;">
-                                    ${Number(sust.esi).toFixed(2)}
-                                </td>
-                                <td style="border:1px solid #ccc;padding:8px;text-align:center;">
-                                    ${analiseESI(Number(sust.esi))}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="border:1px solid #ccc;padding:8px;">
                                     EIR 
                                     <i class="fas fa-question-circle" 
                                        title="EIR (Emergy Investment Ratio): F/I | mede quanto da energia total usada vem da sociedade vs. fornecida pela natureza.
@@ -554,6 +539,21 @@ document.addEventListener("DOMContentLoaded", function() {
                                 </td>
                                 <td style="border:1px solid #ccc;padding:8px;text-align:center;">
                                     ${analiseEIR(Number(sust.eir))}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid #ccc;padding:8px;">
+                                    ESI 
+                                    <i class="fas fa-question-circle" 
+                                       title="ESI (Emergy Sustainability Index): EYR/ELR | avalia a sustentabilidade integrando eficiência produtiva e carga ambiental.
+                                       Referências: >10 alta; 1–10 moderada; <1 baixa." 
+                                       style="cursor:help;"></i>
+                                </td>
+                                <td style="border:1px solid #ccc;padding:8px;text-align:center;">
+                                    ${Number(sust.esi).toFixed(2)}
+                                </td>
+                                <td style="border:1px solid #ccc;padding:8px;text-align:center;">
+                                    ${analiseESI(Number(sust.esi))}
                                 </td>
                             </tr>
                         </tbody>

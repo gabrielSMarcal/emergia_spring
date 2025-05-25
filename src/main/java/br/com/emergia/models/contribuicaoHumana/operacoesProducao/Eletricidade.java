@@ -16,10 +16,6 @@ public class Eletricidade extends AtributosFixos {
         this.energiaPORKWH = energiaPORKWH;
     }
 
-    public String getUnidadeEletricidade() {
-        return unidadeEletricidade;
-    }
-
     public double getResulRefEmergiaSolarEletricidade() {
         return resulRefEmergiaSolarEletricidade;
     }

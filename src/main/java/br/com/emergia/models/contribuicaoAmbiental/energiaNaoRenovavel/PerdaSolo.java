@@ -20,10 +20,6 @@ public class PerdaSolo extends AtributosFixos {
         return perdaDeSoloToneladasPorAno;
     }
 
-    public String getUnidadePerdaSolo() {
-        return unidadePerdaSolo;
-    }
-
     public double getResulRefEmergiaSolarPerdaSolo() {
         return resulRefEmergiaSolarPerdaSolo;
     }

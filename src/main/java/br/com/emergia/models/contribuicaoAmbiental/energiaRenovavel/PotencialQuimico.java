@@ -23,10 +23,6 @@ public class PotencialQuimico extends AtributosFixos {
         return resulRefEmergiaSolarPotencialQuimico;
     }
 
-    public String getUnidadePotencialQuimico() {
-        return unidadePotencialQuimico;
-    }
-
     public double calcPQ() {
         resulPotencialQuimico = haFazenda * mediaChuvaAnoMetros * getConversaoHaParaM2() * getKgPorM3() * getEnergiaPorKg();
         return resulPotencialQuimico;

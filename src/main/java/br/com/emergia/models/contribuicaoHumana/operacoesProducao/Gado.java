@@ -22,10 +22,6 @@ public class Gado extends AtributosFixos {
         this.anosVidamedia = anosVida;
     }
 
-    public String getUnidadeGado() {
-        return unidadeGado;
-    }
-
     public double getResulRefEmergiaSolarGado() {
         return resulRefEmergiaSolarGado;
     }

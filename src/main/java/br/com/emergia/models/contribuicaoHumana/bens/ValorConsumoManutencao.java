@@ -1,6 +1,7 @@
 package br.com.emergia.models.contribuicaoHumana.bens;
 
 import br.com.emergia.database.AtributosFixos;
+import br.com.emergia.services.ApiCotacaoDolar;
 
 public class ValorConsumoManutencao extends AtributosFixos {
 
@@ -22,21 +23,12 @@ public class ValorConsumoManutencao extends AtributosFixos {
         return resulRefEmergiaSolarVCM;
     }
 
-    public String getUnidadeVCM() {
-        return unidadeVCM;
-    }
-
     public double calcBens() {
-
-
-
         try {
-
-            double cotacaoDolar = dolarProvisorio;
+            double cotacaoDolar = ApiCotacaoDolar.getCotacaoDolar();
             resulVCM = (bens / anos) / cotacaoDolar;
             return resulVCM;
         } catch (Exception e) {
-
             throw new RuntimeException("Erro ao calcular Valor de consumo e manutenção: " + e.getMessage());
         }
     }

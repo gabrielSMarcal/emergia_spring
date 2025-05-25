@@ -1,6 +1,7 @@
 package br.com.emergia.models.contribuicaoHumana.operacoesProducao;
 
 import br.com.emergia.database.AtributosFixos;
+import br.com.emergia.services.ApiCotacaoDolar;
 
 public class Racao extends AtributosFixos{
 
@@ -19,20 +20,13 @@ public class Racao extends AtributosFixos{
         this.valorSaca = valorSaca;
     }
 
-    public String getUnidadeRacao() {
-        return unidadeRacao;
-    }
-
     public double getResulRefEmergiaSolarRacao() {
         return resulRefEmergiaSolarRacao;
     }
 
     public double calcR() {
-
-        double dolarProvisorio = 6.7;
-
         try {
-            double cotacaoDolar = dolarProvisorio;
+            double cotacaoDolar = ApiCotacaoDolar.getCotacaoDolar();
             resulRacao = (saca * valorSaca * getMesAno()) / cotacaoDolar;
             return resulRacao;
         } catch (Exception e) {

@@ -20,10 +20,6 @@ public class AguaUsada extends AtributosFixos {
         this.litrosAdicionalDia = litrosAdicionalDia;
     }
 
-    public String getUnidadeAguaUsada() {
-        return unidadeAguaUsada;
-    }
-
     public double getLitroPorDiaAnimal() {
         return litroPorDiaAnimal;
     }

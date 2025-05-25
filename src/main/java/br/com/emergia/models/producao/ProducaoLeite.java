@@ -21,10 +21,6 @@ public class ProducaoLeite extends AtributosFixos {
             this.leitePorDia = leitePorDia;
     }
 
-    public String getUnidadeProducaoLeite() {
-        return unidadeProducaoLeite;
-    }
-
     public double getResulRefEmergiaSolarProducaoLeite() {
         return resulRefEmergiaSolarProducaoLeite;
     }

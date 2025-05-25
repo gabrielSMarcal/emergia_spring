@@ -22,10 +22,6 @@ public class MaoObra extends AtributosFixos {
         this.qtdDiasTrabalhado = qtdDiasTrabalhado;
     }
 
-    public String getUnidadeMaoObra() {
-        return unidadeMaoObra;
-    }
-
     public double getResulRefEmergiaSolarMaoObra() {
         return resulRefEmergiaSolarMaoObra;
     }

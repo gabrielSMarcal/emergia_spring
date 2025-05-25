@@ -1,6 +1,7 @@
 package br.com.emergia.models.contribuicaoHumana.operacoesProducao;
 
 import br.com.emergia.database.AtributosFixos;
+import br.com.emergia.services.ApiCotacaoDolar;
 
 public class Maquinarios extends AtributosFixos {
 
@@ -18,21 +19,14 @@ public class Maquinarios extends AtributosFixos {
         this.valorHoraTrator = valorHoraTrator;
     }
 
-    public String getUnidadeMaquinario() {
-        return unidadeMaquinario;
-    }
-
     public double getResulRefEmergiaSolarMaquinario() {
         return resulRefEmergiaSolarMaquinario;
     }
 
     public double calcM() {
 
-        double dolarProvisorio = 6.7;
-
         try {
-
-            double cotacaoDolar = dolarProvisorio;
+            double cotacaoDolar = ApiCotacaoDolar.getCotacaoDolar();
             resulMaquinario = (qtdHoraTrator * valorHoraTrator) / cotacaoDolar;
             return resulMaquinario;
         } catch (Exception e) {

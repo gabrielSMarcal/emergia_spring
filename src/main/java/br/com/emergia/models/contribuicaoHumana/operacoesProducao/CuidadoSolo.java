@@ -20,10 +20,6 @@ public class CuidadoSolo extends AtributosFixos{
 
     private double areaDevastadaPeloGado;
 
-    public String getUnidadeCuidadoSolo() {
-        return unidadeCuidadoSolo;
-    }
-
     public double getResulRefEmergiaSolarCuidadoSolo() {
         return resulRefEmergiaSolarCuidadoSolo;
     }

@@ -16,13 +16,12 @@ public class SQLiteDialect extends Dialect {
 
     @Override
     public String getTableTypeString() {
-        // Remove a definição redundante de primary key
         return "";
     }
 }
 
-// Nova classe de suporte à coluna identity:
-class SQLiteIdentityColumnSupport extends org.hibernate.dialect.identity.IdentityColumnSupportImpl {
+class SQLiteIdentityColumnSupport extends org.hibernate.dialect.identity
+.IdentityColumnSupportImpl {
     @Override
     public boolean supportsIdentityColumns() {
         return true;

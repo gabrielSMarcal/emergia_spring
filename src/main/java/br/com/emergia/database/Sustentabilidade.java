@@ -22,7 +22,7 @@ public class Sustentabilidade {
     @Column(name = "nome_da_fazenda")
     private String nomeDaFazenda;
 
-    // getters/setters
+    // Getters e Setters
     public Long getId() { return id; }
     public Relatorio getRelatorio() { return relatorio; }
     public void setRelatorio(Relatorio relatorio) { this.relatorio = relatorio; }

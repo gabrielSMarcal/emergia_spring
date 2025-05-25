@@ -71,7 +71,7 @@ public class Relatorio {
     private Double refBens;
     private Double razaoBens;
 
-    // Getters e setters para todos os campos...
+    // Getters e setters
     public Integer getId() { return id; }
     public void setId(Integer id) { this.id = id; }
 

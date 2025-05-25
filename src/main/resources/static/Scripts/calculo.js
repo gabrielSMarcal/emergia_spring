@@ -21,8 +21,7 @@ const sectionFields = {
 document.addEventListener("DOMContentLoaded", () => {
 
   // Inicializar tooltips do Bootstrap
-  const tooltipTriggerList = [].slice.call(document
-                                .querySelectorAll('[data-bs-toggle="tooltip"]'));
+  const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
   tooltipTriggerList.map(function (tooltipTriggerEl) {
     return new bootstrap.Tooltip(tooltipTriggerEl);
   });

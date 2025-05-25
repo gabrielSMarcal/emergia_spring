@@ -61,101 +61,37 @@ public class AtributosFixos {
     private double transformidadeMaquinario = 6.08e12;
 
     // Getters
-    public double getTransformidadeProducaoleite() {
-        return transformidadeProducaoleite;
-    }
-    public double getTransformidadeGado() {
-        return transformidadeGado;
-    }
-    public double getTransformidadePontencialQuimico() {
-        return transformidadePontencialQuimico;
-    }
-    public double getTransformidadePerdaSolo(){
-        return transformidadePerdaSolo;
-    }
-    public double getTransformidadeMaquinario (){
-        return transformidadeMaquinario;
-    }
-    public double getTransformidadeCuidadoSolo() {
-        return transformidadeCuidadoSolo;
-    }
-    public double getTransformidadeRacao() {
-        return transformidadeRacao;
-    }
-    public double getTransformidadeAguaUsada() {
-        return transformidadeAguaUsada;
-    }
-    public double getTransformidadeCombustivelUsado() {
-        return transformidadeCombustivelUsado;
-    }
+    public double getTransformidadeProducaoleite() {return transformidadeProducaoleite;}
+    public double getTransformidadeGado() {return transformidadeGado;}
+    public double getTransformidadePontencialQuimico() {return transformidadePontencialQuimico;}
+    public double getTransformidadePerdaSolo(){return transformidadePerdaSolo;}
+    public double getTransformidadeMaquinario (){return transformidadeMaquinario;}
+    public double getTransformidadeCuidadoSolo() {return transformidadeCuidadoSolo;}
+    public double getTransformidadeRacao() {return transformidadeRacao;}
+    public double getTransformidadeAguaUsada() {return transformidadeAguaUsada;}
+    public double getTransformidadeCombustivelUsado() {return transformidadeCombustivelUsado;}
     public double getTransformidadeEletricidade(){return transformidadeEletricidade;}
-    public double getTransformidadeMaoObra(){
-        return transformidadeMaoObra;
-    }
-    public  double getPesoSecoPorAnimal(){
-        return pesoSecoPorAnimal;
-    }
-    public double getKcalPorGramaCarne(){
-        return kcalPorGramaCarne;
-    }
-    public double getGramasPorKg(){
-        return gramasPorKg;
-    }
-    public int getDiasAno() {
-        return diasAno;
-    }
-    public int getMesAno() {
-        return mesAno;
-    }
-    public double getQtdEnergiaPorKilo() {
-        return qtdEnergiaPorKilo;
-    }
-    public int getAnos() {
-        return anos;
-    }
-    public double getJoulesPorTonelada() {
-        return joulesPorTonelada;
-    }
-    public double getToneladaPorLitro() {
-        return toneladaPorLitro;
-    }
-    public int getKwhParaKcal() {
-        return kwhParaKcal;
-    }
-    public int getEnergiaPorKcal() {
-        return energiaPorKcal;
-    }
-    public double getEnergiaPessoaAno() {
-        return energiaPessoaAno;
-    }
-    public double getConversaoToneladaParaGramas() {
-        return conversaoToneladaParaGramas;
-    }
-    public double getGramasMOporGramasSolo() {
-        return gramasMOporGramasSolo;
-    }
-    public double getKcalPorGrama() {
-        return kcalPorGrama;
-    }
-    public double getJoulesPorKcal() {
-        return joulesPorKcal;
-    }
-    public double getConversaoHaParaM2() {
-        return conversaoM2porHa;
-    }
-    public double getKgPorM3() {
-        return kgPorM3;
-    }
-    public double getEnergiaPorKg() {
-        return energiaPorKg;
-    }
-    public double getLitroParaGrama() {
-        return litroParaGrama;
-    }
-    public double getKcalPorGramaLeite() {
-        return kcalPorGramaLeite;
-    }
-    public double getJoulesPorKcalLeite() {
-        return joulesPorKcalLeite;
-    }
+    public double getTransformidadeMaoObra(){return transformidadeMaoObra;}
+    public double getPesoSecoPorAnimal(){return pesoSecoPorAnimal;}
+    public double getKcalPorGramaCarne(){return kcalPorGramaCarne;}
+    public double getGramasPorKg(){return gramasPorKg;}
+    public int getDiasAno() {return diasAno;}
+    public int getMesAno() {return mesAno;}
+    public double getQtdEnergiaPorKilo() {return qtdEnergiaPorKilo;}
+    public int getAnos() {return anos;}
+    public double getJoulesPorTonelada() {return joulesPorTonelada;}
+    public double getToneladaPorLitro() {return toneladaPorLitro;}
+    public int getKwhParaKcal() {return kwhParaKcal;}
+    public int getEnergiaPorKcal() {return energiaPorKcal;}
+    public double getEnergiaPessoaAno() {return energiaPessoaAno;}
+    public double getConversaoToneladaParaGramas() {return conversaoToneladaParaGramas;}
+    public double getGramasMOporGramasSolo() {return gramasMOporGramasSolo;}
+    public double getKcalPorGrama() {return kcalPorGrama;}
+    public double getJoulesPorKcal() {return joulesPorKcal;}
+    public double getConversaoHaParaM2() {return conversaoM2porHa;}
+    public double getKgPorM3() {return kgPorM3;}
+    public double getEnergiaPorKg() {return energiaPorKg;}
+    public double getLitroParaGrama() {return litroParaGrama;}
+    public double getKcalPorGramaLeite() {return kcalPorGramaLeite;}
+    public double getJoulesPorKcalLeite() {return joulesPorKcalLeite;}
 }

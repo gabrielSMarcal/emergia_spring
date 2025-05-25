@@ -2,10 +2,7 @@ package br.com.emergia.services;
 
 import br.com.emergia.database.Relatorio;
 import br.com.emergia.database.Sustentabilidade;
-import br.com.emergia.models.sustentabilidade.EIR;
-import br.com.emergia.models.sustentabilidade.ELR;
-import br.com.emergia.models.sustentabilidade.ESI;
-import br.com.emergia.models.sustentabilidade.EYR;
+import br.com.emergia.models.sustentabilidade.*;
 import br.com.emergia.repository.RelatorioRepository;
 import br.com.emergia.repository.SustentabilidadeRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -39,7 +39,6 @@ document.addEventListener("DOMContentLoaded", function() {
             
             const thead = document.createElement("thead");
 
-            // Add Font Awesome link if not already present in HTML
             if (!document.querySelector('link[href*="font-awesome"]')) {
                 const faLink = document.createElement('link');
                 faLink.rel = 'stylesheet';

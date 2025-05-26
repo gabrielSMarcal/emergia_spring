@@ -87,7 +87,7 @@ body {
 
 .accordion-button:not(.collapsed) {
   color: white;
-  background-color: var(--emerald);
+  background-color: #70957c;
 }
 
 .accordion-button:not(.collapsed)::after {

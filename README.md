@@ -1,6 +1,6 @@
-# 🔌 Relatório Emergético 🔌
+# 🔌 Relatório Emergético na Agropecuária de Leite 🔌
 
-Essa aplicação web foi feita com o objetivo de atender as necessidades do controle do uso excessivo de carbono, a partir da informação e conscientização sobre como funciona o crédito de carbono e como está a situação atual no mundo. Além disso, a página da calculadora mostra o quanto de carbono você emitiu em toneladas usando veículos, gás de cozinha e energia e também mostra o como você poderia contribuir para o mundo a partir disso.
+Essa aplicação web foi feita com o objetivo de atender as necessidades de documentação do uso de emergia, a partir da informação e conscientização sobre como funciona a emergia na produção. Esse projeto tem a capacidade de fazer o cálculo do uso emergético para o setor e também gerar o relatório desse cálculo. 
 
 ## 💻 Tecnologias Utilizadas 💻
 
@@ -17,7 +17,7 @@ Essa aplicação web foi feita com o objetivo de atender as necessidades do cont
 
 - (opicional) Possuir Git instalado em seu sistema [Realize a instalação clicando aqui](https://git-scm.com/downloads)
 - Requer Java JDK 21 [Você pode instalar por aqui](https://www.oracle.com/br/java/technologies/downloads/#java21)
-- IDE Java (recomendável o Intellij)
+- IDE Intellij
 
 ### Passos
 
@@ -27,11 +27,7 @@ Essa aplicação web foi feita com o objetivo de atender as necessidades do cont
 
 <hr>
 
-2. Abra o diretório em sua IDE de preferência
-
-<hr>
-
-3. Em sua IDE entre no arquivo `pom.xml` para instalar as dependências
+2. Abra o diretório no <b>Intellij</b>
 
 <hr>
 
@@ -41,11 +37,12 @@ Essa aplicação web foi feita com o objetivo de atender as necessidades do cont
 
 ## Mídia do Projeto
 * Início:
-  
+
 ![inicio](https://github.com/user-attachments/assets/9418e68a-52e2-4a0c-b310-2418a0113a9c)
 
 * Calculadora:
 
+https://github.com/user-attachments/assets/249c3f7b-b909-488f-b2ba-21658c79b395
 
 
 ## Equipe
